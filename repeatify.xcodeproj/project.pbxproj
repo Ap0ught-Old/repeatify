@@ -1,0 +1,295 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */; };
+		29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */; };
+		29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9A513DDDFDC00CAFBE6 /* main.m */; };
+		29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */; };
+		29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */; };
+		29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		29E8C99513DDDFDC00CAFBE6 /* repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		29E8C99C13DDDFDC00CAFBE6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		29E8C99D13DDDFDC00CAFBE6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		29E8C99E13DDDFDC00CAFBE6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		29E8C9A113DDDFDC00CAFBE6 /* repeatify-Info.plist */ = {isa = PBXFileReference; path = "repeatify-Info.plist"; sourceTree = "<group>"; };
+		29E8C9A313DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		29E8C9A513DDDFDC00CAFBE6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29E8C9A713DDDFDC00CAFBE6 /* repeatify-Prefix.pch */ = {isa = PBXFileReference; path = "repeatify-Prefix.pch"; sourceTree = "<group>"; };
+		29E8C9A913DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */ = {isa = PBXFileReference; path = repeatifyAppDelegate.h; sourceTree = "<group>"; };
+		29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = repeatifyAppDelegate.m; sourceTree = "<group>"; };
+		29E8C9AF13DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		29E8C99213DDDFDC00CAFBE6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		29E8C98A13DDDFDC00CAFBE6 = {
+			isa = PBXGroup;
+			children = (
+				29E8C99F13DDDFDC00CAFBE6 /* repeatify */,
+				29E8C99813DDDFDC00CAFBE6 /* Frameworks */,
+				29E8C99613DDDFDC00CAFBE6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		29E8C99613DDDFDC00CAFBE6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				29E8C99513DDDFDC00CAFBE6 /* repeatify.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29E8C99813DDDFDC00CAFBE6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */,
+				29E8C99B13DDDFDC00CAFBE6 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29E8C99B13DDDFDC00CAFBE6 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29E8C99C13DDDFDC00CAFBE6 /* AppKit.framework */,
+				29E8C99D13DDDFDC00CAFBE6 /* CoreData.framework */,
+				29E8C99E13DDDFDC00CAFBE6 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		29E8C99F13DDDFDC00CAFBE6 /* repeatify */ = {
+			isa = PBXGroup;
+			children = (
+				29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */,
+				29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */,
+				29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */,
+				29E8C9A013DDDFDC00CAFBE6 /* Supporting Files */,
+			);
+			path = repeatify;
+			sourceTree = "<group>";
+		};
+		29E8C9A013DDDFDC00CAFBE6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				29E8C9A113DDDFDC00CAFBE6 /* repeatify-Info.plist */,
+				29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */,
+				29E8C9A513DDDFDC00CAFBE6 /* main.m */,
+				29E8C9A713DDDFDC00CAFBE6 /* repeatify-Prefix.pch */,
+				29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29E8C99413DDDFDC00CAFBE6 /* repeatify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29E8C9B313DDDFDC00CAFBE6 /* Build configuration list for PBXNativeTarget "repeatify" */;
+			buildPhases = (
+				29E8C99113DDDFDC00CAFBE6 /* Sources */,
+				29E8C99213DDDFDC00CAFBE6 /* Frameworks */,
+				29E8C99313DDDFDC00CAFBE6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = repeatify;
+			productName = repeatify;
+			productReference = 29E8C99513DDDFDC00CAFBE6 /* repeatify.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29E8C98C13DDDFDC00CAFBE6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = ChaiONE;
+			};
+			buildConfigurationList = 29E8C98F13DDDFDC00CAFBE6 /* Build configuration list for PBXProject "repeatify" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29E8C98A13DDDFDC00CAFBE6;
+			productRefGroup = 29E8C99613DDDFDC00CAFBE6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				29E8C99413DDDFDC00CAFBE6 /* repeatify */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		29E8C99313DDDFDC00CAFBE6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */,
+				29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */,
+				29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29E8C99113DDDFDC00CAFBE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */,
+				29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29E8C9A313DDDFDC00CAFBE6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29E8C9A913DDDFDC00CAFBE6 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29E8C9AF13DDDFDC00CAFBE6 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		29E8C9B113DDDFDC00CAFBE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		29E8C9B213DDDFDC00CAFBE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		29E8C9B413DDDFDC00CAFBE6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
+				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		29E8C9B513DDDFDC00CAFBE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
+				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		29E8C98F13DDDFDC00CAFBE6 /* Build configuration list for PBXProject "repeatify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29E8C9B113DDDFDC00CAFBE6 /* Debug */,
+				29E8C9B213DDDFDC00CAFBE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29E8C9B313DDDFDC00CAFBE6 /* Build configuration list for PBXNativeTarget "repeatify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29E8C9B413DDDFDC00CAFBE6 /* Debug */,
+				29E8C9B513DDDFDC00CAFBE6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29E8C98C13DDDFDC00CAFBE6 /* Project object */;
+}
