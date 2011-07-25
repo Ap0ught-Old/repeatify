@@ -21,12 +21,12 @@
 		29E8C99C13DDDFDC00CAFBE6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		29E8C99D13DDDFDC00CAFBE6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		29E8C99E13DDDFDC00CAFBE6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		29E8C9A113DDDFDC00CAFBE6 /* repeatify-Info.plist */ = {isa = PBXFileReference; path = "repeatify-Info.plist"; sourceTree = "<group>"; };
+		29E8C9A113DDDFDC00CAFBE6 /* repeatify-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "repeatify-Info.plist"; sourceTree = "<group>"; };
 		29E8C9A313DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		29E8C9A513DDDFDC00CAFBE6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		29E8C9A713DDDFDC00CAFBE6 /* repeatify-Prefix.pch */ = {isa = PBXFileReference; path = "repeatify-Prefix.pch"; sourceTree = "<group>"; };
+		29E8C9A713DDDFDC00CAFBE6 /* repeatify-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "repeatify-Prefix.pch"; sourceTree = "<group>"; };
 		29E8C9A913DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */ = {isa = PBXFileReference; path = repeatifyAppDelegate.h; sourceTree = "<group>"; };
+		29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = repeatifyAppDelegate.h; sourceTree = "<group>"; };
 		29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = repeatifyAppDelegate.m; sourceTree = "<group>"; };
 		29E8C9AF13DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,7 +128,8 @@
 		29E8C98C13DDDFDC00CAFBE6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				ORGANIZATIONNAME = ChaiONE;
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Longyi Qi";
 			};
 			buildConfigurationList = 29E8C98F13DDDFDC00CAFBE6 /* Build configuration list for PBXProject "repeatify" */;
 			compatibilityVersion = "Xcode 3.2";
