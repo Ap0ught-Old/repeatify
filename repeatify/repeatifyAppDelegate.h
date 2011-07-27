@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface repeatifyAppDelegate : NSObject <NSApplicationDelegate> {
+@interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate> {
     NSWindow *_window;
 }
 

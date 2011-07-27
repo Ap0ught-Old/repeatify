@@ -13,7 +13,23 @@
 		29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */; };
 		29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */; };
 		29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */; };
+		29E8C9EB13DDE94300CAFBE6 /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C9E613DDE52200CAFBE6 /* libspotify.framework */; };
+		29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
+		29E8C9ED13DDE94600CAFBE6 /* libspotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29E8C9E613DDE52200CAFBE6 /* libspotify.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		29E8C9E513DDE4FA00CAFBE6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				29E8C9ED13DDE94600CAFBE6 /* libspotify.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		29E8C99513DDDFDC00CAFBE6 /* repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +45,9 @@
 		29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = repeatifyAppDelegate.h; sourceTree = "<group>"; };
 		29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = repeatifyAppDelegate.m; sourceTree = "<group>"; };
 		29E8C9AF13DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLibSpotify.framework; path = "../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug/CocoaLibSpotify.framework"; sourceTree = "<group>"; };
+		29E8C9DC13DDE3BB00CAFBE6 /* appkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appkey.h; sourceTree = "<group>"; };
+		29E8C9E613DDE52200CAFBE6 /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libspotify.framework; path = "lib/cocoalibspotify/libspotify-0.0.8-Darwin/libspotify.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29E8C9EB13DDE94300CAFBE6 /* libspotify.framework in Frameworks */,
+				29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */,
 				29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -63,6 +84,8 @@
 		29E8C99813DDDFDC00CAFBE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29E8C9E613DDE52200CAFBE6 /* libspotify.framework */,
+				29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */,
 				29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */,
 				29E8C99B13DDDFDC00CAFBE6 /* Other Frameworks */,
 			);
@@ -98,6 +121,7 @@
 				29E8C9A513DDDFDC00CAFBE6 /* main.m */,
 				29E8C9A713DDDFDC00CAFBE6 /* repeatify-Prefix.pch */,
 				29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */,
+				29E8C9DC13DDE3BB00CAFBE6 /* appkey.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -111,6 +135,7 @@
 			buildPhases = (
 				29E8C99113DDDFDC00CAFBE6 /* Sources */,
 				29E8C99213DDDFDC00CAFBE6 /* Frameworks */,
+				29E8C9E513DDE4FA00CAFBE6 /* CopyFiles */,
 				29E8C99313DDDFDC00CAFBE6 /* Resources */,
 			);
 			buildRules = (
@@ -206,7 +231,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -233,7 +258,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -251,8 +276,14 @@
 		29E8C9B413DDDFDC00CAFBE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug\"",
+					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"";
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -262,8 +293,14 @@
 		29E8C9B513DDDFDC00CAFBE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug\"",
+					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"";
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -289,6 +326,7 @@
 				29E8C9B513DDDFDC00CAFBE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
