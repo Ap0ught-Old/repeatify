@@ -10,10 +10,10 @@
 
 @interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate> {
     NSStatusItem *_statusItem;
+    NSMenu *_statusMenu;
 }
 
-@property (strong) IBOutlet NSMenu *statusMenu;
-
 - (IBAction)helloSpotify:(id)sender;
+- (IBAction)showPlaylist:(id)sender;
 
 @end
