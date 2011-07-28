@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate> {
-    NSWindow *_window;
+    NSStatusItem *_statusItem;
 }
 
-@property (strong) IBOutlet NSWindow *window;
+@property (strong) IBOutlet NSMenu *statusMenu;
+
+- (IBAction)helloSpotify:(id)sender;
 
 @end

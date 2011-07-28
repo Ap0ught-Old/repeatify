@@ -11,7 +11,7 @@
 
 @implementation repeatifyAppDelegate
 
-@synthesize window = _window;
+@synthesize statusMenu = _statusMenu;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -22,6 +22,14 @@
                                                      password:sp_password
                                                         error:nil];
     
+    NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
+    _statusItem = [[statusBar statusItemWithLength:NSSquareStatusItemLength] retain];
+    [_statusItem setImage:[NSImage imageNamed:@"Icon"]];
+    [_statusItem setMenu:_statusMenu];
+}
+
+- (IBAction)helloSpotify:(id)sender {
+    NSLog(@"Hello Spotify!");
 }
 
 
@@ -30,9 +38,7 @@
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession; {
     SPUser *currentUser = nil;
-    do {
-        currentUser = [[SPSession sharedSession] user];
-    } while (currentUser == nil);
+    
     NSLog(@"%@", currentUser.displayName);
 }
 

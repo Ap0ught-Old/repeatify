@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29C5683113E0DF9D001300AC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C5683013E0DF9D001300AC /* Icon.png */; };
 		29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */; };
 		29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */; };
 		29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9A513DDDFDC00CAFBE6 /* main.m */; };
@@ -32,6 +33,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		29C5683013E0DF9D001300AC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = resources/Icon.png; sourceTree = "<group>"; };
 		29E8C99513DDDFDC00CAFBE6 /* repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29E8C99C13DDDFDC00CAFBE6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -64,6 +66,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29C5682E13E0DF8F001300AC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				29C5683013E0DF9D001300AC /* Icon.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		29E8C98A13DDDFDC00CAFBE6 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 		29E8C99F13DDDFDC00CAFBE6 /* repeatify */ = {
 			isa = PBXGroup;
 			children = (
+				29C5682E13E0DF8F001300AC /* Resources */,
 				29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */,
 				29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */,
 				29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */,
@@ -181,6 +192,7 @@
 				29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */,
 				29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */,
 				29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */,
+				29C5683113E0DF9D001300AC /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
