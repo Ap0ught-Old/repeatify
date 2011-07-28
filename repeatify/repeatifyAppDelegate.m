@@ -26,6 +26,7 @@
     _statusItem = [[statusBar statusItemWithLength:NSSquareStatusItemLength] retain];
     [_statusItem setImage:[NSImage imageNamed:@"Icon"]];
     [_statusItem setMenu:_statusMenu];
+    [_statusItem setHighlightMode:YES];
 }
 
 - (IBAction)helloSpotify:(id)sender {
