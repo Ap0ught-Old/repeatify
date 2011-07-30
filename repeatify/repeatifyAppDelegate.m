@@ -31,24 +31,27 @@
                                                      password:sp_password
                                                         error:nil];
     
-    _statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
-    
-    [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
-    [_statusMenu addItem:[NSMenuItem separatorItem]];
-    [_statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
-    [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
+    _playbackManager = [[RPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
     
     NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
     _statusItem = [[statusBar statusItemWithLength:NSSquareStatusItemLength] retain];
     [_statusItem setImage:[NSImage imageNamed:@"Icon"]];
-    [_statusItem setMenu:_statusMenu];
+    
     [_statusItem setHighlightMode:YES];
     [_statusItem setTarget:self];
+    
+    NSMenu *statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
+    [statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
+    [statusMenu addItem:[NSMenuItem separatorItem]];
+    [statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
+    [statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
+    [_statusItem setMenu:statusMenu];
+    [statusMenu release];
 }
 
 - (void)dealloc {
-    [_statusMenu release];
     [_statusItem release];
+    [_playbackManager release];
     
     [super dealloc];
 }
@@ -56,7 +59,7 @@
 # pragma marks - menu actions
 
 - (void)updateMenu {
-    [_statusMenu removeAllItems];
+    NSMenu *statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
     
     SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
     NSArray *playlists = container.playlists;
@@ -70,13 +73,15 @@
             [self handlePlaylist:playlist menuItem:innerMenuItem];
         }
         
-        [_statusMenu addItem:innerMenuItem];
+        [statusMenu addItem:innerMenuItem];
         [innerMenuItem release];
     }
     
-    [_statusMenu addItem:[NSMenuItem separatorItem]];
-    [_statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
-    [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
+    [statusMenu addItem:[NSMenuItem separatorItem]];
+    [statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
+    [statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
+    [_statusItem setMenu:statusMenu];
+    [statusMenu release];
 }
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
@@ -120,7 +125,19 @@
 - (void)clickTrackMenuItem:(id)sender {
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
     SPTrack *track = [clickedMenuItem representedObject];
-    NSLog(@"%@", track.spotifyURL);
+    
+    if (track != nil) {
+        if (!track.isLoaded) {
+            [self performSelector:@selector(clickTrackMenuItem:) withObject:sender afterDelay:0.5];
+            return;
+        }
+        
+        NSError *error = nil;
+        
+        if (![_playbackManager playTrack:track error:&error]) {
+            //[self.window presentError:error];
+        }
+    }
 }
 
 - (void)quitRepeatify {

@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */; };
+		29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */; };
+		29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3B13E4BBEF00951AB6 /* NCCommon.m */; };
+		29893A4613E4BBEF00951AB6 /* CoCAAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3F13E4BBEF00951AB6 /* CoCAAudioDevice.m */; };
+		29893A4713E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4113E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m */; };
+		29893A4813E4BBEF00951AB6 /* CoCAAudioUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4313E4BBEF00951AB6 /* CoCAAudioUnit.m */; };
+		29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4913E4BC2200951AB6 /* CoreAudio.framework */; };
+		29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4B13E4BC2900951AB6 /* AudioUnit.framework */; };
+		29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */; };
 		29C5683113E0DF9D001300AC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C5683013E0DF9D001300AC /* Icon.png */; };
 		29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */; };
 		29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */; };
@@ -33,6 +42,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPCircularBuffer.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.h"; sourceTree = SOURCE_ROOT; };
+		29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.m"; sourceTree = SOURCE_ROOT; };
+		29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.h"; sourceTree = SOURCE_ROOT; };
+		29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlaybackManager.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.m"; sourceTree = SOURCE_ROOT; };
+		29893A3A13E4BBEF00951AB6 /* NCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCCommon.h; path = lib/coca/NCCommon.h; sourceTree = SOURCE_ROOT; };
+		29893A3B13E4BBEF00951AB6 /* NCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NCCommon.m; path = lib/coca/NCCommon.m; sourceTree = SOURCE_ROOT; };
+		29893A3D13E4BBEF00951AB6 /* CoCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoCA.h; sourceTree = "<group>"; };
+		29893A3E13E4BBEF00951AB6 /* CoCAAudioDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoCAAudioDevice.h; sourceTree = "<group>"; };
+		29893A3F13E4BBEF00951AB6 /* CoCAAudioDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoCAAudioDevice.m; sourceTree = "<group>"; };
+		29893A4013E4BBEF00951AB6 /* CoCAAudioHardwareSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoCAAudioHardwareSystem.h; sourceTree = "<group>"; };
+		29893A4113E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoCAAudioHardwareSystem.m; sourceTree = "<group>"; };
+		29893A4213E4BBEF00951AB6 /* CoCAAudioUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoCAAudioUnit.h; sourceTree = "<group>"; };
+		29893A4313E4BBEF00951AB6 /* CoCAAudioUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoCAAudioUnit.m; sourceTree = "<group>"; };
+		29893A4413E4BBEF00951AB6 /* PrivateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateUtil.h; sourceTree = "<group>"; };
+		29893A4913E4BC2200951AB6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		29893A4B13E4BC2900951AB6 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		29893A4D13E4C27800951AB6 /* RPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPPlaybackManager.h; sourceTree = "<group>"; };
+		29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPPlaybackManager.m; sourceTree = "<group>"; };
 		29C5683013E0DF9D001300AC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = resources/Icon.png; sourceTree = "<group>"; };
 		29E8C99513DDDFDC00CAFBE6 /* repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -57,6 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */,
+				29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */,
 				29E8C9EB13DDE94300CAFBE6 /* libspotify.framework in Frameworks */,
 				29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */,
 				29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */,
@@ -66,6 +95,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29893A3113E4BB8600951AB6 /* Playback Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				29893A3913E4BBCF00951AB6 /* CoCA */,
+				29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */,
+				29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */,
+				29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */,
+				29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */,
+			);
+			name = "Playback Helpers";
+			sourceTree = "<group>";
+		};
+		29893A3913E4BBCF00951AB6 /* CoCA */ = {
+			isa = PBXGroup;
+			children = (
+				29893A3A13E4BBEF00951AB6 /* NCCommon.h */,
+				29893A3B13E4BBEF00951AB6 /* NCCommon.m */,
+				29893A3C13E4BBEF00951AB6 /* Source */,
+			);
+			name = CoCA;
+			sourceTree = "<group>";
+		};
+		29893A3C13E4BBEF00951AB6 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				29893A3D13E4BBEF00951AB6 /* CoCA.h */,
+				29893A3E13E4BBEF00951AB6 /* CoCAAudioDevice.h */,
+				29893A3F13E4BBEF00951AB6 /* CoCAAudioDevice.m */,
+				29893A4013E4BBEF00951AB6 /* CoCAAudioHardwareSystem.h */,
+				29893A4113E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m */,
+				29893A4213E4BBEF00951AB6 /* CoCAAudioUnit.h */,
+				29893A4313E4BBEF00951AB6 /* CoCAAudioUnit.m */,
+				29893A4413E4BBEF00951AB6 /* PrivateUtil.h */,
+			);
+			name = Source;
+			path = lib/coca/Source;
+			sourceTree = SOURCE_ROOT;
+		};
 		29C5682E13E0DF8F001300AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +144,8 @@
 		29E8C98A13DDDFDC00CAFBE6 = {
 			isa = PBXGroup;
 			children = (
+				29893A4B13E4BC2900951AB6 /* AudioUnit.framework */,
+				29893A4913E4BC2200951AB6 /* CoreAudio.framework */,
 				29E8C99F13DDDFDC00CAFBE6 /* repeatify */,
 				29E8C99813DDDFDC00CAFBE6 /* Frameworks */,
 				29E8C99613DDDFDC00CAFBE6 /* Products */,
@@ -115,7 +184,10 @@
 		29E8C99F13DDDFDC00CAFBE6 /* repeatify */ = {
 			isa = PBXGroup;
 			children = (
+				29893A3113E4BB8600951AB6 /* Playback Helpers */,
 				29C5682E13E0DF8F001300AC /* Resources */,
+				29893A4D13E4C27800951AB6 /* RPPlaybackManager.h */,
+				29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */,
 				29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */,
 				29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */,
 				29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */,
@@ -205,6 +277,13 @@
 			files = (
 				29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */,
 				29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */,
+				29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */,
+				29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */,
+				29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */,
+				29893A4613E4BBEF00951AB6 /* CoCAAudioDevice.m in Sources */,
+				29893A4713E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m in Sources */,
+				29893A4813E4BBEF00951AB6 /* CoCAAudioUnit.m in Sources */,
+				29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
