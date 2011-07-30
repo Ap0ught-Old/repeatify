@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "RPPlaybackManager.h"
 
-@interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate> {
+@interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate, NSMenuDelegate> {
     NSStatusItem *_statusItem;
+    NSMenu *_statusMenu;
     
     RPPlaybackManager *_playbackManager;
 }

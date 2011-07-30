@@ -36,20 +36,17 @@
     NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
     _statusItem = [[statusBar statusItemWithLength:NSSquareStatusItemLength] retain];
     [_statusItem setImage:[NSImage imageNamed:@"Icon"]];
-    
     [_statusItem setHighlightMode:YES];
     [_statusItem setTarget:self];
     
-    NSMenu *statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
-    [statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
-    [statusMenu addItem:[NSMenuItem separatorItem]];
-    [statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
-    [statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
-    [_statusItem setMenu:statusMenu];
-    [statusMenu release];
+    _statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
+    [_statusMenu setDelegate:self];
+    
+    [_statusItem setMenu:_statusMenu];
 }
 
 - (void)dealloc {
+    [_statusMenu release];
     [_statusItem release];
     [_playbackManager release];
     
@@ -59,29 +56,32 @@
 # pragma marks - menu actions
 
 - (void)updateMenu {
-    NSMenu *statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
+    [_statusMenu removeAllItems];
     
     SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
-    NSArray *playlists = container.playlists;
-    for (id playlist in playlists) {
-        NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
-        
-        if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
-            [self handlePlaylistFolder:playlist menuItem:innerMenuItem];
+    if (container == nil) {
+        [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
+    }
+    else {
+        NSArray *playlists = container.playlists;
+        for (id playlist in playlists) {
+            NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
+            
+            if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
+                [self handlePlaylistFolder:playlist menuItem:innerMenuItem];
+            }
+            else if ([playlist isKindOfClass:[SPPlaylist class]]) {
+                [self handlePlaylist:playlist menuItem:innerMenuItem];
+            }
+            
+            [_statusMenu addItem:innerMenuItem];
+            [innerMenuItem release];
         }
-        else if ([playlist isKindOfClass:[SPPlaylist class]]) {
-            [self handlePlaylist:playlist menuItem:innerMenuItem];
-        }
-        
-        [statusMenu addItem:innerMenuItem];
-        [innerMenuItem release];
     }
     
-    [statusMenu addItem:[NSMenuItem separatorItem]];
-    [statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
-    [statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
-    [_statusItem setMenu:statusMenu];
-    [statusMenu release];
+    [_statusMenu addItem:[NSMenuItem separatorItem]];
+    [_statusMenu addItemWithTitle:@"About" action:nil keyEquivalent:@""];
+    [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
 }
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
@@ -103,6 +103,7 @@
     }
     
     [menuItem setSubmenu:innerMenu];
+    [innerMenu release];
 }
 
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem {
@@ -111,8 +112,14 @@
     
     NSArray *tracks = list.tracks;
     for (SPTrack *track in tracks) {
-        if (track != nil && track.name != nil && track.spotifyURL != nil) {
-            NSMenuItem *innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+        if (track != nil) {
+            NSMenuItem *innerMenuItem;
+            if (track.name == nil) {
+                innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
+            }
+            else {
+                innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+            }
             [innerMenuItem setRepresentedObject:track];
             [innerMenu addItem:innerMenuItem];
             [innerMenuItem release];
@@ -120,6 +127,7 @@
     }
     
     [menuItem setSubmenu:innerMenu];
+    [innerMenu release];
 }
 
 - (void)clickTrackMenuItem:(id)sender {
@@ -136,6 +144,7 @@
         
         if (![_playbackManager playTrack:track error:&error]) {
             //[self.window presentError:error];
+            NSLog(@"error description %@", [error localizedDescription]);
         }
     }
 }
@@ -144,6 +153,12 @@
     [[NSApplication sharedApplication] terminate:nil];
 }
 
+#pragma mark -
+#pragma mark NSMenuDelegate Methods
+
+- (void)menuNeedsUpdate:(NSMenu *)menu {
+    [self updateMenu];
+}
 
 #pragma mark -
 #pragma mark SPSessionDelegate Methods
@@ -170,7 +185,6 @@
 
 -(void)sessionDidChangeMetadata:(SPSession *)aSession {
     NSLog(@"did change metadata");
-    [self updateMenu];
 }
 
 -(void)session:(SPSession *)aSession recievedMessageForUser:(NSString *)aMessage; {
