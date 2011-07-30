@@ -13,7 +13,4 @@
     NSMenu *_statusMenu;
 }
 
-- (IBAction)helloSpotify:(id)sender;
-- (IBAction)showPlaylist:(id)sender;
-
 @end

@@ -11,10 +11,12 @@
 
 @interface repeatifyAppDelegate()
 
-- (void)handlePlaylistFolder:(SPPlaylistFolder *)folder indent:(NSInteger)indent;
-- (void)handlePlaylist:(SPPlaylist *)list indent:(NSInteger)indent;
+- (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
+- (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
 
 - (void)quitRepeatify;
+- (void)updateMenu;
+- (void)clickTrackMenuItem:(id)sender;
 
 @end
 
@@ -30,71 +32,95 @@
                                                         error:nil];
     
     _statusMenu = [[NSMenu alloc] initWithTitle:@"Status Menu"];
-    [_statusMenu addItemWithTitle:@"Hello Spotify" action:@selector(helloSpotify:) keyEquivalent:@""];
+    
+    [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
     [_statusMenu addItem:[NSMenuItem separatorItem]];
+    [_statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
-
     
     NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
     _statusItem = [[statusBar statusItemWithLength:NSSquareStatusItemLength] retain];
     [_statusItem setImage:[NSImage imageNamed:@"Icon"]];
     [_statusItem setMenu:_statusMenu];
     [_statusItem setHighlightMode:YES];
-    [_statusItem setAction:@selector(helloSpotify:)];
     [_statusItem setTarget:self];
 }
 
-- (IBAction)helloSpotify:(id)sender {
-    NSLog(@"%@", sender);
-    NSLog(@"Hello Spotify!");
-    NSLog(@"current user: %@", [[SPSession sharedSession] user].displayName);
-    [_statusMenu removeAllItems];
+- (void)dealloc {
+    [_statusMenu release];
+    [_statusItem release];
     
-    [_statusMenu addItem:[NSMenuItem separatorItem]];
-    [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
-}
-
-- (IBAction)showPlaylist:(id)sender {
-    SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
-    NSArray *playlists = container.playlists;
-    for (id playlist in playlists) {
-        if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
-            [self handlePlaylistFolder:playlist indent:0];
-        }
-        else if ([playlist isKindOfClass:[SPPlaylist class]]) {
-            [self handlePlaylist:playlist indent:0];
-        }
-    }
+    [super dealloc];
 }
 
 # pragma marks - menu actions
 
-- (void)handlePlaylistFolder:(SPPlaylistFolder *)folder indent:(NSInteger)indent {
-    NSMutableString *indentString = [NSMutableString string];
-    for (int i = 0; i < indent; i++) {
-        [indentString appendString:@"---"];
-    }
-    NSLog(@"%@ %@", indentString, folder.name);
-    for (id playlist in folder.playlists) {
+- (void)updateMenu {
+    [_statusMenu removeAllItems];
+    
+    SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
+    NSArray *playlists = container.playlists;
+    for (id playlist in playlists) {
+        NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
+        
         if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
-            [self handlePlaylistFolder:playlist indent:(indent + 1)];
+            [self handlePlaylistFolder:playlist menuItem:innerMenuItem];
         }
         else if ([playlist isKindOfClass:[SPPlaylist class]]) {
-            [self handlePlaylist:playlist indent:(indent + 1)];
+            [self handlePlaylist:playlist menuItem:innerMenuItem];
         }
+        
+        [_statusMenu addItem:innerMenuItem];
+        [innerMenuItem release];
     }
+    
+    [_statusMenu addItem:[NSMenuItem separatorItem]];
+    [_statusMenu addItemWithTitle:@"Update Playlist" action:@selector(updateMenu) keyEquivalent:@""];
+    [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
 }
 
-- (void)handlePlaylist:(SPPlaylist *)list indent:(NSInteger)indent {
-    NSMutableString *indentString = [NSMutableString string];
-    for (int i = 0; i < indent; i++) {
-        [indentString appendString:@"---"];
+- (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
+    [menuItem setTitle:folder.name];
+    NSMenu *innerMenu = [[NSMenu alloc] init];
+
+    for (id playlist in folder.playlists) {
+        NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
+        
+        if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
+            [self handlePlaylistFolder:playlist menuItem:innerMenuItem];
+        }
+        else if ([playlist isKindOfClass:[SPPlaylist class]]) {
+            [self handlePlaylist:playlist menuItem:innerMenuItem];
+        }
+        
+        [innerMenu addItem:innerMenuItem];
+        [innerMenuItem release];
     }
-    NSLog(@"%@ %@", indentString, list.name);
+    
+    [menuItem setSubmenu:innerMenu];
+}
+
+- (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem {
+    [menuItem setTitle:list.name];
+    NSMenu *innerMenu = [[NSMenu alloc] init];
+    
     NSArray *tracks = list.tracks;
     for (SPTrack *track in tracks) {
-        NSLog(@"%@--- %@\t[%@]", indentString, track.name, track.spotifyURL);
+        if (track != nil && track.name != nil && track.spotifyURL != nil) {
+            NSMenuItem *innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+            [innerMenuItem setRepresentedObject:track];
+            [innerMenu addItem:innerMenuItem];
+            [innerMenuItem release];
+        }
     }
+    
+    [menuItem setSubmenu:innerMenu];
+}
+
+- (void)clickTrackMenuItem:(id)sender {
+    NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
+    SPTrack *track = [clickedMenuItem representedObject];
+    NSLog(@"%@", track.spotifyURL);
 }
 
 - (void)quitRepeatify {
@@ -127,6 +153,7 @@
 
 -(void)sessionDidChangeMetadata:(SPSession *)aSession {
     NSLog(@"did change metadata");
+    [self updateMenu];
 }
 
 -(void)session:(SPSession *)aSession recievedMessageForUser:(NSString *)aMessage; {
