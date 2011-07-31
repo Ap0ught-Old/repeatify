@@ -16,6 +16,7 @@
 		29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4913E4BC2200951AB6 /* CoreAudio.framework */; };
 		29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4B13E4BC2900951AB6 /* AudioUnit.framework */; };
 		29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */; };
+		29893A5813E5A88900951AB6 /* album-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 29893A5713E5A88900951AB6 /* album-placeholder.png */; };
 		29C5683113E0DF9D001300AC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C5683013E0DF9D001300AC /* Icon.png */; };
 		29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */; };
 		29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */; };
@@ -60,6 +61,7 @@
 		29893A4B13E4BC2900951AB6 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		29893A4D13E4C27800951AB6 /* RPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPPlaybackManager.h; sourceTree = "<group>"; };
 		29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPPlaybackManager.m; sourceTree = "<group>"; };
+		29893A5713E5A88900951AB6 /* album-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "album-placeholder.png"; path = "resources/album-placeholder.png"; sourceTree = "<group>"; };
 		29C5683013E0DF9D001300AC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = resources/Icon.png; sourceTree = "<group>"; };
 		29E8C99513DDDFDC00CAFBE6 /* repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -136,6 +138,7 @@
 		29C5682E13E0DF8F001300AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29893A5713E5A88900951AB6 /* album-placeholder.png */,
 				29C5683013E0DF9D001300AC /* Icon.png */,
 			);
 			name = Resources;
@@ -265,6 +268,7 @@
 				29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */,
 				29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */,
 				29C5683113E0DF9D001300AC /* Icon.png in Resources */,
+				29893A5813E5A88900951AB6 /* album-placeholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

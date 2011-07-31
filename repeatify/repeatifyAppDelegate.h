@@ -16,4 +16,9 @@
     RPPlaybackManager *_playbackManager;
 }
 
+@property (nonatomic, retain) IBOutlet NSView *nowPlayingView;
+@property (nonatomic, retain) IBOutlet NSImageView *nowPlayingAlbumCoverImageView;
+@property (nonatomic, retain) IBOutlet NSTextField *nowPlayingTrackNameLabel;
+@property (nonatomic, retain) IBOutlet NSTextField *nowPlayingArtistNameLabel;
+
 @end

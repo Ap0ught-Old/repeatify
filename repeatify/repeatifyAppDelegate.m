@@ -13,9 +13,11 @@
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
+- (void)handleNowPlayingView:(NSMenu *)menu;
 
 - (void)updateMenu;
 - (void)clickTrackMenuItem:(id)sender;
+- (void)updateAlbumCoverImage:(id)sender;
 
 - (void)showLoginDialog;
 - (void)logoutUser;
@@ -24,6 +26,8 @@
 @end
 
 @implementation repeatifyAppDelegate
+
+@synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -60,6 +64,9 @@
 
 - (void)updateMenu {
     [_statusMenu removeAllItems];
+    
+    [self handleNowPlayingView:_statusMenu];
+    
     SPUser *user = [[SPSession sharedSession] user];
     
     SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
@@ -98,6 +105,17 @@
     }
     [_statusMenu addItemWithTitle:@"About Repeatify" action:nil keyEquivalent:@""];
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
+}
+
+- (void)handleNowPlayingView:(NSMenu *)menu {
+    if (_playbackManager.currentTrack != nil) {
+        NSMenuItem *nowPlayingMenuItem = [[NSMenuItem alloc] init];
+        nowPlayingMenuItem.view = self.nowPlayingView;
+        [menu addItem:nowPlayingMenuItem];
+        [nowPlayingMenuItem release];
+        
+        [menu addItem:[NSMenuItem separatorItem]];
+    }
 }
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
@@ -158,9 +176,45 @@
         
         NSError *error = nil;
         
-        if (![_playbackManager playTrack:track error:&error]) {
-            //[self.window presentError:error];
+        if ([_playbackManager playTrack:track error:&error]) {
+            [self.nowPlayingArtistNameLabel setStringValue:((SPArtist *)[track.artists objectAtIndex:0]).name];
+            [self.nowPlayingTrackNameLabel setStringValue:track.name];
+            SPImage *cover = track.album.cover;
+            if (cover.isLoaded) {
+                NSImage *coverImage = cover.image;
+                if (coverImage != nil) {
+                    [self.nowPlayingAlbumCoverImageView setImage:coverImage];
+                }
+            }
+            else {
+                [cover beginLoading];
+                [self performSelector:@selector(updateAlbumCoverImage:) withObject:sender afterDelay:0.5];
+                return;
+            }
+        }
+        else {
             NSLog(@"error description %@", [error localizedDescription]);
+        }
+    }
+}
+
+- (void)updateAlbumCoverImage:(id)sender {
+    NSLog(@"greetings from updateAlbumCoverImage:");
+    NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
+    SPTrack *track = [clickedMenuItem representedObject];
+    if (track != nil) {
+        if (track.isLoaded) {
+            SPImage *cover = track.album.cover;
+            if (cover.isLoaded) {
+                NSImage *coverImage = cover.image;
+                if (coverImage != nil) {
+                    [self.nowPlayingAlbumCoverImageView setImage:coverImage];
+                }
+            }
+            else {
+                [self performSelector:@selector(updateAlbumCoverImage:) withObject:sender afterDelay:0.5];
+                return;
+            }
         }
     }
 }
