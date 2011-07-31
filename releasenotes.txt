@@ -1,0 +1,8 @@
+Repeatify v0.9.1 Release Notes
+==============================
+
+- User authentication
+* Display user's playlists
+* Play, pause and repeat a song
+* Display now playing song's information
+* Credits
