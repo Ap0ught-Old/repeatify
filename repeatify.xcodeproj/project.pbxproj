@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		293B726F13E5B97500C5AF2E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726D13E5B97500C5AF2E /* pause.png */; };
+		293B727013E5B97500C5AF2E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726E13E5B97500C5AF2E /* play.png */; };
 		29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */; };
 		29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */; };
 		29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3B13E4BBEF00951AB6 /* NCCommon.m */; };
@@ -43,6 +45,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		293B726D13E5B97500C5AF2E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = resources/pause.png; sourceTree = "<group>"; };
+		293B726E13E5B97500C5AF2E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = resources/play.png; sourceTree = "<group>"; };
 		29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPCircularBuffer.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.h"; sourceTree = SOURCE_ROOT; };
 		29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.m"; sourceTree = SOURCE_ROOT; };
 		29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.h"; sourceTree = SOURCE_ROOT; };
@@ -138,6 +142,8 @@
 		29C5682E13E0DF8F001300AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				293B726D13E5B97500C5AF2E /* pause.png */,
+				293B726E13E5B97500C5AF2E /* play.png */,
 				29893A5713E5A88900951AB6 /* album-placeholder.png */,
 				29C5683013E0DF9D001300AC /* Icon.png */,
 			);
@@ -269,6 +275,8 @@
 				29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */,
 				29C5683113E0DF9D001300AC /* Icon.png in Resources */,
 				29893A5813E5A88900951AB6 /* album-placeholder.png in Resources */,
+				293B726F13E5B97500C5AF2E /* pause.png in Resources */,
+				293B727013E5B97500C5AF2E /* play.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

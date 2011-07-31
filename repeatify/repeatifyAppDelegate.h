@@ -20,5 +20,8 @@
 @property (nonatomic, retain) IBOutlet NSImageView *nowPlayingAlbumCoverImageView;
 @property (nonatomic, retain) IBOutlet NSTextField *nowPlayingTrackNameLabel;
 @property (nonatomic, retain) IBOutlet NSTextField *nowPlayingArtistNameLabel;
+@property (nonatomic, retain) IBOutlet NSButton *nowPlayingControllerButton;
+
+- (IBAction)togglePlayController:(id)sender;
 
 @end

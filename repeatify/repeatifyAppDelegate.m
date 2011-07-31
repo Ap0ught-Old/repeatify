@@ -21,13 +21,14 @@
 
 - (void)showLoginDialog;
 - (void)logoutUser;
+- (void)showAboutPanel;
 - (void)quitRepeatify;
 
 @end
 
 @implementation repeatifyAppDelegate
 
-@synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel;
+@synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -103,7 +104,7 @@
     else {
         [_statusMenu addItemWithTitle:[NSString stringWithFormat:@"Log Out %@", user.displayName] action:@selector(logoutUser) keyEquivalent:@""];
     }
-    [_statusMenu addItemWithTitle:@"About Repeatify" action:nil keyEquivalent:@""];
+    [_statusMenu addItemWithTitle:@"About Repeatify" action:@selector(showAboutPanel) keyEquivalent:@""];
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
 }
 
@@ -189,8 +190,8 @@
             else {
                 [cover beginLoading];
                 [self performSelector:@selector(updateAlbumCoverImage:) withObject:sender afterDelay:0.5];
-                return;
             }
+            self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
         }
         else {
             NSLog(@"error description %@", [error localizedDescription]);
@@ -199,7 +200,6 @@
 }
 
 - (void)updateAlbumCoverImage:(id)sender {
-    NSLog(@"greetings from updateAlbumCoverImage:");
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
     SPTrack *track = [clickedMenuItem representedObject];
     if (track != nil) {
@@ -219,8 +219,23 @@
     }
 }
 
+- (IBAction)togglePlayController:(id)sender {
+    if (_playbackManager.isPlaying) {
+        self.nowPlayingControllerButton.image = [NSImage imageNamed:@"play"];
+        _playbackManager.isPlaying = NO;
+    }
+    else {
+        self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
+        _playbackManager.isPlaying = YES;
+    }
+}
+
 - (void)showLoginDialog {
     NSLog(@"show login dialog");
+}
+
+- (void)showAboutPanel {
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:nil];
 }
 
 - (void)logoutUser {
