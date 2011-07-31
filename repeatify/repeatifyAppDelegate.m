@@ -29,15 +29,11 @@
 @implementation repeatifyAppDelegate
 
 @synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton;
+@synthesize loginDialog, usernameField, passwordField;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[SPSession sharedSession] setDelegate:self];
-    [[SPSession sharedSession] attemptLoginWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size]
-                                                    userAgent:@"com.longyiqi.repeatify"
-                                                     userName:sp_username
-                                                     password:sp_password
-                                                        error:nil];
     
     _playbackManager = [[RPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
     
@@ -230,8 +226,28 @@
     }
 }
 
+- (IBAction)closeLoginDialog:(id)sender {
+    [self.loginDialog orderOut:nil];
+}
+
+- (IBAction)clickLoginButton:(id)sender {
+    if ([self.usernameField.stringValue length] > 0 && [self.passwordField.stringValue length] > 0) {
+        [[SPSession sharedSession] attemptLoginWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size]
+                                                        userAgent:@"com.longyiqi.repeatify"
+                                                         userName:self.usernameField.stringValue
+                                                         password:self.passwordField.stringValue
+                                                            error:nil];
+    }
+    else {
+        NSBeep();
+    }
+}
+
 - (void)showLoginDialog {
-    NSLog(@"show login dialog");
+    self.usernameField.stringValue = @"";
+    self.passwordField.stringValue = @"";
+    [self.loginDialog center];
+    [self.loginDialog orderFront:nil];
 }
 
 - (void)showAboutPanel {
@@ -259,10 +275,12 @@
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
     NSLog(@"login successfully");
+    [self closeLoginDialog:nil];
 }
 
 -(void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error {
     NSLog(@"failed in login");
+    [[NSApplication sharedApplication] presentError:error];
 }
 
 -(void)sessionDidLogOut:(SPSession *)aSession {
