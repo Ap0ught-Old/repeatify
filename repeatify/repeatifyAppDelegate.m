@@ -14,9 +14,12 @@
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
 
-- (void)quitRepeatify;
 - (void)updateMenu;
 - (void)clickTrackMenuItem:(id)sender;
+
+- (void)showLoginDialog;
+- (void)logoutUser;
+- (void)quitRepeatify;
 
 @end
 
@@ -57,10 +60,16 @@
 
 - (void)updateMenu {
     [_statusMenu removeAllItems];
+    SPUser *user = [[SPSession sharedSession] user];
     
     SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
     if (container == nil) {
-        [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
+        if (user == nil) {
+            [_statusMenu addItemWithTitle:@"No Login or Unsupport User Type" action:nil keyEquivalent:@""];
+        }
+        else {
+            [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
+        }
     }
     else {
         NSArray *playlists = container.playlists;
@@ -80,7 +89,14 @@
     }
     
     [_statusMenu addItem:[NSMenuItem separatorItem]];
-    [_statusMenu addItemWithTitle:@"About" action:nil keyEquivalent:@""];
+    
+    if (user == nil) {
+        [_statusMenu addItemWithTitle:@"Login" action:@selector(showLoginDialog) keyEquivalent:@""];
+    }
+    else {
+        [_statusMenu addItemWithTitle:[NSString stringWithFormat:@"Log Out %@", user.displayName] action:@selector(logoutUser) keyEquivalent:@""];
+    }
+    [_statusMenu addItemWithTitle:@"About Repeatify" action:nil keyEquivalent:@""];
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
 }
 
@@ -147,6 +163,15 @@
             NSLog(@"error description %@", [error localizedDescription]);
         }
     }
+}
+
+- (void)showLoginDialog {
+    NSLog(@"show login dialog");
+}
+
+- (void)logoutUser {
+    [[SPSession sharedSession] logout];
+    [self showLoginDialog];
 }
 
 - (void)quitRepeatify {
