@@ -153,8 +153,6 @@
 		29E8C98A13DDDFDC00CAFBE6 = {
 			isa = PBXGroup;
 			children = (
-				29893A4B13E4BC2900951AB6 /* AudioUnit.framework */,
-				29893A4913E4BC2200951AB6 /* CoreAudio.framework */,
 				29E8C99F13DDDFDC00CAFBE6 /* repeatify */,
 				29E8C99813DDDFDC00CAFBE6 /* Frameworks */,
 				29E8C99613DDDFDC00CAFBE6 /* Products */,
@@ -172,6 +170,8 @@
 		29E8C99813DDDFDC00CAFBE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29893A4B13E4BC2900951AB6 /* AudioUnit.framework */,
+				29893A4913E4BC2200951AB6 /* CoreAudio.framework */,
 				29E8C9E613DDE52200CAFBE6 /* libspotify.framework */,
 				29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */,
 				29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */,

@@ -71,7 +71,7 @@
 							<string key="NSCellIdentifier">_NS:3995</string>
 							<reference key="NSControlView" ref="232845655"/>
 							<int key="NSButtonFlags">-2033450753</int>
-							<int key="NSButtonFlags2">135</int>
+							<int key="NSButtonFlags2">7</int>
 							<object class="NSCustomResource" key="NSNormalImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">pause</string>
@@ -93,7 +93,7 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="769609296">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">272630848</int>
+							<int key="NSCellFlags2">272630784</int>
 							<string key="NSContents">Label</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande</string>
@@ -133,7 +133,7 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="495556565">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">4195392</int>
+							<int key="NSCellFlags2">4195328</int>
 							<string key="NSContents">Label</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
