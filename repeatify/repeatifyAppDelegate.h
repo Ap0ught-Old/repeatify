@@ -22,7 +22,7 @@
 @property (nonatomic, retain) IBOutlet NSTextField *nowPlayingArtistNameLabel;
 @property (nonatomic, retain) IBOutlet NSButton *nowPlayingControllerButton;
 
-@property (assign) IBOutlet NSPanel *loginDialog;
+@property (assign) IBOutlet NSWindow *loginDialog;
 @property (assign) IBOutlet NSTextField *usernameField;
 @property (assign) IBOutlet NSSecureTextField *passwordField;
 

@@ -33,6 +33,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self showLoginDialog];
+    
     [[SPSession sharedSession] setDelegate:self];
     
     _playbackManager = [[RPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
@@ -248,6 +250,7 @@
     self.passwordField.stringValue = @"";
     [self.loginDialog center];
     [self.loginDialog orderFront:nil];
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
 }
 
 - (void)showAboutPanel {
@@ -255,6 +258,7 @@
 }
 
 - (void)logoutUser {
+    [_playbackManager playTrack:nil error:nil];
     [[SPSession sharedSession] logout];
     [self showLoginDialog];
 }
