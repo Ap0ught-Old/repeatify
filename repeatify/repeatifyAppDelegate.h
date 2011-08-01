@@ -12,7 +12,7 @@
 typedef enum _RPLoginStatus {
     RPLoginStatusNoUser,
     RPLoginStatusLogging,
-    RPLoginStatusFetchingPlaylist,
+    RPLoginStatusLoadingPlaylist,
     RPLoginStatusLoggedIn
 } RPLoginStatus;
 
@@ -35,7 +35,7 @@ typedef enum _RPLoginStatus {
 @property (nonatomic, retain) IBOutlet NSTextField *usernameField;
 @property (nonatomic, retain) IBOutlet NSSecureTextField *passwordField;
 @property (nonatomic, retain) IBOutlet NSProgressIndicator *loginProgressIndicator;
-
+@property (nonatomic, retain) IBOutlet NSTextField *loginStatusField;
 
 - (IBAction)togglePlayController:(id)sender;
 - (IBAction)closeLoginDialog:(id)sender;

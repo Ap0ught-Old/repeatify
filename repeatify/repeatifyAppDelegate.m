@@ -30,7 +30,7 @@
 @implementation repeatifyAppDelegate
 
 @synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton;
-@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator;
+@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -74,7 +74,7 @@
     if (_loginStatus == RPLoginStatusLogging) {
         [_statusMenu addItemWithTitle:@"Logging In..." action:nil keyEquivalent:@""];
     }
-    if (_loginStatus == RPLoginStatusFetchingPlaylist) {
+    if (_loginStatus == RPLoginStatusLoadingPlaylist) {
         [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
     }
     if (_loginStatus == RPLoginStatusLoggedIn && container != nil) {
@@ -244,6 +244,7 @@
         [self.loginProgressIndicator setHidden:NO];
         [self.loginProgressIndicator startAnimation:self];
         _loginStatus = RPLoginStatusLogging;
+        [self.loginStatusField setStringValue:@"Logging In..."];
     }
     else {
         NSBeep();
@@ -258,6 +259,7 @@
     [self.loginDialog orderFront:nil];
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [self.loginProgressIndicator setHidden:YES];
+    [self.loginStatusField setStringValue:@""];
 }
 
 - (void)didLoggedIn {
@@ -292,13 +294,15 @@
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
     NSLog(@"login successfully");
-    _loginStatus = RPLoginStatusFetchingPlaylist;
+    _loginStatus = RPLoginStatusLoadingPlaylist;
+    [self.loginStatusField setStringValue:@"Loading Playlists..."];
     [self performSelector:@selector(didLoggedIn) withObject:nil afterDelay:5.0];
 }
 
 -(void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error {
     NSLog(@"failed in login");
     _loginStatus = RPLoginStatusNoUser;
+    [self.loginStatusField setStringValue:@""];
     [[NSApplication sharedApplication] presentError:error];
     [self.loginProgressIndicator setHidden:YES];
 }
