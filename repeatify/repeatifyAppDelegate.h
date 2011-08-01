@@ -9,11 +9,20 @@
 #import <Cocoa/Cocoa.h>
 #import "RPPlaybackManager.h"
 
+typedef enum _RPLoginStatus {
+    RPLoginStatusNoUser,
+    RPLoginStatusLogging,
+    RPLoginStatusFetchingPlaylist,
+    RPLoginStatusLoggedIn
+} RPLoginStatus;
+
 @interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate, NSMenuDelegate> {
     NSStatusItem *_statusItem;
     NSMenu *_statusMenu;
     
     RPPlaybackManager *_playbackManager;
+    
+    RPLoginStatus _loginStatus;
 }
 
 @property (nonatomic, retain) IBOutlet NSView *nowPlayingView;
@@ -22,9 +31,10 @@
 @property (nonatomic, retain) IBOutlet NSTextField *nowPlayingArtistNameLabel;
 @property (nonatomic, retain) IBOutlet NSButton *nowPlayingControllerButton;
 
-@property (assign) IBOutlet NSWindow *loginDialog;
-@property (assign) IBOutlet NSTextField *usernameField;
-@property (assign) IBOutlet NSSecureTextField *passwordField;
+@property (nonatomic, retain) IBOutlet NSWindow *loginDialog;
+@property (nonatomic, retain) IBOutlet NSTextField *usernameField;
+@property (nonatomic, retain) IBOutlet NSSecureTextField *passwordField;
+@property (nonatomic, retain) IBOutlet NSProgressIndicator *loginProgressIndicator;
 
 
 - (IBAction)togglePlayController:(id)sender;

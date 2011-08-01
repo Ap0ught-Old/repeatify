@@ -20,6 +20,7 @@
 - (void)updateAlbumCoverImage:(id)sender;
 
 - (void)showLoginDialog;
+- (void)didLoggedIn;
 - (void)logoutUser;
 - (void)showAboutPanel;
 - (void)quitRepeatify;
@@ -29,11 +30,12 @@
 @implementation repeatifyAppDelegate
 
 @synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton;
-@synthesize loginDialog, usernameField, passwordField;
+@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self showLoginDialog];
+    _loginStatus = RPLoginStatusNoUser;
     
     [[SPSession sharedSession] setDelegate:self];
     
@@ -69,15 +71,13 @@
     SPUser *user = [[SPSession sharedSession] user];
     
     SPPlaylistContainer *container = [[SPSession sharedSession] userPlaylists];
-    if (container == nil) {
-        if (user == nil) {
-            [_statusMenu addItemWithTitle:@"No Login or Unsupport User Type" action:nil keyEquivalent:@""];
-        }
-        else {
-            [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
-        }
+    if (_loginStatus == RPLoginStatusLogging) {
+        [_statusMenu addItemWithTitle:@"Logging In..." action:nil keyEquivalent:@""];
     }
-    else {
+    if (_loginStatus == RPLoginStatusFetchingPlaylist) {
+        [_statusMenu addItemWithTitle:@"Loading Playlist..." action:nil keyEquivalent:@""];
+    }
+    if (_loginStatus == RPLoginStatusLoggedIn && container != nil) {
         NSArray *playlists = container.playlists;
         for (id playlist in playlists) {
             NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
@@ -94,7 +94,9 @@
         }
     }
     
-    [_statusMenu addItem:[NSMenuItem separatorItem]];
+    if (_loginStatus != RPLoginStatusNoUser) {
+        [_statusMenu addItem:[NSMenuItem separatorItem]];
+    }
     
     if (user == nil) {
         [_statusMenu addItemWithTitle:@"Login" action:@selector(showLoginDialog) keyEquivalent:@""];
@@ -239,6 +241,9 @@
                                                          userName:self.usernameField.stringValue
                                                          password:self.passwordField.stringValue
                                                             error:nil];
+        [self.loginProgressIndicator setHidden:NO];
+        [self.loginProgressIndicator startAnimation:self];
+        _loginStatus = RPLoginStatusLogging;
     }
     else {
         NSBeep();
@@ -246,11 +251,18 @@
 }
 
 - (void)showLoginDialog {
+    _loginStatus = RPLoginStatusNoUser;
     self.usernameField.stringValue = @"";
     self.passwordField.stringValue = @"";
     [self.loginDialog center];
     [self.loginDialog orderFront:nil];
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+    [self.loginProgressIndicator setHidden:YES];
+}
+
+- (void)didLoggedIn {
+    _loginStatus = RPLoginStatusLoggedIn;
+    [self closeLoginDialog:nil];
 }
 
 - (void)showAboutPanel {
@@ -258,6 +270,7 @@
 }
 
 - (void)logoutUser {
+    _loginStatus = RPLoginStatusNoUser;
     [_playbackManager playTrack:nil error:nil];
     [[SPSession sharedSession] logout];
     [self showLoginDialog];
@@ -279,12 +292,15 @@
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
     NSLog(@"login successfully");
-    [self closeLoginDialog:nil];
+    _loginStatus = RPLoginStatusFetchingPlaylist;
+    [self performSelector:@selector(didLoggedIn) withObject:nil afterDelay:5.0];
 }
 
 -(void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error {
     NSLog(@"failed in login");
+    _loginStatus = RPLoginStatusNoUser;
     [[NSApplication sharedApplication] presentError:error];
+    [self.loginProgressIndicator setHidden:YES];
 }
 
 -(void)sessionDidLogOut:(SPSession *)aSession {
