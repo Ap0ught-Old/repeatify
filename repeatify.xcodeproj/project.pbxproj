@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		293B726F13E5B97500C5AF2E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726D13E5B97500C5AF2E /* pause.png */; };
 		293B727013E5B97500C5AF2E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726E13E5B97500C5AF2E /* play.png */; };
+		294D84A013E8430200DE09A1 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 294D849F13E8430200DE09A1 /* app.icns */; };
+		294D84A913E844F700DE09A1 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
 		29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */; };
 		29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */; };
 		29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3B13E4BBEF00951AB6 /* NCCommon.m */; };
@@ -19,16 +21,13 @@
 		29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4B13E4BC2900951AB6 /* AudioUnit.framework */; };
 		29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */; };
 		29893A5813E5A88900951AB6 /* album-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 29893A5713E5A88900951AB6 /* album-placeholder.png */; };
-		29C5683113E0DF9D001300AC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C5683013E0DF9D001300AC /* Icon.png */; };
 		29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */; };
 		29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */; };
 		29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9A513DDDFDC00CAFBE6 /* main.m */; };
 		29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */; };
 		29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */; };
 		29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */; };
-		29E8C9EB13DDE94300CAFBE6 /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C9E613DDE52200CAFBE6 /* libspotify.framework */; };
 		29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
-		29E8C9ED13DDE94600CAFBE6 /* libspotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29E8C9E613DDE52200CAFBE6 /* libspotify.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,7 +37,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				29E8C9ED13DDE94600CAFBE6 /* libspotify.framework in CopyFiles */,
+				294D84A913E844F700DE09A1 /* CocoaLibSpotify.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,6 +46,7 @@
 /* Begin PBXFileReference section */
 		293B726D13E5B97500C5AF2E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = resources/pause.png; sourceTree = "<group>"; };
 		293B726E13E5B97500C5AF2E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = resources/play.png; sourceTree = "<group>"; };
+		294D849F13E8430200DE09A1 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = app.icns; path = resources/app.icns; sourceTree = "<group>"; };
 		29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPCircularBuffer.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.h"; sourceTree = SOURCE_ROOT; };
 		29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.m"; sourceTree = SOURCE_ROOT; };
 		29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.h"; sourceTree = SOURCE_ROOT; };
@@ -66,8 +66,7 @@
 		29893A4D13E4C27800951AB6 /* RPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPPlaybackManager.h; sourceTree = "<group>"; };
 		29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPPlaybackManager.m; sourceTree = "<group>"; };
 		29893A5713E5A88900951AB6 /* album-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "album-placeholder.png"; path = "resources/album-placeholder.png"; sourceTree = "<group>"; };
-		29C5683013E0DF9D001300AC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = resources/Icon.png; sourceTree = "<group>"; };
-		29E8C99513DDDFDC00CAFBE6 /* repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29E8C99513DDDFDC00CAFBE6 /* Repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29E8C99C13DDDFDC00CAFBE6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		29E8C99D13DDDFDC00CAFBE6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -92,7 +91,6 @@
 			files = (
 				29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */,
 				29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */,
-				29E8C9EB13DDE94300CAFBE6 /* libspotify.framework in Frameworks */,
 				29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */,
 				29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */,
 			);
@@ -142,10 +140,10 @@
 		29C5682E13E0DF8F001300AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				294D849F13E8430200DE09A1 /* app.icns */,
 				293B726D13E5B97500C5AF2E /* pause.png */,
 				293B726E13E5B97500C5AF2E /* play.png */,
 				29893A5713E5A88900951AB6 /* album-placeholder.png */,
-				29C5683013E0DF9D001300AC /* Icon.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -162,7 +160,7 @@
 		29E8C99613DDDFDC00CAFBE6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				29E8C99513DDDFDC00CAFBE6 /* repeatify.app */,
+				29E8C99513DDDFDC00CAFBE6 /* Repeatify.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,7 +234,7 @@
 			);
 			name = repeatify;
 			productName = repeatify;
-			productReference = 29E8C99513DDDFDC00CAFBE6 /* repeatify.app */;
+			productReference = 29E8C99513DDDFDC00CAFBE6 /* Repeatify.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -273,10 +271,10 @@
 				29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */,
 				29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */,
 				29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */,
-				29C5683113E0DF9D001300AC /* Icon.png in Resources */,
 				29893A5813E5A88900951AB6 /* album-placeholder.png in Resources */,
 				293B726F13E5B97500C5AF2E /* pause.png in Resources */,
 				293B727013E5B97500C5AF2E /* play.png in Resources */,
+				294D84A013E8430200DE09A1 /* app.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +391,8 @@
 				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"";
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_NAME = Repeatify;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -411,7 +410,8 @@
 				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"";
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_NAME = Repeatify;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

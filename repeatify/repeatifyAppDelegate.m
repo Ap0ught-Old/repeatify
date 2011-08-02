@@ -43,7 +43,9 @@
     
     NSStatusBar *statusBar = [NSStatusBar systemStatusBar];
     _statusItem = [[statusBar statusItemWithLength:NSSquareStatusItemLength] retain];
-    [_statusItem setImage:[NSImage imageNamed:@"Icon"]];
+    NSImage *statusBarIcon = [NSImage imageNamed:@"app"];
+    [statusBarIcon setSize:NSMakeSize(16, 16)];
+    [_statusItem setImage:statusBarIcon];
     [_statusItem setHighlightMode:YES];
     [_statusItem setTarget:self];
     
