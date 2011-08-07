@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">0</int>
 		<string key="IBDocument.SystemVersion">11A511</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1900</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1617</string>
 		<string key="IBDocument.AppKitVersion">1138</string>
 		<string key="IBDocument.HIToolboxVersion">566.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1900</string>
+			<string key="NS.object.0">1617</string>
 		</object>
 		<object class="NSArray" key="IBDocument.IntegratedClassDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -32,8 +32,11 @@
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
-			<string key="NS.key.0">PluginDependencyRecalculationVersion</string>
-			<integer value="1" key="NS.object.0"/>
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys" id="0">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+			</object>
+			<reference key="dict.values" ref="0"/>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1048">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -200,7 +203,7 @@
 			<object class="NSWindowTemplate" id="854830810">
 				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{385, 279}, {295, 200}}</string>
+				<string key="NSWindowRect">{{385, 279}, {300, 265}}</string>
 				<int key="NSWTFlags">-461896704</int>
 				<string key="NSWindowTitle">Login with your Spotify Account</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -214,7 +217,7 @@
 						<object class="NSTextField" id="687625423">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 166}, {76, 17}}</string>
+							<string key="NSFrame">{{17, 231}, {76, 17}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="462215328"/>
@@ -232,7 +235,7 @@
 						<object class="NSTextField" id="462215328">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{20, 136}, {255, 22}}</string>
+							<string key="NSFrame">{{20, 201}, {260, 22}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="88102842"/>
@@ -264,7 +267,7 @@
 						<object class="NSSecureTextField" id="279197054">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{20, 81}, {255, 22}}</string>
+							<string key="NSFrame">{{20, 146}, {260, 22}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="398223755"/>
@@ -287,7 +290,7 @@
 						<object class="NSTextField" id="88102842">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 111}, {76, 17}}</string>
+							<string key="NSFrame">{{17, 176}, {76, 17}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="279197054"/>
@@ -305,10 +308,10 @@
 						<object class="NSButton" id="499348908">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">265</int>
-							<string key="NSFrame">{{185, 12}, {96, 32}}</string>
+							<string key="NSFrame">{{190, 77}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSNextKeyView" ref="153415196"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="496526884">
 								<int key="NSCellFlags">67239424</int>
@@ -327,7 +330,7 @@
 						<object class="NSButton" id="272944755">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">265</int>
-							<string key="NSFrame">{{89, 12}, {96, 32}}</string>
+							<string key="NSFrame">{{94, 77}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="499348908"/>
@@ -349,7 +352,7 @@
 						<object class="NSBox" id="398223755">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">10</int>
-							<string key="NSFrame">{{20, 70}, {255, 5}}</string>
+							<string key="NSFrame">{{20, 135}, {260, 5}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="65228549"/>
@@ -374,7 +377,7 @@
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">1292</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{20, 48}, {16, 16}}</string>
+							<string key="NSFrame">{{20, 113}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="199895358"/>
@@ -384,7 +387,7 @@
 						<object class="NSTextField" id="199895358">
 							<reference key="NSNextResponder" ref="497670992"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{41, 48}, {237, 17}}</string>
+							<string key="NSFrame">{{41, 113}, {237, 17}}</string>
 							<reference key="NSSuperview" ref="497670992"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="272944755"/>
@@ -401,8 +404,100 @@
 								<reference key="NSTextColor" ref="936174314"/>
 							</object>
 						</object>
+						<object class="NSTextField" id="153415196">
+							<reference key="NSNextResponder" ref="497670992"/>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{17, 48}, {266, 19}}</string>
+							<reference key="NSSuperview" ref="497670992"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="782781069"/>
+							<string key="NSReuseIdentifierKey">_NS:3596</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="302357814">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">272629760</int>
+								<string key="NSContents"> *  Repeatify, as a third-party Spotify application,</string>
+								<object class="NSFont" key="NSSupport" id="435311597">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">11</double>
+									<int key="NSfFlags">16</int>
+								</object>
+								<string key="NSCellIdentifier">_NS:3596</string>
+								<reference key="NSControlView" ref="153415196"/>
+								<reference key="NSBackgroundColor" ref="760118295"/>
+								<object class="NSColor" key="NSTextColor" id="791382708">
+									<int key="NSColorSpace">6</int>
+									<string key="NSCatalogName">System</string>
+									<string key="NSColorName">controlShadowColor</string>
+									<object class="NSColor" key="NSColor">
+										<int key="NSColorSpace">3</int>
+										<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
+									</object>
+								</object>
+							</object>
+						</object>
+						<object class="NSTextField" id="782781069">
+							<reference key="NSNextResponder" ref="497670992"/>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{19, 40}, {266, 14}}</string>
+							<reference key="NSSuperview" ref="497670992"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="14730791"/>
+							<string key="NSReuseIdentifierKey">_NS:3596</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="238603227">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">272629760</int>
+								<string key="NSContents">    requires a Spotify Premium subscription.</string>
+								<reference key="NSSupport" ref="435311597"/>
+								<string key="NSCellIdentifier">_NS:3596</string>
+								<reference key="NSControlView" ref="782781069"/>
+								<reference key="NSBackgroundColor" ref="760118295"/>
+								<reference key="NSTextColor" ref="791382708"/>
+							</object>
+						</object>
+						<object class="NSTextField" id="14730791">
+							<reference key="NSNextResponder" ref="497670992"/>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{18, 26}, {266, 14}}</string>
+							<reference key="NSSuperview" ref="497670992"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="710641890"/>
+							<string key="NSReuseIdentifierKey">_NS:3596</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="128831039">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">272629760</int>
+								<string key="NSContents">** Spotify is the registered trade mark of the                </string>
+								<reference key="NSSupport" ref="435311597"/>
+								<string key="NSCellIdentifier">_NS:3596</string>
+								<reference key="NSControlView" ref="14730791"/>
+								<reference key="NSBackgroundColor" ref="760118295"/>
+								<reference key="NSTextColor" ref="791382708"/>
+							</object>
+						</object>
+						<object class="NSTextField" id="710641890">
+							<reference key="NSNextResponder" ref="497670992"/>
+							<int key="NSvFlags">266</int>
+							<string key="NSFrame">{{18, 10}, {266, 17}}</string>
+							<reference key="NSSuperview" ref="497670992"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
+							<string key="NSReuseIdentifierKey">_NS:3596</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSTextFieldCell" key="NSCell" id="1026047609">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">272629760</int>
+								<string key="NSContents">    Spotify Group.</string>
+								<reference key="NSSupport" ref="435311597"/>
+								<string key="NSCellIdentifier">_NS:3596</string>
+								<reference key="NSControlView" ref="710641890"/>
+								<reference key="NSBackgroundColor" ref="760118295"/>
+								<reference key="NSTextColor" ref="791382708"/>
+							</object>
+						</object>
 					</object>
-					<string key="NSFrameSize">{295, 200}</string>
+					<string key="NSFrameSize">{300, 265}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="687625423"/>
@@ -533,9 +628,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<object class="NSArray" key="object" id="0">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-						</object>
+						<reference key="object" ref="0"/>
 						<reference key="children" ref="1048"/>
 						<nil key="parent"/>
 					</object>
@@ -658,6 +751,10 @@
 							<reference ref="199895358"/>
 							<reference ref="499348908"/>
 							<reference ref="272944755"/>
+							<reference ref="153415196"/>
+							<reference ref="782781069"/>
+							<reference ref="14730791"/>
+							<reference ref="710641890"/>
 						</object>
 						<reference key="parent" ref="854830810"/>
 					</object>
@@ -769,6 +866,62 @@
 						<reference key="object" ref="214262006"/>
 						<reference key="parent" ref="199895358"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">630</int>
+						<reference key="object" ref="153415196"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="302357814"/>
+						</object>
+						<reference key="parent" ref="497670992"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">631</int>
+						<reference key="object" ref="302357814"/>
+						<reference key="parent" ref="153415196"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">632</int>
+						<reference key="object" ref="14730791"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="128831039"/>
+						</object>
+						<reference key="parent" ref="497670992"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">633</int>
+						<reference key="object" ref="128831039"/>
+						<reference key="parent" ref="14730791"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">634</int>
+						<reference key="object" ref="782781069"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="238603227"/>
+						</object>
+						<reference key="parent" ref="497670992"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">635</int>
+						<reference key="object" ref="238603227"/>
+						<reference key="parent" ref="782781069"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">636</int>
+						<reference key="object" ref="710641890"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="1026047609"/>
+						</object>
+						<reference key="parent" ref="497670992"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">637</int>
+						<reference key="object" ref="1026047609"/>
+						<reference key="parent" ref="710641890"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -789,6 +942,8 @@
 					<string>562.IBPluginDependency</string>
 					<string>580.IBPluginDependency</string>
 					<string>581.IBPluginDependency</string>
+					<string>584.IBNSWindowAutoPositionCentersHorizontal</string>
+					<string>584.IBNSWindowAutoPositionCentersVertical</string>
 					<string>584.IBPluginDependency</string>
 					<string>584.NSWindowTemplate.visibleAtLaunch</string>
 					<string>585.IBPluginDependency</string>
@@ -808,6 +963,14 @@
 					<string>599.IBPluginDependency</string>
 					<string>623.IBPluginDependency</string>
 					<string>624.IBPluginDependency</string>
+					<string>630.IBPluginDependency</string>
+					<string>631.IBPluginDependency</string>
+					<string>632.IBPluginDependency</string>
+					<string>633.IBPluginDependency</string>
+					<string>634.IBPluginDependency</string>
+					<string>635.IBPluginDependency</string>
+					<string>636.IBPluginDependency</string>
+					<string>637.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -825,8 +988,18 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="NO"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -858,7 +1031,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">625</int>
+			<int key="maxID">637</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
