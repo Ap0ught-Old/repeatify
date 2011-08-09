@@ -28,6 +28,9 @@
 		29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */; };
 		29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */; };
 		29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
+		29EC923513F0BC03009CE42C /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */; };
+		29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29EC924713F0BCF9009CE42C /* Carbon.framework */; };
+		29EC924C13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EC924B13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -82,6 +85,11 @@
 		29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLibSpotify.framework; path = "../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug/CocoaLibSpotify.framework"; sourceTree = "<group>"; };
 		29E8C9DC13DDE3BB00CAFBE6 /* appkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appkey.h; sourceTree = "<group>"; };
 		29E8C9E613DDE52200CAFBE6 /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libspotify.framework; path = "lib/cocoalibspotify/libspotify-0.0.8-Darwin/libspotify.framework"; sourceTree = "<group>"; };
+		29EC923313F0BC03009CE42C /* SPMediaKeyTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPMediaKeyTap.h; path = lib/spmediakeytap/SPMediaKeyTap.h; sourceTree = SOURCE_ROOT; };
+		29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPMediaKeyTap.m; path = lib/spmediakeytap/SPMediaKeyTap.m; sourceTree = SOURCE_ROOT; };
+		29EC924713F0BCF9009CE42C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		29EC924A13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SPInvocationGrabbing.h"; path = "lib/spinvocationgrabbing/NSObject+SPInvocationGrabbing.h"; sourceTree = SOURCE_ROOT; };
+		29EC924B13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SPInvocationGrabbing.m"; path = "lib/spinvocationgrabbing/NSObject+SPInvocationGrabbing.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */,
 				29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */,
 				29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */,
 				29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */,
@@ -168,6 +177,7 @@
 		29E8C99813DDDFDC00CAFBE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29EC924713F0BCF9009CE42C /* Carbon.framework */,
 				29893A4B13E4BC2900951AB6 /* AudioUnit.framework */,
 				29893A4913E4BC2200951AB6 /* CoreAudio.framework */,
 				29E8C9E613DDE52200CAFBE6 /* libspotify.framework */,
@@ -191,6 +201,7 @@
 		29E8C99F13DDDFDC00CAFBE6 /* repeatify */ = {
 			isa = PBXGroup;
 			children = (
+				29EC923113F0BBD8009CE42C /* SPMediaKeyTap */,
 				29893A3113E4BB8600951AB6 /* Playback Helpers */,
 				29C5682E13E0DF8F001300AC /* Resources */,
 				29893A4D13E4C27800951AB6 /* RPPlaybackManager.h */,
@@ -214,6 +225,25 @@
 				29E8C9DC13DDE3BB00CAFBE6 /* appkey.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		29EC923113F0BBD8009CE42C /* SPMediaKeyTap */ = {
+			isa = PBXGroup;
+			children = (
+				29EC923613F0BC0F009CE42C /* SPInvocationGrabbing */,
+				29EC923313F0BC03009CE42C /* SPMediaKeyTap.h */,
+				29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */,
+			);
+			name = SPMediaKeyTap;
+			sourceTree = "<group>";
+		};
+		29EC923613F0BC0F009CE42C /* SPInvocationGrabbing */ = {
+			isa = PBXGroup;
+			children = (
+				29EC924A13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.h */,
+				29EC924B13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m */,
+			);
+			name = SPInvocationGrabbing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,6 +324,8 @@
 				29893A4713E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m in Sources */,
 				29893A4813E4BBEF00951AB6 /* CoCAAudioUnit.m in Sources */,
 				29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */,
+				29EC923513F0BC03009CE42C /* SPMediaKeyTap.m in Sources */,
+				29EC924C13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

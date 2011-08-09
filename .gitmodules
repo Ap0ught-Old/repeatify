@@ -4,3 +4,9 @@
 [submodule "lib/coca"]
 	path = lib/coca
 	url = git://github.com/iKenndac/CoCA.git
+[submodule "lib/spmediakeytap"]
+	path = lib/spmediakeytap
+	url = https://github.com/nevyn/SPMediaKeyTap.git
+[submodule "lib/spinvocationgrabbing"]
+	path = lib/spinvocationgrabbing
+	url = git://gist.github.com/511181.git

@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "RPPlaybackManager.h"
+#import "SPMediaKeyTap.h"
 
 typedef enum _RPLoginStatus {
     RPLoginStatusNoUser,
@@ -16,10 +17,14 @@ typedef enum _RPLoginStatus {
     RPLoginStatusLoggedIn
 } RPLoginStatus;
 
+@interface RPApplication : NSApplication
+@end
+
 @interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate, NSMenuDelegate> {
     NSStatusItem *_statusItem;
     NSMenu *_statusMenu;
     
+    SPMediaKeyTap *_mediaKeyTap;
     RPPlaybackManager *_playbackManager;
     
     RPLoginStatus _loginStatus;
