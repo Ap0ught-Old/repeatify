@@ -336,7 +336,14 @@
     NSLog(@"failed in login");
     _loginStatus = RPLoginStatusNoUser;
     [self.loginStatusField setStringValue:@""];
-    [[NSApplication sharedApplication] presentError:error];
+    if (error.code == SP_ERROR_USER_BANNED) {
+        [[NSApplication sharedApplication] presentError:[NSError spotifyErrorWithDescription:@"Please upgrade to Spotify Premium account"]];
+    }
+    else {
+        [[NSApplication sharedApplication] presentError:error];
+    }
+    [self.passwordField becomeFirstResponder];
+    
     [self.loginProgressIndicator setHidden:YES];
 }
 
