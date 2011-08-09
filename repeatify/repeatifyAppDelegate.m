@@ -251,13 +251,15 @@
 }
 
 - (IBAction)togglePlayController:(id)sender {
-    if (_playbackManager.isPlaying) {
-        self.nowPlayingControllerButton.image = [NSImage imageNamed:@"play"];
-        _playbackManager.isPlaying = NO;
-    }
-    else {
-        self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
-        _playbackManager.isPlaying = YES;
+    if (_playbackManager.currentTrack != nil) {
+        if (_playbackManager.isPlaying) {
+            self.nowPlayingControllerButton.image = [NSImage imageNamed:@"play"];
+            _playbackManager.isPlaying = NO;
+        }
+        else {
+            self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
+            _playbackManager.isPlaying = YES;
+        }
     }
 }
 
@@ -366,28 +368,29 @@
     int keyCode = (([event data1] & 0xFFFF0000) >> 16);
     int keyFlags = ([event data1] & 0x0000FFFF);
     BOOL keyIsPressed = (((keyFlags & 0xFF00) >> 8)) == 0xA;
-    int keyRepeat = (keyFlags & 0x1);
+    // int keyRepeat = (keyFlags & 0x1);
     
     if (keyIsPressed) {
-        NSString *debugString = [NSString stringWithFormat:@"%@", keyRepeat?@", repeated.":@"."];
+        // NSString *debugString = [NSString stringWithFormat:@"%@", keyRepeat?@", repeated.":@"."];
         switch (keyCode) {
             case NX_KEYTYPE_PLAY:
-                debugString = [@"Play/pause pressed" stringByAppendingString:debugString];
+                // debugString = [@"Play/pause pressed" stringByAppendingString:debugString];
+                [self togglePlayController:self];
                 break;
                 
             case NX_KEYTYPE_FAST:
-                debugString = [@"Ffwd pressed" stringByAppendingString:debugString];
+                // debugString = [@"Ffwd pressed" stringByAppendingString:debugString];
                 break;
                 
             case NX_KEYTYPE_REWIND:
-                debugString = [@"Rewind pressed" stringByAppendingString:debugString];
+                // debugString = [@"Rewind pressed" stringByAppendingString:debugString];
                 break;
             default:
-                debugString = [NSString stringWithFormat:@"Key %d pressed%@", keyCode, debugString];
+                // debugString = [NSString stringWithFormat:@"Key %d pressed%@", keyCode, debugString];
                 break;
                 // More cases defined in hidsystem/ev_keymap.h
         }
-        NSLog(@"%@", debugString);
+        // NSLog(@"%@", debugString);
     }
 }
 
