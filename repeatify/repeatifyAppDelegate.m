@@ -366,6 +366,7 @@
 }
 
 - (void)didLoggedIn {
+    _topList = [[SPToplist alloc] initLocaleToplistWithLocale:nil inSession:[SPSession sharedSession]];
     _loginStatus = RPLoginStatusLoggedIn;
     [self closeLoginDialog:nil];
 }
@@ -382,7 +383,6 @@
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
     NSLog(@"login successfully");
-    _topList = [[SPToplist alloc] initLocaleToplistWithLocale:[[SPSession sharedSession] locale] inSession:[SPSession sharedSession]];
     _loginStatus = RPLoginStatusLoadingPlaylist;
     [self.loginStatusField setStringValue:@"Loading Playlists..."];
     [self performSelector:@selector(didLoggedIn) withObject:nil afterDelay:5.0];
