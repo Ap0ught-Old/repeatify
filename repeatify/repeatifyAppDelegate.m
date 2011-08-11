@@ -45,6 +45,10 @@
 @synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton;
 @synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField;
 
+
+#pragma mark -
+#pragma mark Application Lifecycle
+
 +(void)initialize {
     if([self class] != [repeatifyAppDelegate class]) return;
     
@@ -92,7 +96,22 @@
     [super dealloc];
 }
 
-# pragma marks - menu actions
+
+#pragma mark -
+#pragma mark System Menu Items
+
+- (void)showAboutPanel {
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:nil];
+}
+
+
+- (void)quitRepeatify {
+    [[NSApplication sharedApplication] terminate:nil];
+}
+
+
+#pragma mark -
+#pragma mark Playlist Menu Items
 
 - (void)updateMenu {
     [_statusMenu removeAllItems];
@@ -137,17 +156,6 @@
     }
     [_statusMenu addItemWithTitle:@"About Repeatify" action:@selector(showAboutPanel) keyEquivalent:@""];
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
-}
-
-- (void)handleNowPlayingView:(NSMenu *)menu {
-    if (_playbackManager.currentTrack != nil) {
-        NSMenuItem *nowPlayingMenuItem = [[NSMenuItem alloc] init];
-        nowPlayingMenuItem.view = self.nowPlayingView;
-        [menu addItem:nowPlayingMenuItem];
-        [nowPlayingMenuItem release];
-        
-        [menu addItem:[NSMenuItem separatorItem]];
-    }
 }
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
@@ -200,6 +208,9 @@
     [menuItem setSubmenu:innerMenu];
     [innerMenu release];
 }
+
+#pragma mark -
+#pragma mark Playback
 
 - (void)clickTrackMenuItem:(id)sender {
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
@@ -255,6 +266,17 @@
     }
 }
 
+- (void)handleNowPlayingView:(NSMenu *)menu {
+    if (_playbackManager.currentTrack != nil) {
+        NSMenuItem *nowPlayingMenuItem = [[NSMenuItem alloc] init];
+        nowPlayingMenuItem.view = self.nowPlayingView;
+        [menu addItem:nowPlayingMenuItem];
+        [nowPlayingMenuItem release];
+        
+        [menu addItem:[NSMenuItem separatorItem]];
+    }
+}
+
 - (IBAction)togglePlayController:(id)sender {
     if (_playbackManager.currentTrack != nil) {
         if (_playbackManager.isPlaying) {
@@ -267,6 +289,17 @@
         }
     }
 }
+
+
+#pragma mark -
+#pragma mark NSMenuDelegate Methods
+
+- (void)menuNeedsUpdate:(NSMenu *)menu {
+    [self updateMenu];
+}
+
+#pragma mark -
+#pragma mark Login/Logout methods
 
 - (IBAction)closeLoginDialog:(id)sender {
     [self.loginDialog orderOut:nil];
@@ -305,26 +338,11 @@
     [self closeLoginDialog:nil];
 }
 
-- (void)showAboutPanel {
-    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:nil];
-}
-
 - (void)logoutUser {
     _loginStatus = RPLoginStatusNoUser;
     [_playbackManager playTrack:nil error:nil];
     [[SPSession sharedSession] logout];
     [self showLoginDialog];
-}
-
-- (void)quitRepeatify {
-    [[NSApplication sharedApplication] terminate:nil];
-}
-
-#pragma mark -
-#pragma mark NSMenuDelegate Methods
-
-- (void)menuNeedsUpdate:(NSMenu *)menu {
-    [self updateMenu];
 }
 
 #pragma mark -
