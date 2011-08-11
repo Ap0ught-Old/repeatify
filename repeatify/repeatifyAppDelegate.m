@@ -27,6 +27,8 @@
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
 - (void)handleTopList:(NSMenu *)menu;
+- (void)handleInboxPlaylist:(NSMenu *)menu;
+- (void)handleStarredPlaylist:(NSMenu *)menu;
 - (void)handleNowPlayingView:(NSMenu *)menu;
 
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem;
@@ -155,6 +157,10 @@
             [_statusMenu addItem:innerMenuItem];
             [innerMenuItem release];
         }
+        
+        [_statusMenu addItem:[NSMenuItem separatorItem]];
+        [self handleStarredPlaylist:_statusMenu];
+        [self handleInboxPlaylist:_statusMenu];
         [self handleTopList:_statusMenu];
     }
     
@@ -172,12 +178,28 @@
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
 }
 
+- (void)handleStarredPlaylist:(NSMenu *)menu {
+    NSMenuItem *starredPlaylistItem = [[NSMenuItem alloc] init];
+    [self handlePlaylist:[[SPSession sharedSession] starredPlaylist] menuItem:starredPlaylistItem];
+    [starredPlaylistItem setTitle:@"Starred"];
+    [menu addItem:starredPlaylistItem];
+    [starredPlaylistItem release];    
+}
+
+- (void)handleInboxPlaylist:(NSMenu *)menu {
+    NSMenuItem *inboxPlaylistItem = [[NSMenuItem alloc] init];
+    [self handlePlaylist:[[SPSession sharedSession] inboxPlaylist] menuItem:inboxPlaylistItem];
+    [inboxPlaylistItem setTitle:@"Inbox"];
+    [menu addItem:inboxPlaylistItem];
+    [inboxPlaylistItem release];
+}
+
 - (void)handleTopList:(NSMenu *)menu {
     if (_topList.isLoaded) {
         [menu addItem:[NSMenuItem separatorItem]];
         
         NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
-        [innerMenuItem setTitle:@"Top Tracks"];
+        [innerMenuItem setTitle:@"What's Hot"];
         [self addTracks:_topList.tracks toMenuItem:innerMenuItem];
         [menu addItem:innerMenuItem];
         [innerMenuItem release];
