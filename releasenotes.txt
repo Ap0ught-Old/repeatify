@@ -1,3 +1,11 @@
+Repeatify v0.9.2 Release Notes
+==============================
+
+* New app icon and album placeholder image, designed by Cissy
+* filter unplayable tracks out with gray text color marked
+* Global top lists
+* User's inbox playlist and starred playlist
+
 Repeatify v0.9.1 Release Notes
 ==============================
 
