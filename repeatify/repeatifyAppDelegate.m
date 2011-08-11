@@ -184,7 +184,12 @@
                 innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
             }
             else {
-                innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+                if (track.availableForPlayback) {
+                    innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+                }
+                else {
+                    innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:nil keyEquivalent:@""];
+                }
             }
             [innerMenuItem setRepresentedObject:track];
             [innerMenu addItem:innerMenuItem];
@@ -270,7 +275,7 @@
 - (IBAction)clickLoginButton:(id)sender {
     if ([self.usernameField.stringValue length] > 0 && [self.passwordField.stringValue length] > 0) {
         [[SPSession sharedSession] attemptLoginWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size]
-                                                        userAgent:@"com.longyiqi.repeatify"
+                                                        userAgent:@"com.longyiqi.Repeatify"
                                                          userName:self.usernameField.stringValue
                                                          password:self.passwordField.stringValue
                                                             error:nil];
