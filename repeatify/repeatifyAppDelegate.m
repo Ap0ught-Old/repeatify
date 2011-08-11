@@ -26,7 +26,11 @@
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
+- (void)handleTopList:(NSMenu *)menu;
 - (void)handleNowPlayingView:(NSMenu *)menu;
+
+- (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem;
+- (void)addTrack:(SPTrack *)track toMenu:(NSMenu *)menu;
 
 - (void)updateMenu;
 - (void)clickTrackMenuItem:(id)sender;
@@ -35,6 +39,7 @@
 - (void)showLoginDialog;
 - (void)didLoggedIn;
 - (void)logoutUser;
+
 - (void)showAboutPanel;
 - (void)quitRepeatify;
 
@@ -64,7 +69,8 @@
     
     [[SPSession sharedSession] setDelegate:self];
     
-    _playbackManager = [[RPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];
+    _playbackManager = [[RPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];    
+    _topList = nil;
     _mediaKeyTap = [[SPMediaKeyTap alloc] initWithDelegate:self];
     if([SPMediaKeyTap usesGlobalMediaKeyTap]) {
         [_mediaKeyTap startWatchingMediaKeys];
@@ -92,6 +98,10 @@
     [_statusItem release];
     [_playbackManager release];
     [_mediaKeyTap release];
+    if (_topList != nil) {
+        [_topList release];
+        _topList = nil;
+    }
     
     [super dealloc];
 }
@@ -129,6 +139,9 @@
     }
     if (_loginStatus == RPLoginStatusLoggedIn && container != nil) {
         NSArray *playlists = container.playlists;
+        if ([playlists count] == 0) {
+            [_statusMenu addItemWithTitle:@"No Playlist Found" action:nil keyEquivalent:@""];
+        }
         for (id playlist in playlists) {
             NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
             
@@ -142,6 +155,7 @@
             [_statusMenu addItem:innerMenuItem];
             [innerMenuItem release];
         }
+        [self handleTopList:_statusMenu];
     }
     
     if (_loginStatus != RPLoginStatusNoUser) {
@@ -156,6 +170,18 @@
     }
     [_statusMenu addItemWithTitle:@"About Repeatify" action:@selector(showAboutPanel) keyEquivalent:@""];
     [_statusMenu addItemWithTitle:@"Quit" action:@selector(quitRepeatify) keyEquivalent:@""];
+}
+
+- (void)handleTopList:(NSMenu *)menu {
+    if (_topList.isLoaded) {
+        [menu addItem:[NSMenuItem separatorItem]];
+        
+        NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
+        [innerMenuItem setTitle:@"Top Tracks"];
+        [self addTracks:_topList.tracks toMenuItem:innerMenuItem];
+        [menu addItem:innerMenuItem];
+        [innerMenuItem release];
+    }
 }
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
@@ -182,31 +208,37 @@
 
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem {
     [menuItem setTitle:list.name];
-    NSMenu *innerMenu = [[NSMenu alloc] init];
+    [self addTracks:list.tracks toMenuItem:menuItem];
     
-    NSArray *tracks = list.tracks;
+}
+
+- (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem {
+    NSMenu *innerMenu = [[NSMenu alloc] init];
     for (SPTrack *track in tracks) {
         if (track != nil) {
-            NSMenuItem *innerMenuItem;
-            if (track.name == nil) {
-                innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
-            }
-            else {
-                if (track.availableForPlayback) {
-                    innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
-                }
-                else {
-                    innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:nil keyEquivalent:@""];
-                }
-            }
-            [innerMenuItem setRepresentedObject:track];
-            [innerMenu addItem:innerMenuItem];
-            [innerMenuItem release];
+            [self addTrack:track toMenu:innerMenu];
         }
     }
-    
     [menuItem setSubmenu:innerMenu];
     [innerMenu release];
+}
+
+- (void)addTrack:(SPTrack *)track toMenu:(NSMenu *)menu {
+    NSMenuItem *innerMenuItem;
+    if (track.name == nil) {
+        innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
+    }
+    else {
+        if (track.availableForPlayback) {
+            innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+        }
+        else {
+            innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:nil keyEquivalent:@""];
+        }
+    }
+    [innerMenuItem setRepresentedObject:track];
+    [menu addItem:innerMenuItem];
+    [innerMenuItem release];
 }
 
 #pragma mark -
@@ -350,6 +382,7 @@
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
     NSLog(@"login successfully");
+    _topList = [[SPToplist alloc] initLocaleToplistWithLocale:[[SPSession sharedSession] locale] inSession:[SPSession sharedSession]];
     _loginStatus = RPLoginStatusLoadingPlaylist;
     [self.loginStatusField setStringValue:@"Loading Playlists..."];
     [self performSelector:@selector(didLoggedIn) withObject:nil afterDelay:5.0];

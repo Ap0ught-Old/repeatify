@@ -25,6 +25,7 @@ typedef enum _RPLoginStatus {
     NSMenu *_statusMenu;
     
     SPMediaKeyTap *_mediaKeyTap;
+    SPToplist *_topList;
     RPPlaybackManager *_playbackManager;
     
     RPLoginStatus _loginStatus;

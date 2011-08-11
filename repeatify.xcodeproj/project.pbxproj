@@ -366,7 +366,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 15;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -395,7 +395,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -413,7 +413,7 @@
 		29E8C9B413DDDFDC00CAFBE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug\"",
@@ -432,7 +432,7 @@
 		29E8C9B513DDDFDC00CAFBE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 15;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug\"",
