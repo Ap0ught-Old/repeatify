@@ -413,10 +413,10 @@
 		29E8C9B413DDDFDC00CAFBE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 16;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
-					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug\"",
 					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -432,10 +432,10 @@
 		29E8C9B513DDDFDC00CAFBE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CURRENT_PROJECT_VERSION = 16;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
-					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug\"",
 					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -444,6 +444,7 @@
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = Repeatify;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
