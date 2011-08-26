@@ -35,6 +35,15 @@
 
 #import "SPPlaybackManager.h"
 
+typedef enum _RPRepeatMode {
+    RPRepeatOne,
+    RPRepeatAll,
+    RPRepeatShuffle
+} RPRepeatMode;
+
 @interface RPPlaybackManager : SPPlaybackManager
+
+- (RPRepeatMode)getCurrentRepeatMode;
+- (void)setCurrentRepeatifyMode:(RPRepeatMode)targetMode;
 
 @end

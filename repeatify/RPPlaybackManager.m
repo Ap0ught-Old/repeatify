@@ -38,7 +38,27 @@
 @implementation RPPlaybackManager
 
 -(void)sessionDidEndPlaybackOnMainThread:(SPSession *)aSession {
-    [self seekToTrackPosition:0.0];
+    switch ([self getCurrentRepeatMode]) {
+        case RPRepeatOne:
+            [self seekToTrackPosition:0.0];
+            break;
+        case RPRepeatAll:
+        case RPRepeatShuffle:
+            NSLog(@"To-do!");
+        default:
+            break;
+    }
+}
+
+#pragma mark -
+#pragma mark Playback Management
+
+- (RPRepeatMode)getCurrentRepeatMode {
+    return (RPRepeatMode)[[NSUserDefaults standardUserDefaults] integerForKey:@"RPRepeatMode"];
+}
+
+- (void)setCurrentRepeatifyMode:(RPRepeatMode)targetMode {
+    [[NSUserDefaults standardUserDefaults] setInteger:targetMode forKey:@"RPRepeatMode"];
 }
 
 @end

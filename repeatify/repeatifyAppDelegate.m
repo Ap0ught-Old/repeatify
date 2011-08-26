@@ -51,12 +51,17 @@
 
 @interface repeatifyAppDelegate()
 
+- (void)switchToRepeatOneMode;
+- (void)switchToRepeatAllMode;
+- (void)switchToRepeatShuffleMode;
+
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
 - (void)handleTopList:(NSMenu *)menu;
 - (void)handleInboxPlaylist:(NSMenu *)menu;
 - (void)handleStarredPlaylist:(NSMenu *)menu;
 - (void)handleNowPlayingView:(NSMenu *)menu;
+- (void)handlePlaybackMenuItem:(NSMenu *)menu;
 
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem;
 - (void)addTrack:(SPTrack *)track toMenu:(NSMenu *)menu;
@@ -88,6 +93,7 @@
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
                                                              [SPMediaKeyTap defaultMediaKeyUserBundleIdentifiers], kMediaKeyUsingBundleIdentifiersDefaultsKey,
+                                                             RPRepeatOne, "RPRepeatMode",
                                                              nil]];
 }
 
@@ -156,6 +162,7 @@
     [_statusMenu removeAllItems];
     
     [self handleNowPlayingView:_statusMenu];
+    [self handlePlaybackMenuItem:_statusMenu];
     
     SPUser *user = [[SPSession sharedSession] user];
     
@@ -358,6 +365,59 @@
     }
 }
 
+- (void)handlePlaybackMenuItem:(NSMenu *)menu {
+    if (_playbackManager.currentTrack != nil) {
+        NSMenuItem *playbackMenuItem = [[NSMenuItem alloc] initWithTitle:@"Playback" action:nil keyEquivalent:@""];
+        NSMenu *playbackControlMenu = [[NSMenu alloc] init];
+        
+        [playbackControlMenu addItemWithTitle:@"Play Queue" action:nil keyEquivalent:@""];
+        [playbackControlMenu addItemWithTitle:@"" action:nil keyEquivalent:@""];
+        [playbackControlMenu addItemWithTitle:@"Play/Pause" action:@selector(togglePlayController:) keyEquivalent:@""];
+        [playbackControlMenu addItem:[NSMenuItem separatorItem]];
+        
+        [playbackControlMenu addItemWithTitle:@"Next" action:nil keyEquivalent:@""];
+        [playbackControlMenu addItemWithTitle:@"Previous" action:nil keyEquivalent:@""];
+        [playbackControlMenu addItem:[NSMenuItem separatorItem]];
+        
+        NSMenuItem *repeatOneMenuItem = [[NSMenuItem alloc] initWithTitle:@"Repeat One" action:@selector(switchToRepeatOneMode) keyEquivalent:@""];
+        NSMenuItem *repeatAllMenuItem = [[NSMenuItem alloc] initWithTitle:@"Repeat All" action:@selector(switchToRepeatAllMode) keyEquivalent:@""];
+        NSMenuItem *repeatShuffleMenuItem = [[NSMenuItem alloc] initWithTitle:@"Repeat Shuffle" action:@selector(switchToRepeatShuffleMode) keyEquivalent:@""];
+        
+        switch ([_playbackManager getCurrentRepeatMode]) {
+            case RPRepeatOne:
+                [repeatOneMenuItem setState:NSOnState];
+                break;
+            case RPRepeatAll:
+                [repeatAllMenuItem setState:NSOnState];
+                break;
+            case RPRepeatShuffle:
+                [repeatShuffleMenuItem setState:NSOnState];
+                break;
+            default:
+                break;
+        }
+        
+        [playbackControlMenu addItem:repeatOneMenuItem];
+        [playbackControlMenu addItem:repeatAllMenuItem];
+        [playbackControlMenu addItem:repeatShuffleMenuItem];
+        [repeatOneMenuItem release];
+        [repeatAllMenuItem release];
+        [repeatShuffleMenuItem release];
+        [playbackControlMenu addItem:[NSMenuItem separatorItem]];
+        
+        [playbackControlMenu addItemWithTitle:@"Volume Up" action:nil keyEquivalent:@""];
+        [playbackControlMenu addItemWithTitle:@"Volumn Down" action:nil keyEquivalent:@""];
+        
+        [playbackMenuItem setSubmenu:playbackControlMenu];
+        [menu addItem:playbackMenuItem];
+        
+        [playbackControlMenu release];
+        [playbackMenuItem release];
+        
+        [menu addItem:[NSMenuItem separatorItem]];
+    }
+}
+
 - (IBAction)togglePlayController:(id)sender {
     if (_playbackManager.currentTrack != nil) {
         if (_playbackManager.isPlaying) {
@@ -369,6 +429,21 @@
             _playbackManager.isPlaying = YES;
         }
     }
+}
+
+#pragma mark -
+#pragma mark Playback Management
+
+- (void)switchToRepeatOneMode {
+    [_playbackManager setCurrentRepeatifyMode:RPRepeatOne];
+}
+
+- (void)switchToRepeatAllMode {
+    [_playbackManager setCurrentRepeatifyMode:RPRepeatAll];
+}
+
+- (void)switchToRepeatShuffleMode {
+    [_playbackManager setCurrentRepeatifyMode:RPRepeatShuffle];
 }
 
 
