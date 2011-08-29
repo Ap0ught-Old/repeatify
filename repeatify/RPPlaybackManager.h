@@ -44,6 +44,10 @@ typedef enum _RPRepeatMode {
 @interface RPPlaybackManager : SPPlaybackManager
 
 - (RPRepeatMode)getCurrentRepeatMode;
-- (void)setCurrentRepeatifyMode:(RPRepeatMode)targetMode;
+- (void)toggleRepeatOneMode;
+- (void)toggleRepeatAllMode;
+- (void)toggleRepeatShuffleMode;
+
+- (void)setPlaylist:(NSArray *)newPlaylist;
 
 @end

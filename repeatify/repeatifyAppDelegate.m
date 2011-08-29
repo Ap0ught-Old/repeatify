@@ -435,15 +435,15 @@
 #pragma mark Playback Management
 
 - (void)switchToRepeatOneMode {
-    [_playbackManager setCurrentRepeatifyMode:RPRepeatOne];
+    [_playbackManager toggleRepeatOneMode];
 }
 
 - (void)switchToRepeatAllMode {
-    [_playbackManager setCurrentRepeatifyMode:RPRepeatAll];
+    [_playbackManager toggleRepeatAllMode];
 }
 
 - (void)switchToRepeatShuffleMode {
-    [_playbackManager setCurrentRepeatifyMode:RPRepeatShuffle];
+    [_playbackManager toggleRepeatShuffleMode];
 }
 
 

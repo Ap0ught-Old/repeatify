@@ -35,7 +35,18 @@
 
 #import "RPPlaybackManager.h"
 
+@interface RPPlaybackManager()
+
+@property (nonatomic, retain) NSArray *currentPlaylist;
+@property (nonatomic, retain) NSArray *playQueue;
+
+- (void)setCurrentRepeatifyMode:(RPRepeatMode)targetMode;
+
+@end
+
 @implementation RPPlaybackManager
+
+@synthesize currentPlaylist, playQueue;
 
 -(void)sessionDidEndPlaybackOnMainThread:(SPSession *)aSession {
     switch ([self getCurrentRepeatMode]) {
@@ -59,6 +70,25 @@
 
 - (void)setCurrentRepeatifyMode:(RPRepeatMode)targetMode {
     [[NSUserDefaults standardUserDefaults] setInteger:targetMode forKey:@"RPRepeatMode"];
+}
+
+#pragma mark -
+#pragma mark Play Queue Control
+
+- (void)setPlaylist:(NSArray *)newPlaylist {
+    self.currentPlaylist = newPlaylist;
+}
+
+- (void)toggleRepeatOneMode {
+    [self setCurrentRepeatifyMode:RPRepeatOne];
+}
+
+- (void)toggleRepeatAllMode {
+    [self setCurrentRepeatifyMode:RPRepeatAll];
+}
+
+- (void)toggleRepeatShuffleMode {
+    [self setCurrentRepeatifyMode:RPRepeatShuffle];
 }
 
 @end
