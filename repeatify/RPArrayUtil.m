@@ -1,8 +1,8 @@
 //
-//  RPPlaybackManager.h
+//  RPArrayUtil.m
 //  repeatify
 //
-//  Created by Longyi Qi on 7/30/11.
+//  Created by Longyi Qi on 8/29/11.
 //  Copyright 2011 Longyi Qi. All rights reserved.
 //
 /*
@@ -33,26 +33,19 @@
  OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SPPlaybackManager.h"
+#import "RPArrayUtil.h"
 
-typedef enum _RPRepeatMode {
-    RPRepeatOne,
-    RPRepeatAll,
-    RPRepeatShuffle
-} RPRepeatMode;
+@implementation RPArrayUtil
 
-@interface RPPlaybackManager : SPPlaybackManager
-
-- (RPRepeatMode)getCurrentRepeatMode;
-- (void)toggleRepeatOneMode;
-- (void)toggleRepeatAllMode;
-- (void)toggleRepeatShuffleMode;
-
-- (void)setPlaylist:(NSArray *)newPlaylist;
-- (NSArray *)getCurrentPlayQueue;
-
-- (void)play:(SPTrack *)track;
-- (void)next;
-- (void)previous;
++ (NSArray *)shuffle:(NSArray *)array {
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:[array count]];
+    
+    for (id anObject in array) {
+        NSUInteger randomPos = arc4random() % ([mutableArray count]+1);
+        [mutableArray insertObject:anObject atIndex:randomPos];
+    }
+    
+    return [NSArray arrayWithArray:mutableArray];
+}
 
 @end

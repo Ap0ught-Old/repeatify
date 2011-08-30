@@ -64,11 +64,15 @@
 - (void)handlePlaybackMenuItem:(NSMenu *)menu;
 
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem;
-- (void)addTrack:(SPTrack *)track toMenu:(NSMenu *)menu;
+
+- (void)togglePlayNext:(id)sender;
+- (void)togglePlayPrevious:(id)sender;
 
 - (void)updateMenu;
 - (void)clickTrackMenuItem:(id)sender;
 - (void)updateAlbumCoverImage:(id)sender;
+- (void)updateNowPlayingTrackInformation:(id)sender;
+- (void)updateIsPlayingStatus:(id)sender;
 
 - (void)showLoginDialog;
 - (void)didLoggedIn;
@@ -272,29 +276,32 @@
     NSMenu *innerMenu = [[NSMenu alloc] init];
     for (SPTrack *track in tracks) {
         if (track != nil) {
-            [self addTrack:track toMenu:innerMenu];
+            NSMenuItem *innerMenuItem;
+            if (track.name == nil) {
+                innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
+            }
+            else {
+                if (track.availableForPlayback) {
+                    innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
+                    
+                    if ([track isEqualTo:_playbackManager.currentTrack]) {
+                        [innerMenuItem setState:NSOnState];
+                    }
+                    else {
+                        [innerMenuItem setState:NSOffState];
+                    }
+                }
+                else {
+                    innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:nil keyEquivalent:@""];
+                }
+            }
+            [innerMenuItem setRepresentedObject:[NSArray arrayWithObjects:track, tracks, nil]];
+            [innerMenu addItem:innerMenuItem];
+            [innerMenuItem release];
         }
     }
     [menuItem setSubmenu:innerMenu];
     [innerMenu release];
-}
-
-- (void)addTrack:(SPTrack *)track toMenu:(NSMenu *)menu {
-    NSMenuItem *innerMenuItem;
-    if (track.name == nil) {
-        innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
-    }
-    else {
-        if (track.availableForPlayback) {
-            innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
-        }
-        else {
-            innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:nil keyEquivalent:@""];
-        }
-    }
-    [innerMenuItem setRepresentedObject:track];
-    [menu addItem:innerMenuItem];
-    [innerMenuItem release];
 }
 
 #pragma mark -
@@ -302,41 +309,13 @@
 
 - (void)clickTrackMenuItem:(id)sender {
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
-    SPTrack *track = [clickedMenuItem representedObject];
     
-    if (track != nil) {
-        if (!track.isLoaded) {
-            [self performSelector:@selector(clickTrackMenuItem:) withObject:sender afterDelay:0.5];
-            return;
-        }
-        
-        NSError *error = nil;
-        
-        if ([_playbackManager playTrack:track error:&error]) {
-            [self.nowPlayingArtistNameLabel setStringValue:((SPArtist *)[track.artists objectAtIndex:0]).name];
-            [self.nowPlayingTrackNameLabel setStringValue:track.name];
-            SPImage *cover = track.album.cover;
-            if (cover.isLoaded) {
-                NSImage *coverImage = cover.image;
-                if (coverImage != nil) {
-                    [self.nowPlayingAlbumCoverImageView setImage:coverImage];
-                }
-            }
-            else {
-                [cover beginLoading];
-                [self performSelector:@selector(updateAlbumCoverImage:) withObject:sender afterDelay:0.5];
-            }
-            self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
-        }
-        else {
-            NSLog(@"error description %@", [error localizedDescription]);
-        }
-    }
+    [_playbackManager play:[[clickedMenuItem representedObject] objectAtIndex:0]];
+    [_playbackManager setPlaylist:[[clickedMenuItem representedObject] objectAtIndex:1]];
 }
 
 - (void)updateAlbumCoverImage:(id)sender {
-    NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
-    SPTrack *track = [clickedMenuItem representedObject];
+    SPTrack *track = (SPTrack *)sender;
     if (track != nil) {
         if (track.isLoaded) {
             SPImage *cover = track.album.cover;
@@ -347,15 +326,45 @@
                 }
             }
             else {
-                [self performSelector:@selector(updateAlbumCoverImage:) withObject:sender afterDelay:0.5];
+                [self performSelector:@selector(updateAlbumCoverImage:) withObject:track afterDelay:0.5];
                 return;
             }
         }
     }
 }
 
+- (void)updateNowPlayingTrackInformation:(id)sender {
+    SPTrack *track = _playbackManager.currentTrack;
+    [self.nowPlayingArtistNameLabel setStringValue:((SPArtist *)[track.artists objectAtIndex:0]).name];
+    [self.nowPlayingTrackNameLabel setStringValue:track.name];
+    SPImage *cover = track.album.cover;
+    if (cover.isLoaded) {
+        NSImage *coverImage = cover.image;
+        if (coverImage != nil) {
+            [self.nowPlayingAlbumCoverImageView setImage:coverImage];
+        }
+    }
+    else {
+        [self.nowPlayingAlbumCoverImageView setImage:[NSImage imageNamed:@"album-placeholder"]];
+        [cover beginLoading];
+        [self performSelector:@selector(updateAlbumCoverImage:) withObject:track afterDelay:0.5];
+    }
+    
+    [self updateIsPlayingStatus:self];
+}
+
+- (void)updateIsPlayingStatus:(id)sender {
+    if (_playbackManager.isPlaying) {
+        self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
+    }
+    else {
+        self.nowPlayingControllerButton.image = [NSImage imageNamed:@"play"];
+    }
+}
+
 - (void)handleNowPlayingView:(NSMenu *)menu {
     if (_playbackManager.currentTrack != nil) {
+        [self updateNowPlayingTrackInformation:self];
         NSMenuItem *nowPlayingMenuItem = [[NSMenuItem alloc] init];
         nowPlayingMenuItem.view = self.nowPlayingView;
         [menu addItem:nowPlayingMenuItem];
@@ -370,13 +379,18 @@
         NSMenuItem *playbackMenuItem = [[NSMenuItem alloc] initWithTitle:@"Playback" action:nil keyEquivalent:@""];
         NSMenu *playbackControlMenu = [[NSMenu alloc] init];
         
-        [playbackControlMenu addItemWithTitle:@"Play Queue" action:nil keyEquivalent:@""];
+        NSMenuItem *playQueueMenuItem = [[NSMenuItem alloc] init];
+        [playQueueMenuItem setTitle:@"Play Queue"];
+        [self addTracks:[_playbackManager getCurrentPlayQueue] toMenuItem:playQueueMenuItem];
+        [playbackControlMenu addItem:playQueueMenuItem];
+        [playQueueMenuItem release];
+        
         [playbackControlMenu addItemWithTitle:@"" action:nil keyEquivalent:@""];
         [playbackControlMenu addItemWithTitle:@"Play/Pause" action:@selector(togglePlayController:) keyEquivalent:@""];
         [playbackControlMenu addItem:[NSMenuItem separatorItem]];
         
-        [playbackControlMenu addItemWithTitle:@"Next" action:nil keyEquivalent:@""];
-        [playbackControlMenu addItemWithTitle:@"Previous" action:nil keyEquivalent:@""];
+        [playbackControlMenu addItemWithTitle:@"Next" action:@selector(togglePlayNext:) keyEquivalent:@""];
+        [playbackControlMenu addItemWithTitle:@"Previous" action:@selector(togglePlayPrevious:) keyEquivalent:@""];
         [playbackControlMenu addItem:[NSMenuItem separatorItem]];
         
         NSMenuItem *repeatOneMenuItem = [[NSMenuItem alloc] initWithTitle:@"Repeat One" action:@selector(switchToRepeatOneMode) keyEquivalent:@""];
@@ -420,15 +434,17 @@
 
 - (IBAction)togglePlayController:(id)sender {
     if (_playbackManager.currentTrack != nil) {
-        if (_playbackManager.isPlaying) {
-            self.nowPlayingControllerButton.image = [NSImage imageNamed:@"play"];
-            _playbackManager.isPlaying = NO;
-        }
-        else {
-            self.nowPlayingControllerButton.image = [NSImage imageNamed:@"pause"];
-            _playbackManager.isPlaying = YES;
-        }
+        _playbackManager.isPlaying = !_playbackManager.isPlaying;
+        [self updateIsPlayingStatus:self];
     }
+}
+
+- (void)togglePlayNext:(id)sender {
+    [_playbackManager next];
+}
+
+- (void)togglePlayPrevious:(id)sender {
+    [_playbackManager previous];
 }
 
 #pragma mark -
@@ -567,10 +583,12 @@
                 
             case NX_KEYTYPE_FAST:
                 // debugString = [@"Ffwd pressed" stringByAppendingString:debugString];
+                [self togglePlayNext:self];
                 break;
                 
             case NX_KEYTYPE_REWIND:
                 // debugString = [@"Rewind pressed" stringByAppendingString:debugString];
+                [self togglePlayPrevious:self];
                 break;
             default:
                 // debugString = [NSString stringWithFormat:@"Key %d pressed%@", keyCode, debugString];

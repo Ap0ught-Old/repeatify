@@ -34,6 +34,7 @@
  */
 
 #import "RPPlaybackManager.h"
+#import "RPArrayUtil.h"
 
 @interface RPPlaybackManager()
 
@@ -55,7 +56,7 @@
             break;
         case RPRepeatAll:
         case RPRepeatShuffle:
-            NSLog(@"To-do!");
+            [self next];
         default:
             break;
     }
@@ -72,23 +73,89 @@
     [[NSUserDefaults standardUserDefaults] setInteger:targetMode forKey:@"RPRepeatMode"];
 }
 
+- (NSArray *)getCurrentPlayQueue {
+    return self.playQueue;
+}
+
+#pragma mark -
+#pragma mark Play Control
+
+- (void)play:(SPTrack *)track {
+    if (track != nil) {
+        if (!track.isLoaded) {
+            [self performSelector:@selector(play:) withObject:track afterDelay:0.5];
+            return;
+        }
+        
+        NSError *error = nil;
+        if (![self playTrack:track error:&error]) {
+            NSLog(@"error description %@", [error localizedDescription]);
+        }
+        
+        SPImage *cover = track.album.cover;
+        if (!cover.isLoaded) {
+            [cover beginLoading];
+        }
+    }
+}
+
+- (void)next {
+    NSInteger index = [self.playQueue indexOfObject:self.currentTrack];
+    NSInteger nextIndex = (index + 1) % [self.playQueue count];
+    [self play:[self.playQueue objectAtIndex:nextIndex]];
+}
+
+- (void)previous {
+    NSInteger index = [self.playQueue indexOfObject:self.currentTrack];
+    NSInteger previousIndex = index - 1;
+    if (previousIndex == -1) {
+        previousIndex = [self.playQueue count] - 1;
+    }
+    [self play:[self.playQueue objectAtIndex:previousIndex]];
+}
+
 #pragma mark -
 #pragma mark Play Queue Control
 
 - (void)setPlaylist:(NSArray *)newPlaylist {
-    self.currentPlaylist = newPlaylist;
+    if (![newPlaylist isEqualToArray:self.playQueue]) {
+        self.currentPlaylist = newPlaylist;
+    }
+    switch ([self getCurrentRepeatMode]) {
+        case RPRepeatOne:
+            [self toggleRepeatOneMode];
+            break;
+        case RPRepeatAll:
+            [self toggleRepeatAllMode];
+            break;
+        case RPRepeatShuffle:
+            if (![newPlaylist isEqualToArray:self.playQueue]) {
+                [self toggleRepeatShuffleMode];
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)toggleRepeatOneMode {
     [self setCurrentRepeatifyMode:RPRepeatOne];
+    self.playQueue = self.currentPlaylist;
 }
 
 - (void)toggleRepeatAllMode {
     [self setCurrentRepeatifyMode:RPRepeatAll];
+    self.playQueue = self.currentPlaylist;
 }
 
 - (void)toggleRepeatShuffleMode {
     [self setCurrentRepeatifyMode:RPRepeatShuffle];
+    
+    NSMutableArray *mutablePlaylist = [[RPArrayUtil shuffle:self.currentPlaylist] mutableCopy];
+    [mutablePlaylist removeObject:self.currentTrack];
+    [mutablePlaylist insertObject:self.currentTrack atIndex:0];
+    self.playQueue = mutablePlaylist;
+    [mutablePlaylist release];
 }
 
 @end

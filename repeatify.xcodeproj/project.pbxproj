@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29036ABE140C418A00130182 /* RPArrayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 29036ABD140C418A00130182 /* RPArrayUtil.m */; };
 		293B726F13E5B97500C5AF2E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726D13E5B97500C5AF2E /* pause.png */; };
 		293B727013E5B97500C5AF2E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726E13E5B97500C5AF2E /* play.png */; };
 		294D84A013E8430200DE09A1 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 294D849F13E8430200DE09A1 /* app.icns */; };
@@ -47,6 +48,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		29036ABC140C418A00130182 /* RPArrayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPArrayUtil.h; sourceTree = "<group>"; };
+		29036ABD140C418A00130182 /* RPArrayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPArrayUtil.m; sourceTree = "<group>"; };
 		293B726D13E5B97500C5AF2E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = resources/pause.png; sourceTree = "<group>"; };
 		293B726E13E5B97500C5AF2E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = resources/play.png; sourceTree = "<group>"; };
 		294D849F13E8430200DE09A1 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = app.icns; path = resources/app.icns; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */,
 				29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */,
 				29E8C9A013DDDFDC00CAFBE6 /* Supporting Files */,
+				29036ABC140C418A00130182 /* RPArrayUtil.h */,
+				29036ABD140C418A00130182 /* RPArrayUtil.m */,
 			);
 			path = repeatify;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */,
 				29EC923513F0BC03009CE42C /* SPMediaKeyTap.m in Sources */,
 				29EC924C13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m in Sources */,
+				29036ABE140C418A00130182 /* RPArrayUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +372,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 22;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -395,7 +401,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 22;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -414,7 +420,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
 					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
@@ -433,7 +439,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 22;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
 					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
