@@ -12,6 +12,8 @@
 		293B727013E5B97500C5AF2E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726E13E5B97500C5AF2E /* play.png */; };
 		294D84A013E8430200DE09A1 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 294D849F13E8430200DE09A1 /* app.icns */; };
 		294D84A913E844F700DE09A1 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
+		29875827140DB37200387F9D /* volume-decrease.png in Resources */ = {isa = PBXBuildFile; fileRef = 29875825140DB37200387F9D /* volume-decrease.png */; };
+		29875828140DB37200387F9D /* volume-increase.png in Resources */ = {isa = PBXBuildFile; fileRef = 29875826140DB37200387F9D /* volume-increase.png */; };
 		29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */; };
 		29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */; };
 		29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3B13E4BBEF00951AB6 /* NCCommon.m */; };
@@ -53,6 +55,8 @@
 		293B726D13E5B97500C5AF2E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = resources/pause.png; sourceTree = "<group>"; };
 		293B726E13E5B97500C5AF2E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = resources/play.png; sourceTree = "<group>"; };
 		294D849F13E8430200DE09A1 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = app.icns; path = resources/app.icns; sourceTree = "<group>"; };
+		29875825140DB37200387F9D /* volume-decrease.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-decrease.png"; path = "resources/volume-decrease.png"; sourceTree = "<group>"; };
+		29875826140DB37200387F9D /* volume-increase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-increase.png"; path = "resources/volume-increase.png"; sourceTree = "<group>"; };
 		29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPCircularBuffer.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.h"; sourceTree = SOURCE_ROOT; };
 		29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.m"; sourceTree = SOURCE_ROOT; };
 		29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.h"; sourceTree = SOURCE_ROOT; };
@@ -152,6 +156,8 @@
 		29C5682E13E0DF8F001300AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29875825140DB37200387F9D /* volume-decrease.png */,
+				29875826140DB37200387F9D /* volume-increase.png */,
 				294D849F13E8430200DE09A1 /* app.icns */,
 				293B726D13E5B97500C5AF2E /* pause.png */,
 				293B726E13E5B97500C5AF2E /* play.png */,
@@ -310,6 +316,8 @@
 				293B726F13E5B97500C5AF2E /* pause.png in Resources */,
 				293B727013E5B97500C5AF2E /* play.png in Resources */,
 				294D84A013E8430200DE09A1 /* app.icns in Resources */,
+				29875827140DB37200387F9D /* volume-decrease.png in Resources */,
+				29875828140DB37200387F9D /* volume-increase.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
