@@ -311,13 +311,14 @@
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
     
     [_playbackManager play:[[clickedMenuItem representedObject] objectAtIndex:0]];
-    NSMutableArray *filteredPlaylist = [[clickedMenuItem representedObject] objectAtIndex:1];
-    for (SPTrack *track in filteredPlaylist) {
-        if (!track.availableForPlayback) {
-            [filteredPlaylist removeObject:track];
+    NSMutableArray *filteredPlaylist = [[NSMutableArray alloc] init];
+    for (SPTrack *track in [[clickedMenuItem representedObject] objectAtIndex:1]) {
+        if (track.availableForPlayback) {
+            [filteredPlaylist addObject:track];
         }
     }
     [_playbackManager setPlaylist:filteredPlaylist];
+    [filteredPlaylist release];
 }
 
 - (void)updateAlbumCoverImage:(id)sender {
@@ -425,14 +426,10 @@
         [repeatShuffleMenuItem release];
         [playbackControlMenu addItem:[NSMenuItem separatorItem]];
         
-        [self.volumeControlSlider setDoubleValue:_playbackManager.volume];
         NSMenuItem *volumeControlMenuItem = [[NSMenuItem alloc] init];
         volumeControlMenuItem.view = self.volumeControlView;
         [playbackControlMenu addItem:volumeControlMenuItem];
         [volumeControlMenuItem release];
-
-        [playbackControlMenu addItemWithTitle:@"Volume Up" action:nil keyEquivalent:@""];
-        [playbackControlMenu addItemWithTitle:@"Volumn Down" action:nil keyEquivalent:@""];
         
         [playbackMenuItem setSubmenu:playbackControlMenu];
         [menu addItem:playbackMenuItem];
@@ -478,7 +475,7 @@
 
 
 #pragma mark -
-#pragma mark NSMenuDelegate Methods
+#pragma mark Volume Change Methods
 
 - (IBAction)volumeChanged:(id)sender {
     NSSlider *volumeSlider = (NSSlider *)sender;
