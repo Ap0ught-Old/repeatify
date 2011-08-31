@@ -63,6 +63,8 @@ typedef enum _RPLoginStatus {
 @property (nonatomic, retain) IBOutlet NSTextField *nowPlayingTrackNameLabel;
 @property (nonatomic, retain) IBOutlet NSTextField *nowPlayingArtistNameLabel;
 @property (nonatomic, retain) IBOutlet NSButton *nowPlayingControllerButton;
+@property (nonatomic, retain) IBOutlet NSView *volumeControlView;
+@property (nonatomic, retain) IBOutlet NSSlider *volumeControlSlider;
 
 @property (nonatomic, retain) IBOutlet NSWindow *loginDialog;
 @property (nonatomic, retain) IBOutlet NSTextField *usernameField;
@@ -71,6 +73,7 @@ typedef enum _RPLoginStatus {
 @property (nonatomic, retain) IBOutlet NSTextField *loginStatusField;
 
 - (IBAction)togglePlayController:(id)sender;
+- (IBAction)volumeChanged:(id)sender;
 - (IBAction)closeLoginDialog:(id)sender;
 - (IBAction)clickLoginButton:(id)sender;
 

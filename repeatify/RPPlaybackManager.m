@@ -106,12 +106,17 @@
 }
 
 - (void)previous {
-    NSInteger index = [self.playQueue indexOfObject:self.currentTrack];
-    NSInteger previousIndex = index - 1;
-    if (previousIndex == -1) {
-        previousIndex = [self.playQueue count] - 1;
+    if (self.trackPosition < 5.0) {
+        NSInteger index = [self.playQueue indexOfObject:self.currentTrack];
+        NSInteger previousIndex = index - 1;
+        if (previousIndex == -1) {
+            previousIndex = [self.playQueue count] - 1;
+        }
+        [self play:[self.playQueue objectAtIndex:previousIndex]];
     }
-    [self play:[self.playQueue objectAtIndex:previousIndex]];
+    else {
+        [self seekToTrackPosition:0.0];
+    }
 }
 
 #pragma mark -

@@ -85,7 +85,7 @@
 
 @implementation repeatifyAppDelegate
 
-@synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton;
+@synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton, volumeControlView, volumeControlSlider;
 @synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField;
 
 
@@ -419,6 +419,12 @@
         [repeatShuffleMenuItem release];
         [playbackControlMenu addItem:[NSMenuItem separatorItem]];
         
+        [self.volumeControlSlider setDoubleValue:_playbackManager.volume];
+        NSMenuItem *volumeControlMenuItem = [[NSMenuItem alloc] init];
+        volumeControlMenuItem.view = self.volumeControlView;
+        [playbackControlMenu addItem:volumeControlMenuItem];
+        [volumeControlMenuItem release];
+
         [playbackControlMenu addItemWithTitle:@"Volume Up" action:nil keyEquivalent:@""];
         [playbackControlMenu addItemWithTitle:@"Volumn Down" action:nil keyEquivalent:@""];
         
@@ -441,10 +447,12 @@
 
 - (void)togglePlayNext:(id)sender {
     [_playbackManager next];
+    [self updateMenu];
 }
 
 - (void)togglePlayPrevious:(id)sender {
     [_playbackManager previous];
+    [self updateMenu];
 }
 
 #pragma mark -
@@ -460,6 +468,15 @@
 
 - (void)switchToRepeatShuffleMode {
     [_playbackManager toggleRepeatShuffleMode];
+}
+
+
+#pragma mark -
+#pragma mark NSMenuDelegate Methods
+
+- (IBAction)volumeChanged:(id)sender {
+    NSSlider *volumeSlider = (NSSlider *)sender;
+    _playbackManager.volume = volumeSlider.doubleValue;
 }
 
 
@@ -522,14 +539,12 @@
 #pragma mark SPSessionDelegate Methods
 
 -(void)sessionDidLoginSuccessfully:(SPSession *)aSession {
-    NSLog(@"login successfully");
     _loginStatus = RPLoginStatusLoadingPlaylist;
     [self.loginStatusField setStringValue:@"Loading Playlists..."];
     [self performSelector:@selector(didLoggedIn) withObject:nil afterDelay:5.0];
 }
 
 -(void)session:(SPSession *)aSession didFailToLoginWithError:(NSError *)error {
-    NSLog(@"failed in login");
     _loginStatus = RPLoginStatusNoUser;
     [self.loginStatusField setStringValue:@""];
     if (error.code == SP_ERROR_USER_BANNED) {
