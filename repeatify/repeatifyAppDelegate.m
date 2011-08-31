@@ -311,7 +311,13 @@
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
     
     [_playbackManager play:[[clickedMenuItem representedObject] objectAtIndex:0]];
-    [_playbackManager setPlaylist:[[clickedMenuItem representedObject] objectAtIndex:1]];
+    NSMutableArray *filteredPlaylist = [[clickedMenuItem representedObject] objectAtIndex:1];
+    for (SPTrack *track in filteredPlaylist) {
+        if (!track.availableForPlayback) {
+            [filteredPlaylist removeObject:track];
+        }
+    }
+    [_playbackManager setPlaylist:filteredPlaylist];
 }
 
 - (void)updateAlbumCoverImage:(id)sender {
