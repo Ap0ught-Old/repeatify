@@ -1,3 +1,20 @@
+Updated Features
+==============================
+
+Repeatify is simplest player to repeat Spotify music
+
+* Repeat your favorite Spotify tracks by one click
+* Sync your Spotify playlist, inbox and starred playlist
+* Control play, pause, rewind, and fast forward by media keys
+
+Repeatify v0.9.4 Release Notes
+==============================
+
+* Play queue supported
+* Multiple repeat mode, repeat one, repeat all, and shuffle repeat
+* Application level volume control
+* Play/Pause, fast forward, and rewind within play queue by menu item and media keys
+
 Repeatify v0.9.2 Release Notes
 ==============================
 
