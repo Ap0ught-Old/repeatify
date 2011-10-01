@@ -11,11 +11,15 @@
 		293B726F13E5B97500C5AF2E /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726D13E5B97500C5AF2E /* pause.png */; };
 		293B727013E5B97500C5AF2E /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 293B726E13E5B97500C5AF2E /* play.png */; };
 		294D84A013E8430200DE09A1 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 294D849F13E8430200DE09A1 /* app.icns */; };
-		294D84A913E844F700DE09A1 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
+		2965ACF11436F4B6007D3657 /* CocoaLibSpotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2965ACF01436F4B6007D3657 /* CocoaLibSpotify.framework */; };
+		2965ACF21436F4BC007D3657 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2965ACF01436F4B6007D3657 /* CocoaLibSpotify.framework */; };
+		2965ACF71436F5EF007D3657 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2965ACF41436F5EF007D3657 /* SPCircularBuffer.m */; };
+		2965ACF81436F5EF007D3657 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2965ACF61436F5EF007D3657 /* SPPlaybackManager.m */; };
+		2965ACFB1436F603007D3657 /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2965ACFA1436F603007D3657 /* NSObject+SPInvocationGrabbing.m */; };
+		2965AD001436F646007D3657 /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2965ACFF1436F646007D3657 /* libspotify.framework */; };
+		2965AD011436F78F007D3657 /* libspotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2965ACFF1436F646007D3657 /* libspotify.framework */; };
 		29875827140DB37200387F9D /* volume-decrease.png in Resources */ = {isa = PBXBuildFile; fileRef = 29875825140DB37200387F9D /* volume-decrease.png */; };
 		29875828140DB37200387F9D /* volume-increase.png in Resources */ = {isa = PBXBuildFile; fileRef = 29875826140DB37200387F9D /* volume-increase.png */; };
-		29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */; };
-		29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */; };
 		29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3B13E4BBEF00951AB6 /* NCCommon.m */; };
 		29893A4613E4BBEF00951AB6 /* CoCAAudioDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A3F13E4BBEF00951AB6 /* CoCAAudioDevice.m */; };
 		29893A4713E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4113E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m */; };
@@ -30,10 +34,8 @@
 		29E8C9AA13DDDFDC00CAFBE6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */; };
 		29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */; };
 		29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */; };
-		29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */; };
 		29EC923513F0BC03009CE42C /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */; };
 		29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29EC924713F0BCF9009CE42C /* Carbon.framework */; };
-		29EC924C13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EC924B13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,7 +45,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				294D84A913E844F700DE09A1 /* CocoaLibSpotify.framework in CopyFiles */,
+				2965ACF11436F4B6007D3657 /* CocoaLibSpotify.framework in CopyFiles */,
+				2965AD011436F78F007D3657 /* libspotify.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,12 +58,16 @@
 		293B726D13E5B97500C5AF2E /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = resources/pause.png; sourceTree = "<group>"; };
 		293B726E13E5B97500C5AF2E /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = resources/play.png; sourceTree = "<group>"; };
 		294D849F13E8430200DE09A1 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = app.icns; path = resources/app.icns; sourceTree = "<group>"; };
+		2965ACF01436F4B6007D3657 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLibSpotify.framework; path = framework/CocoaLibSpotify.framework; sourceTree = "<group>"; };
+		2965ACF31436F5EF007D3657 /* SPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPCircularBuffer.h; path = lib/playbackhelpers/SPCircularBuffer.h; sourceTree = SOURCE_ROOT; };
+		2965ACF41436F5EF007D3657 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = lib/playbackhelpers/SPCircularBuffer.m; sourceTree = SOURCE_ROOT; };
+		2965ACF51436F5EF007D3657 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = lib/playbackhelpers/SPPlaybackManager.h; sourceTree = SOURCE_ROOT; };
+		2965ACF61436F5EF007D3657 /* SPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlaybackManager.m; path = lib/playbackhelpers/SPPlaybackManager.m; sourceTree = SOURCE_ROOT; };
+		2965ACF91436F603007D3657 /* NSObject+SPInvocationGrabbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SPInvocationGrabbing.h"; path = "lib/spmediakeytap/SPInvocationGrabbing/NSObject+SPInvocationGrabbing.h"; sourceTree = SOURCE_ROOT; };
+		2965ACFA1436F603007D3657 /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SPInvocationGrabbing.m"; path = "lib/spmediakeytap/SPInvocationGrabbing/NSObject+SPInvocationGrabbing.m"; sourceTree = SOURCE_ROOT; };
+		2965ACFF1436F646007D3657 /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libspotify.framework; path = framework/CocoaLibSpotify.framework/Versions/A/Frameworks/libspotify.framework; sourceTree = "<group>"; };
 		29875825140DB37200387F9D /* volume-decrease.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-decrease.png"; path = "resources/volume-decrease.png"; sourceTree = "<group>"; };
 		29875826140DB37200387F9D /* volume-increase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "volume-increase.png"; path = "resources/volume-increase.png"; sourceTree = "<group>"; };
-		29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPCircularBuffer.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.h"; sourceTree = SOURCE_ROOT; };
-		29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPCircularBuffer.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPCircularBuffer.m"; sourceTree = SOURCE_ROOT; };
-		29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPPlaybackManager.h; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.h"; sourceTree = SOURCE_ROOT; };
-		29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPPlaybackManager.m; path = "lib/cocoalibspotify/Sample Projects/SimplePlayer/SimplePlayer/SPPlaybackManager.m"; sourceTree = SOURCE_ROOT; };
 		29893A3A13E4BBEF00951AB6 /* NCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NCCommon.h; path = lib/coca/NCCommon.h; sourceTree = SOURCE_ROOT; };
 		29893A3B13E4BBEF00951AB6 /* NCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NCCommon.m; path = lib/coca/NCCommon.m; sourceTree = SOURCE_ROOT; };
 		29893A3D13E4BBEF00951AB6 /* CoCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoCA.h; sourceTree = "<group>"; };
@@ -89,14 +96,10 @@
 		29E8C9AB13DDDFDC00CAFBE6 /* repeatifyAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = repeatifyAppDelegate.h; sourceTree = "<group>"; };
 		29E8C9AC13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = repeatifyAppDelegate.m; sourceTree = "<group>"; };
 		29E8C9AF13DDDFDC00CAFBE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLibSpotify.framework; path = "../../Library/Developer/Xcode/DerivedData/repeatify-bduzbsczeotvxffreawzutbpzyjs/Build/Products/Debug/CocoaLibSpotify.framework"; sourceTree = "<group>"; };
 		29E8C9DC13DDE3BB00CAFBE6 /* appkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appkey.h; sourceTree = "<group>"; };
-		29E8C9E613DDE52200CAFBE6 /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libspotify.framework; path = "lib/cocoalibspotify/libspotify-0.0.8-Darwin/libspotify.framework"; sourceTree = "<group>"; };
 		29EC923313F0BC03009CE42C /* SPMediaKeyTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPMediaKeyTap.h; path = lib/spmediakeytap/SPMediaKeyTap.h; sourceTree = SOURCE_ROOT; };
 		29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPMediaKeyTap.m; path = lib/spmediakeytap/SPMediaKeyTap.m; sourceTree = SOURCE_ROOT; };
 		29EC924713F0BCF9009CE42C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		29EC924A13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SPInvocationGrabbing.h"; path = "lib/spinvocationgrabbing/NSObject+SPInvocationGrabbing.h"; sourceTree = SOURCE_ROOT; };
-		29EC924B13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SPInvocationGrabbing.m"; path = "lib/spinvocationgrabbing/NSObject+SPInvocationGrabbing.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,9 +109,10 @@
 			files = (
 				29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */,
 				29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */,
+				2965ACF21436F4BC007D3657 /* CocoaLibSpotify.framework in Frameworks */,
 				29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */,
-				29E8C9EC13DDE94300CAFBE6 /* CocoaLibSpotify.framework in Frameworks */,
 				29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */,
+				2965AD001436F646007D3657 /* libspotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,11 +122,11 @@
 		29893A3113E4BB8600951AB6 /* Playback Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2965ACF31436F5EF007D3657 /* SPCircularBuffer.h */,
+				2965ACF41436F5EF007D3657 /* SPCircularBuffer.m */,
+				2965ACF51436F5EF007D3657 /* SPPlaybackManager.h */,
+				2965ACF61436F5EF007D3657 /* SPPlaybackManager.m */,
 				29893A3913E4BBCF00951AB6 /* CoCA */,
-				29893A3313E4BBCA00951AB6 /* SPCircularBuffer.h */,
-				29893A3413E4BBCA00951AB6 /* SPCircularBuffer.m */,
-				29893A3513E4BBCA00951AB6 /* SPPlaybackManager.h */,
-				29893A3613E4BBCA00951AB6 /* SPPlaybackManager.m */,
 			);
 			name = "Playback Helpers";
 			sourceTree = "<group>";
@@ -169,6 +173,7 @@
 		29E8C98A13DDDFDC00CAFBE6 = {
 			isa = PBXGroup;
 			children = (
+				2965ACF01436F4B6007D3657 /* CocoaLibSpotify.framework */,
 				29E8C99F13DDDFDC00CAFBE6 /* repeatify */,
 				29E8C99813DDDFDC00CAFBE6 /* Frameworks */,
 				29E8C99613DDDFDC00CAFBE6 /* Products */,
@@ -186,11 +191,10 @@
 		29E8C99813DDDFDC00CAFBE6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2965ACFF1436F646007D3657 /* libspotify.framework */,
 				29EC924713F0BCF9009CE42C /* Carbon.framework */,
 				29893A4B13E4BC2900951AB6 /* AudioUnit.framework */,
 				29893A4913E4BC2200951AB6 /* CoreAudio.framework */,
-				29E8C9E613DDE52200CAFBE6 /* libspotify.framework */,
-				29E8C9D813DDE2E500CAFBE6 /* CocoaLibSpotify.framework */,
 				29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */,
 				29E8C99B13DDDFDC00CAFBE6 /* Other Frameworks */,
 			);
@@ -251,8 +255,8 @@
 		29EC923613F0BC0F009CE42C /* SPInvocationGrabbing */ = {
 			isa = PBXGroup;
 			children = (
-				29EC924A13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.h */,
-				29EC924B13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m */,
+				2965ACF91436F603007D3657 /* NSObject+SPInvocationGrabbing.h */,
+				2965ACFA1436F603007D3657 /* NSObject+SPInvocationGrabbing.m */,
 			);
 			name = SPInvocationGrabbing;
 			sourceTree = "<group>";
@@ -330,16 +334,16 @@
 			files = (
 				29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */,
 				29E8C9AD13DDDFDC00CAFBE6 /* repeatifyAppDelegate.m in Sources */,
-				29893A3713E4BBCA00951AB6 /* SPCircularBuffer.m in Sources */,
-				29893A3813E4BBCA00951AB6 /* SPPlaybackManager.m in Sources */,
 				29893A4513E4BBEF00951AB6 /* NCCommon.m in Sources */,
 				29893A4613E4BBEF00951AB6 /* CoCAAudioDevice.m in Sources */,
 				29893A4713E4BBEF00951AB6 /* CoCAAudioHardwareSystem.m in Sources */,
 				29893A4813E4BBEF00951AB6 /* CoCAAudioUnit.m in Sources */,
 				29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */,
 				29EC923513F0BC03009CE42C /* SPMediaKeyTap.m in Sources */,
-				29EC924C13F0BD13009CE42C /* NSObject+SPInvocationGrabbing.m in Sources */,
 				29036ABE140C418A00130182 /* RPArrayUtil.m in Sources */,
+				2965ACF71436F5EF007D3657 /* SPCircularBuffer.m in Sources */,
+				2965ACF81436F5EF007D3657 /* SPPlaybackManager.m in Sources */,
+				2965ACFB1436F603007D3657 /* NSObject+SPInvocationGrabbing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,12 +434,12 @@
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 24;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
-					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
+					"\"$(SRCROOT)/framework\"",
+					"\"$(SRCROOT)/framework/CocoaLibSpotify.framework/Versions/A/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = Repeatify;
@@ -449,12 +453,12 @@
 				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CURRENT_PROJECT_VERSION = 24;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"",
-					"\"$(SRCROOT)/lib/cocoalibspotify/libspotify-0.0.8-Darwin\"",
+					"\"$(SRCROOT)/framework\"",
+					"\"$(SRCROOT)/framework/CocoaLibSpotify.framework/Versions/A/Frameworks\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "repeatify/repeatify-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SOURCE_ROOT)/lib/CocoaLibSpotify\"";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "repeatify/repeatify-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = Repeatify;
