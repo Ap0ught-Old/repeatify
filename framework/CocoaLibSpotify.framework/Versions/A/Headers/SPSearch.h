@@ -33,7 +33,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** This class performs a search on the Spotify catalogue available to the given session, returning tracks, albums and artists. */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPSession;
 

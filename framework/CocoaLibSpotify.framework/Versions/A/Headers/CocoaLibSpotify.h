@@ -31,6 +31,28 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import <Foundation/Foundation.h>
+#import "CocoaLibSpotifyPlatformImports.h"
+
+#if TARGET_OS_IPHONE
+
+#import "SPErrorExtensions.h"
+#import "SPURLExtensions.h"
+#import "SPAlbum.h"
+#import "SPArtist.h"
+#import "SPImage.h"
+#import "SPUser.h"
+#import "SPSession.h"
+#import "SPPlaylist.h"
+#import "SPPlaylistFolder.h"
+#import "SPTrack.h"
+#import "SPPlaylistContainer.h"
+#import "SPSearch.h"
+#import "SPPostTracksToInboxOperation.h"
+#import "SPArtistBrowse.h"
+#import "SPAlbumBrowse.h"
+#import "SPToplist.h"
+
+#else
 
 #import <CocoaLibSpotify/SPErrorExtensions.h>
 #import <CocoaLibSpotify/SPURLExtensions.h>
@@ -49,4 +71,4 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <CocoaLibSpotify/SPAlbumBrowse.h>
 #import <CocoaLibSpotify/SPToplist.h>
 
-#import <libspotify/api.h>
+#endif

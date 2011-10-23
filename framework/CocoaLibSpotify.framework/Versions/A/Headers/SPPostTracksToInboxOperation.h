@@ -33,7 +33,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** This class provides functionality for sending tracks to another Spotify user. */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPSession;
 @protocol SPPostTracksToInboxOperationDelegate;

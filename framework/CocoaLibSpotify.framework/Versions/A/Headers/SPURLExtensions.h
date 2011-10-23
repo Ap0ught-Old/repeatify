@@ -33,7 +33,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** Adds convenience methods to NSURL for working with Spotify URLs. */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @interface NSURL (SPURLExtensions)
 
