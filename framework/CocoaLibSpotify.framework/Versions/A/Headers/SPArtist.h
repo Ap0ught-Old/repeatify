@@ -36,11 +36,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @interface SPArtist : NSObject {
     @private
     sp_artist *artist;
+    NSURL *spotifyURL;
 }
 
 ///----------------------------
@@ -99,5 +100,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /** Returns the artist's name. */
 @property (readonly) NSString *name;
+
+/** Returns the Spotify URI of the track, for example: `spotify:artist:12EtLdLfJ41vUOoVzPZIUy` */
+@property (readonly, copy) NSURL *spotifyURL;
 
 @end

@@ -101,6 +101,12 @@
                                                              nil]];
 }
 
+-(void)applicationWillFinishLaunching:(NSNotification *)notification {
+    [SPSession initializeSharedSessionWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size] 
+                                               userAgent:@"com.longyiqi.Repeatify"
+                                                   error:nil];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self showLoginDialog];
@@ -499,11 +505,9 @@
 
 - (IBAction)clickLoginButton:(id)sender {
     if ([self.usernameField.stringValue length] > 0 && [self.passwordField.stringValue length] > 0) {
-        [[SPSession sharedSession] attemptLoginWithApplicationKey:[NSData dataWithBytes:&g_appkey length:g_appkey_size]
-                                                        userAgent:@"com.longyiqi.Repeatify"
-                                                         userName:self.usernameField.stringValue
-                                                         password:self.passwordField.stringValue
-                                                            error:nil];
+        [[SPSession sharedSession] attemptLoginWithUserName:self.usernameField.stringValue
+                                                   password:self.passwordField.stringValue
+                                        rememberCredentials:NO];
         [self.loginProgressIndicator setHidden:NO];
         [self.loginProgressIndicator startAnimation:self];
         _loginStatus = RPLoginStatusLogging;

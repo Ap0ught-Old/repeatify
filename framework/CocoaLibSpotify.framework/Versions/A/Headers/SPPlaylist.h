@@ -32,8 +32,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /** This class represents a list of tracks, be it a user's starred list, inbox, or a traditional "playlist". */
 
-#import <Cocoa/Cocoa.h>
-#import <libspotify/api.h>
+#import <Foundation/Foundation.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPUser;
 @class SPImage;
@@ -161,9 +161,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** Returns the Spotify URI of the playlist profile, for example: `spotify:user:sarnesjo:playlist:3p2c7mmML3fIUh5fcZ8Hcq` */
 @property (readonly, copy) NSURL *spotifyURL;
 
-// Removed until subscribers aren't broken in libspotify.
-// /** Returns the subscribers to the playlist as an array of Spotify usernames. */
-// @property (readonly, retain) NSArray *subscribers;
+/** Returns the subscribers to the playlist as an array of Spotify usernames. */
+@property (readonly, retain) NSArray *subscribers;
 
 ///----------------------------
 /// @name Metadata

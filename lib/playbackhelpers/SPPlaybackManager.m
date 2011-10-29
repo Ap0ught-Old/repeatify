@@ -35,12 +35,24 @@
 @interface SPPlaybackManager ()
 
 @property (nonatomic, readwrite, retain) SPCircularBuffer *audioBuffer;
-@property (nonatomic, readwrite, retain) CoCAAudioUnit *audioUnit;
-
 @property (nonatomic, readwrite, retain) SPTrack *currentTrack;
 @property (nonatomic, readwrite, retain) SPSession *playbackSession;
 
 @property (readwrite) NSTimeInterval trackPosition;
+
+// Core Audio
+-(BOOL)setupCoreAudioWithAudioFormat:(const sp_audioformat *)audioFormat error:(NSError **)err;
+-(void)teardownCoreAudio;
+-(void)startAudioUnit;
+-(void)stopAudioUnit;
+-(void)applyVolumeToAudioUnit:(double)vol;
+
+static OSStatus SPPlaybackManagerAudioUnitRenderDelegateCallback(void *inRefCon,
+                                                                 AudioUnitRenderActionFlags *ioActionFlags,
+                                                                 const AudioTimeStamp *inTimeStamp,
+                                                                 UInt32 inBusNumber,
+                                                                 UInt32 inNumberFrames,
+                                                                 AudioBufferList *ioData);
 
 @end
 
@@ -52,26 +64,46 @@ static NSUInteger const kMaximumBytesInBuffer = 44100 * 2 * 2 * 0.5; // 0.5 Seco
 -(id)initWithPlaybackSession:(SPSession *)aSession {
     
     if ((self = [super init])) {
+        
         self.playbackSession = aSession;
 		self.playbackSession.playbackDelegate = self;
-		
 		self.volume = 1.0;
-		
 		self.audioBuffer = [[[SPCircularBuffer alloc] initWithMaximumLength:kMaximumBytesInBuffer] autorelease];
-		self.audioUnit = [CoCAAudioUnit defaultOutputUnit];
-		[self.audioUnit setRenderDelegate:self];
-		[self.audioUnit setup];
 		
 		[self addObserver:self
-			   forKeyPath:@"playbackSession.isPlaying"
+			   forKeyPath:@"playbackSession.playing"
 				  options:0
 				  context:kSPPlaybackManagerKVOContext];
+        
+        // We pre-allocate the NSInvocation for setting the current playback time for performance reasons.
+        // See SPPlaybackManagerAudioUnitRenderDelegateCallback() for more.
+        SEL incrementTrackPositionSelector = @selector(incrementTrackPositionWithFrameCount:);
+		incrementTrackPositionMethodSignature = [[SPPlaybackManager instanceMethodSignatureForSelector:incrementTrackPositionSelector] retain];
+		incrementTrackPositionInvocation = [[NSInvocation invocationWithMethodSignature:incrementTrackPositionMethodSignature] retain];
+		[incrementTrackPositionInvocation setSelector:incrementTrackPositionSelector];
+		[incrementTrackPositionInvocation setTarget:self];
     }
     return self;
 }
 
+-(void)dealloc {
+	
+	[self removeObserver:self forKeyPath:@"playbackSession.playing"];
+	
+	self.playbackSession.playbackDelegate = nil;
+	self.playbackSession = nil;
+	self.currentTrack = nil;
+	
+	[self teardownCoreAudio];
+	self.audioBuffer = nil;
+    
+    [incrementTrackPositionInvocation release];
+	[incrementTrackPositionMethodSignature release];
+	
+    [super dealloc];
+}
+
 @synthesize audioBuffer;
-@synthesize audioUnit;
 @synthesize playbackSession;
 @synthesize trackPosition;
 @synthesize volume;
@@ -83,8 +115,7 @@ static NSUInteger const kMaximumBytesInBuffer = 44100 * 2 * 2 * 0.5; // 0.5 Seco
 	
 	[self.playbackSession setPlaying:NO];
 	[self.playbackSession unloadPlayback];
-	[self.audioUnit stop];
-	self.audioUnit = nil;
+	[self teardownCoreAudio];
 	
 	[self.audioBuffer clear];
 		
@@ -104,7 +135,7 @@ static NSUInteger const kMaximumBytesInBuffer = 44100 * 2 * 2 * 0.5; // 0.5 Seco
 }
 
 +(NSSet *)keyPathsForValuesAffectingIsPlaying {
-	return [NSSet setWithObject:@"playbackSession.isPlaying"];
+	return [NSSet setWithObject:@"playbackSession.playing"];
 }
 
 -(BOOL)isPlaying {
@@ -117,11 +148,12 @@ static NSUInteger const kMaximumBytesInBuffer = 44100 * 2 * 2 * 0.5; // 0.5 Seco
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
-	if ([keyPath isEqualToString:@"playbackSession.isPlaying"] && context == kSPPlaybackManagerKVOContext) {
+	if ([keyPath isEqualToString:@"playbackSession.playing"] && context == kSPPlaybackManagerKVOContext) {
         if (self.playbackSession.isPlaying) {
-			[self.audioUnit start];
+			[self startAudioUnit];
 		} else {
-			[self.audioUnit stop];
+            // Explicitly stop the audio unit, otherwise it'll continue playing audio from the buffers it has.
+			[self stopAudioUnit];
 		}
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -150,31 +182,220 @@ static NSUInteger const kMaximumBytesInBuffer = 44100 * 2 * 2 * 0.5; // 0.5 Seco
 }
 
 -(void)sessionDidEndPlaybackOnMainThread:(SPSession *)aSession {
-	
-	self.currentTrack = nil;
-	
+	self.currentTrack = nil;	
 }
 
 #pragma mark -
-#pragma mark Audio Processing
+#pragma mark Core Audio Setup
+
+-(void)applyVolumeToAudioUnit:(double)vol {
+    
+    if (outputAudioUnit == NULL)
+        return;
+    
+    // Set the volume parameter of our audio unit.
+    // On the Mac, a logarithmic curve sounds best.
+    AudioUnitSetParameter(outputAudioUnit,
+                          kHALOutputParam_Volume,
+                          kAudioUnitScope_Output,
+                          0,
+                          (vol * vol * vol),
+                          0);
+}
+
+-(void)startAudioUnit {
+    if (outputAudioUnit == NULL)
+        return;
+    
+    // Start the audio unit. Until this is called, no sound will happen.
+    AudioOutputUnitStart(outputAudioUnit);
+}
+
+-(void)stopAudioUnit {
+    if (outputAudioUnit == NULL)
+        return;
+    
+    // Stop the audio unit immdediately, ceasing sound output 
+    // even if Core Audio has audio left in its buffer.
+    AudioOutputUnitStop(outputAudioUnit);
+}
+
+-(void)teardownCoreAudio {
+    if (outputAudioUnit == NULL)
+        return;
+    
+    // Tear down the audio init properly.
+    [self stopAudioUnit];
+    AudioUnitUninitialize(outputAudioUnit);
+	
+#if TARGET_OS_IPHONE
+	AudioComponentInstanceDispose(outputAudioUnit);
+	[[AVAudioSession sharedInstance] setActive:NO error:nil];
+#else 
+    CloseComponent(outputAudioUnit);
+#endif
+    outputAudioUnit = NULL;
+}
+
+static inline void fillWithError(NSError **mayBeAnError, NSString *localizedDescription, int code) {
+    
+    if (mayBeAnError == NULL)
+        return;
+    
+    *mayBeAnError = [NSError errorWithDomain:@"com.spplaybackmanager.coreaudio"
+                                        code:code
+                                    userInfo:localizedDescription ? [NSDictionary dictionaryWithObject:localizedDescription
+                                                                                                forKey:NSLocalizedDescriptionKey]
+                                            : nil];
+    
+}
+
+-(BOOL)setupCoreAudioWithAudioFormat:(const sp_audioformat *)audioFormat error:(NSError **)err {
+    
+    if (outputAudioUnit != NULL)
+        [self teardownCoreAudio];
+	
+	// Set up some platform-specific things
+#if TARGET_OS_IPHONE
+	
+	NSError *error = nil;
+	BOOL success = YES;
+	success &= [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+	success &= [[AVAudioSession sharedInstance] setActive:YES error:&error];
+	
+	if (!success && err != NULL) {
+		*err = error;
+		return NO;
+	}
+	
+	AudioComponentDescription desc;
+	desc.componentSubType = kAudioUnitSubType_RemoteIO;
+#else
+	ComponentDescription desc;
+	desc.componentSubType = kAudioUnitSubType_DefaultOutput;
+#endif
+	
+	// Find the system default audio output by creating a component description and
+    // searching for attached output components that match. If no components are connected
+    // (like, say, a G4 Cube with no audio devices) this will fail.
+    desc.componentType = kAudioUnitType_Output;
+    desc.componentManufacturer = kAudioUnitManufacturer_Apple;
+    desc.componentFlags = 0;
+    desc.componentFlagsMask = 0;
+    
+    // Find a component that meets the description's specifications
+#if TARGET_OS_IPHONE
+	AudioComponent comp = AudioComponentFindNext(NULL, &desc);
+#else
+	Component comp = FindNextComponent(NULL, &desc);
+#endif
+	
+    if (comp == NULL) {
+        fillWithError(err, @"Could not find a component that matches our specifications", -1);
+        return NO;
+    }
+	
+    // Attempt to gain access to the audio component.
+    OSErr status = noErr;
+	
+#if TARGET_OS_IPHONE
+	status = AudioComponentInstanceNew(comp, &outputAudioUnit);
+#else
+	status = OpenAComponent(comp, &outputAudioUnit);
+#endif
+	
+    if (status != noErr) {
+        fillWithError(err, @"Couldn't find a device that matched our criteria", status);
+        return NO;
+    }
+    
+    // Tell Core Audio about libspotify's audio format. By default, Core Audio wants
+    // non-interleaved, floating-point PCM which is pretty much opposite to what 
+    // libspotify gives us. Specifying the format this way prevents us having to manually
+    // convert the data later.
+    AudioStreamBasicDescription outputFormat;
+    outputFormat.mSampleRate = (float)audioFormat->sample_rate;
+    outputFormat.mFormatID = kAudioFormatLinearPCM;
+    outputFormat.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked | kAudioFormatFlagsNativeEndian;
+    outputFormat.mBytesPerPacket = audioFormat->channels * sizeof(SInt16);
+    outputFormat.mFramesPerPacket = 1;
+    outputFormat.mBytesPerFrame = outputFormat.mBytesPerPacket;
+    outputFormat.mChannelsPerFrame = audioFormat->channels;
+    outputFormat.mBitsPerChannel = 16;
+    outputFormat.mReserved = 0;
+    
+    status = AudioUnitSetProperty(outputAudioUnit,
+                                  kAudioUnitProperty_StreamFormat,
+                                  kAudioUnitScope_Input,
+                                  0,
+                                  &outputFormat,
+                                  sizeof(outputFormat));
+    if (status != noErr) {
+        fillWithError(err, @"Couldn't set output format", status);
+        return NO;
+    }
+    
+    // Set the render callback, which will be called by Core Audio when it requires data
+    // for its buffers.
+    AURenderCallbackStruct callback;
+    callback.inputProc = SPPlaybackManagerAudioUnitRenderDelegateCallback;
+    callback.inputProcRefCon = self;
+    
+    status = AudioUnitSetProperty(outputAudioUnit,
+                                  kAudioUnitProperty_SetRenderCallback,
+                                  kAudioUnitScope_Input,
+                                  0,
+                                  &callback,
+                                  sizeof(callback));
+    if (status != noErr) {
+        fillWithError(err, @"Couldn't set render callback", status);
+        return NO;
+    }
+    
+    // Initialize the audio unit with the applied settings.
+    status = AudioUnitInitialize(outputAudioUnit);
+    if (status != noErr) {
+        fillWithError(err, @"Couldn't initialize audio unit", status);
+        return NO;
+    }
+    
+    // Start audio output (since we create the audio unit on-demand) and set the volume.
+    [self startAudioUnit];
+    [self applyVolumeToAudioUnit:self.volume];
+    
+    return YES;
+}
+
+#pragma mark -
+#pragma mark Receiving Audio From CocoaLibSpotify
 
 -(NSInteger)session:(SPSession *)aSession shouldDeliverAudioFrames:(const void *)audioFrames ofCount:(NSInteger)frameCount format:(const sp_audioformat *)audioFormat {
 	
+    // This is called by CocoaLibSpotify when there's audio data to be played. Since Core Audio uses callbacks as well to 
+    // fetch data, we store the data in an intermediate buffer.
+	
 	if (frameCount == 0) {
-		
 		// If this happens (frameCount of 0), the user has seeked the track somewhere (or similar). 
 		// Clear audio buffers and wait for more data.
-		
 		[self.audioBuffer clear];
 		return 0;
 	}
+    
+    if (outputAudioUnit == NULL) {
+        // Setup Core Audio if it hasn't been set up yet.
+        NSError *error = nil;
+        if (![self setupCoreAudioWithAudioFormat:audioFormat error:&error]) {
+            NSLog(@"[%@ %@]: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), error);
+            return 0;
+        }
+    }
 	
 	if (self.audioBuffer.length == 0)
 		[(NSObject *)self.delegate performSelectorOnMainThread:@selector(playbackManagerWillStartPlayingAudio:)
 													withObject:self
 												 waitUntilDone:YES];
 	
-	NSUInteger frameByteSize = sizeof(sint16) * audioFormat->channels;
+	NSUInteger frameByteSize = sizeof(SInt16) * audioFormat->channels;
 	NSUInteger dataLength = frameCount * frameByteSize;
 	
 	if ((self.audioBuffer.maximumLength - self.audioBuffer.length) < dataLength) {
@@ -185,104 +406,61 @@ static NSUInteger const kMaximumBytesInBuffer = 44100 * 2 * 2 * 0.5; // 0.5 Seco
 	
 	[self.audioBuffer attemptAppendData:audioFrames ofLength:dataLength];
 	
-	if (self.audioUnit == nil) {
-		self.audioUnit = [CoCAAudioUnit defaultOutputUnit];
-		[self.audioUnit setRenderDelegate:self];
-		[self.audioUnit setup];
-		[self.audioUnit start];
-    }
-	
 	return frameCount;
 }
 
-static UInt32 framesSinceLastUpdate = 0;
+#pragma mark -
+#pragma mark Core Audio Render Callback
 
--(OSStatus)audioUnit:(CoCAAudioUnit*)audioUnit
-     renderWithFlags:(AudioUnitRenderActionFlags*)ioActionFlags
-                  at:(const AudioTimeStamp*)inTimeStamp
-               onBus:(UInt32)inBusNumber
-          frameCount:(UInt32)inNumberFrames
-           audioData:(AudioBufferList *)ioData {
-	
-    // Core Audio generally expects audio data to be in native-endian 32-bit floating-point linear PCM format.
-	
-	AudioBuffer *leftBuffer = &(ioData->mBuffers[0]);
-	AudioBuffer *rightBuffer = &(ioData->mBuffers[1]);
-	
-	NSUInteger bytesRequired = inNumberFrames * 2 * 2; // 16bit per channel, stereo
-	void *frameBuffer = NULL;
-	
-	@synchronized(audioBuffer) {
-		NSUInteger availableData = [audioBuffer length];
-		if (availableData >= bytesRequired) {
-			[audioBuffer readDataOfLength:bytesRequired intoBuffer:&frameBuffer];
-			// We've done a length check just above, so hopefully we don't have to care about  how much was read.
-		} else {
-			leftBuffer->mDataByteSize = 0;
-			rightBuffer->mDataByteSize = 0;
-			*ioActionFlags |= kAudioUnitRenderAction_OutputIsSilence;
-			return noErr;
-		}
-	}
-	
-	float *leftChannelBuffer = leftBuffer->mData;
-	float *rightChannelBuffer = rightBuffer->mData;
-	
-	sint16 *frames = frameBuffer;
-	double effectiveVolume = self.volume;
-	
-	for (NSUInteger currentFrame = 0; currentFrame < inNumberFrames; currentFrame++) {
-		
-		// Convert the frames from 16-bit signed integers to floating point, then apply the volume.
-		leftChannelBuffer[currentFrame] = (frames[currentFrame * 2]/(float)INT16_MAX) * effectiveVolume;
-		rightChannelBuffer[currentFrame] = (frames[(currentFrame * 2) + 1]/(float)INT16_MAX) * effectiveVolume;
-	}
-	
-	if (frameBuffer != NULL) 
-		free(frameBuffer);
-	frames = NULL;
-	
-	framesSinceLastUpdate += inNumberFrames;
-	
-	if (framesSinceLastUpdate >= 8820) {
-		// Update 5 times per second.
-		
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		NSTimeInterval newTrackPosition = self.trackPosition + (double)framesSinceLastUpdate/44100.0;
-		
-		SEL setTrackPositionSelector = @selector(setTrackPosition:);
-		NSMethodSignature *aSignature = [[self class] instanceMethodSignatureForSelector:setTrackPositionSelector];
-		NSInvocation *anInvocation = [NSInvocation invocationWithMethodSignature:aSignature];
-		[anInvocation setSelector:setTrackPositionSelector];
-		[anInvocation setTarget:self];
-		[anInvocation setArgument:&newTrackPosition atIndex:2];
-		
-		[anInvocation performSelectorOnMainThread:@selector(invoke)
-									   withObject:nil
-									waitUntilDone:NO];
-		[pool drain];
-		
-		framesSinceLastUpdate = 0;
+static UInt32 framesSinceLastTimeUpdate = 0;
+
+static OSStatus SPPlaybackManagerAudioUnitRenderDelegateCallback(void *inRefCon,
+                                                                 AudioUnitRenderActionFlags *ioActionFlags,
+                                                                 const AudioTimeStamp *inTimeStamp,
+                                                                 UInt32 inBusNumber,
+                                                                 UInt32 inNumberFrames,
+                                                                 AudioBufferList *ioData) {
+    
+    // This callback is called by Core Audio when it needs more audio data to fill its buffers.
+    // This callback is both super time-sensitive and called on some arbitrary thread, so we
+    // have to be extra careful with performance and locking.
+    SPPlaybackManager *self = inRefCon;
+	AudioBuffer *buffer = &(ioData->mBuffers[0]);
+	UInt32 bytesRequired = buffer->mDataByteSize;
+    framesSinceLastTimeUpdate += inNumberFrames;
+    
+    // If we don't have enough data, tell Core Audio about it.
+	NSUInteger availableData = [self->audioBuffer length];
+	if (availableData < bytesRequired) {
+		buffer->mDataByteSize = 0;
+		*ioActionFlags |= kAudioUnitRenderAction_OutputIsSilence;
+		return noErr;
+    }
+    
+    // Since we told Core Audio about our audio format in -setupCoreAudioWithAudioFormat:error:,
+    // we can simply copy data out of our buffer straight into the one given to us in the callback.
+    // SPCircularBuffer deals with thread safety internally so we don't need to worry about it here.
+    buffer->mDataByteSize = (UInt32)[self->audioBuffer readDataOfLength:bytesRequired intoAllocatedBuffer:&buffer->mData];
+    
+	if (framesSinceLastTimeUpdate >= 8820) {
+        // Only update 5 times per second.
+        // Since this render callback from Core Audio is so time-sensitive, we avoid allocating objects
+        // and having to use an autorelease pool by pre-allocating the NSInvocation, setting its argument here
+        // and setting it off on the main thread without waiting here. The -trackPosition property is atomic, so the
+        // worst race condition that can happen is the property gets set out of order. Since we update at 5Hz, the 
+        // chances of this happening are slim.
+		[self->incrementTrackPositionInvocation setArgument:&framesSinceLastTimeUpdate atIndex:2];
+		[self->incrementTrackPositionInvocation performSelectorOnMainThread:@selector(invoke)
+                                                                 withObject:nil
+                                                              waitUntilDone:NO];
+		framesSinceLastTimeUpdate = 0;
 	}
     
     return noErr;
 }
 
-
-- (void)dealloc {
-	
-	[self removeObserver:self forKeyPath:@"playbackSession.isPlaying"];
-	
-	self.playbackSession.playbackDelegate = nil;
-	self.playbackSession = nil;
-	
-	[self.audioUnit stop];
-	self.audioUnit = nil;
-	self.audioBuffer = nil;
-	
-	self.currentTrack = nil;
-	
-    [super dealloc];
+-(void)incrementTrackPositionWithFrameCount:(UInt32)framesToAppend {
+    self.trackPosition = self.trackPosition + (double)framesToAppend/44100.0;
 }
 
 @end

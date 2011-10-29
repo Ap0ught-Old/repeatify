@@ -36,7 +36,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPSession;
 @class SPImage;
@@ -48,6 +48,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SPSession *session;
     SPImage *cover;
     SPArtist *artist;
+    NSURL *spotifyURL;
 }
 
 ///----------------------------
@@ -124,6 +125,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /** Returns the name of the album. */
 @property (readonly) NSString *name;
+
+/** Returns the Spotify URI of the track, for example: `spotify:album:43p5dnBeVx4H2bzy0W1cGL` */
+@property (readonly, copy) NSURL *spotifyURL;
 
 /** Returns the album type.
  
