@@ -16,8 +16,6 @@
 		2965ACF71436F5EF007D3657 /* SPCircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2965ACF41436F5EF007D3657 /* SPCircularBuffer.m */; };
 		2965ACF81436F5EF007D3657 /* SPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2965ACF61436F5EF007D3657 /* SPPlaybackManager.m */; };
 		2965ACFB1436F603007D3657 /* NSObject+SPInvocationGrabbing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2965ACFA1436F603007D3657 /* NSObject+SPInvocationGrabbing.m */; };
-		2965AD001436F646007D3657 /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2965ACFF1436F646007D3657 /* libspotify.framework */; };
-		2965AD011436F78F007D3657 /* libspotify.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2965ACFF1436F646007D3657 /* libspotify.framework */; };
 		29875827140DB37200387F9D /* volume-decrease.png in Resources */ = {isa = PBXBuildFile; fileRef = 29875825140DB37200387F9D /* volume-decrease.png */; };
 		29875828140DB37200387F9D /* volume-increase.png in Resources */ = {isa = PBXBuildFile; fileRef = 29875826140DB37200387F9D /* volume-increase.png */; };
 		29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4913E4BC2200951AB6 /* CoreAudio.framework */; };
@@ -42,7 +40,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				2965ACF11436F4B6007D3657 /* CocoaLibSpotify.framework in CopyFiles */,
-				2965AD011436F78F007D3657 /* libspotify.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +95,6 @@
 				2965ACF21436F4BC007D3657 /* CocoaLibSpotify.framework in Frameworks */,
 				29893A4A13E4BC2200951AB6 /* CoreAudio.framework in Frameworks */,
 				29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */,
-				2965AD001436F646007D3657 /* libspotify.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
