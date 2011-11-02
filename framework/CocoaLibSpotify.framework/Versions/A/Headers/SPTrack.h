@@ -41,7 +41,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SPAlbum;
 @class SPSession;
 
-@interface SPTrack : NSObject {
+@interface SPTrack : NSObject <SPPlaylistableItem> {
     @private
     sp_track *track;
     __weak SPSession *session;
@@ -96,8 +96,23 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /// @name Properties
 ///----------------------------
 
-/** Returns `YES` if the track is available for playback. */
-@property (readonly) BOOL availableForPlayback;
+/** Returns availability for this  track. 
+ 
+ Possible return values:
+ 
+ SP_TRACK_AVAILABILITY_UNAVAILABLE
+ Track is not available
+ 
+ SP_TRACK_AVAILABILITY_AVAILABLE 
+ Track is available and can be played
+ 
+ SP_TRACK_AVAILABILITY_NOT_STREAMABLE
+ Track can not be streamed using this account
+ 
+ SP_TRACK_AVAILABILITY_BANNED_BY_ARTIST
+ Track not available on artist's reqeust
+ */
+@property (readonly) sp_track_availability availability;
 
 /** Returns `YES` if the track has finished loading and all data is available. */ 
 @property (readonly, getter=isLoaded) BOOL loaded;
@@ -115,6 +130,22 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /** Returns `YES` if the track is in the logged-in user's starred list. */
 @property (readwrite) BOOL starred;
+
+/** 
+ Returns an `sp_track_offline_status` containing the offline status of the track.
+ 
+ Possible values:
+ 
+`SP_TRACK_OFFLINE_NO`: Not marked for offline
+`SP_TRACK_OFFLINE_WAITING`: Waiting for download
+`SP_TRACK_OFFLINE_DOWNLOADING`: Currently downloading
+`SP_TRACK_OFFLINE_DONE`: Downloaded OK and can be played
+`SP_TRACK_OFFLINE_ERROR`: Error during download
+`SP_TRACK_OFFLINE_DONE_EXPIRED`: Downloaded OK but not playable due to expiery
+`SP_TRACK_OFFLINE_RATE_EXCEEDED`: Waiting because download rate limit is exceeded
+`SP_TRACK_OFFLINE_DONE_RESYNC`: Downloaded OK and available but scheduled for re-download
+ */
+@property (readonly) sp_track_offline_status offlineStatus;
 
 ///----------------------------
 /// @name Metadata

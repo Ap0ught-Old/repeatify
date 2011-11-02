@@ -44,6 +44,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SPSession.h"
 #import "SPPlaylist.h"
 #import "SPPlaylistFolder.h"
+#import "SPPlaylistItem.h"
 #import "SPTrack.h"
 #import "SPPlaylistContainer.h"
 #import "SPSearch.h"
@@ -63,6 +64,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <CocoaLibSpotify/SPSession.h>
 #import <CocoaLibSpotify/SPPlaylist.h>
 #import <CocoaLibSpotify/SPPlaylistFolder.h>
+#import <CocoaLibSpotify/SPPlaylistItem.h>
 #import <CocoaLibSpotify/SPTrack.h>
 #import <CocoaLibSpotify/SPPlaylistContainer.h>
 #import <CocoaLibSpotify/SPSearch.h>

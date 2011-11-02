@@ -63,6 +63,7 @@
 - (void)handleNowPlayingView:(NSMenu *)menu;
 - (void)handlePlaybackMenuItem:(NSMenu *)menu;
 
+- (NSArray *)getTracksFromPlaylistItems:(NSArray *)playlistItems;
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem;
 
 - (void)togglePlayNext:(id)sender;
@@ -253,7 +254,6 @@
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
     [menuItem setTitle:folder.name];
     NSMenu *innerMenu = [[NSMenu alloc] init];
-
     for (id playlist in folder.playlists) {
         NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
         
@@ -274,8 +274,27 @@
 
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem {
     [menuItem setTitle:list.name];
-    [self addTracks:list.tracks toMenuItem:menuItem];
-    
+    [self addTracks:[self getTracksFromPlaylistItems:list.items] toMenuItem:menuItem];
+}
+
+- (NSArray *)getTracksFromPlaylistItems:(NSArray *)playlistItems {
+    NSMutableArray *tracks = [[NSMutableArray alloc] init];
+    for (id item in playlistItems) {
+        SPTrack *track = nil;
+        if ([item isKindOfClass:[SPPlaylistItem class]]) {
+            SPPlaylistItem *playlistItem = (SPPlaylistItem *)item;
+            if ([playlistItem.item isKindOfClass:[SPTrack class]]) {
+                track = (SPTrack *)playlistItem.item;
+            }
+        }
+        if ([item isKindOfClass:[SPTrack class]]) {
+            track = (SPTrack *)item;
+        }
+        if (track != nil) {
+            [tracks addObject:track];
+        }
+    }
+    return [tracks autorelease];
 }
 
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem {
@@ -287,7 +306,7 @@
                 innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
             }
             else {
-                if (track.availableForPlayback) {
+                if (track.availability == SP_TRACK_AVAILABILITY_AVAILABLE) {
                     innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
                     
                     if ([track isEqualTo:_playbackManager.currentTrack]) {
@@ -319,7 +338,7 @@
     [_playbackManager play:[[clickedMenuItem representedObject] objectAtIndex:0]];
     NSMutableArray *filteredPlaylist = [[NSMutableArray alloc] init];
     for (SPTrack *track in [[clickedMenuItem representedObject] objectAtIndex:1]) {
-        if (track.availableForPlayback) {
+        if (track.availability == SP_TRACK_AVAILABILITY_AVAILABLE) {
             [filteredPlaylist addObject:track];
         }
     }

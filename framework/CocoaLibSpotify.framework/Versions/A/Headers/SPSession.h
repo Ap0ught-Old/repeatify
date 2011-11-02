@@ -75,8 +75,8 @@ Playback
     __weak id <SPSessionDelegate> delegate;
     __weak id <SPSessionPlaybackDelegate> playbackDelegate;
     SPUser *user;
-    NSArray *friends;
 	NSLocale *locale;
+	NSError *offlineSyncError;
 }
 
 /** Returns a shared SPSession object. 
@@ -254,12 +254,12 @@ Playback
 /** Returns the time until the user needs to reconnect to Spotify to renew offline syncing keys. */
 @property (readonly) NSTimeInterval offlineKeyTimeRemaining;
 
+/** Returns the last error encountered during offline syncing, or `nil` if there is no problem. */
+@property (readonly, retain) NSError *offlineSyncError;
+
 ///----------------------------
 /// @name User Content
 ///----------------------------
-
-/** Returns the logged in user's friends, as an array of SPUser objects. */
-@property (readonly, retain) NSArray *friends;
 
 /** Returns the logged in user's inbox playlist.
  
@@ -409,6 +409,13 @@ Playback
 ///----------------------------
 /// @name Audio Playback
 ///----------------------------
+
+/** Returns `YES` if the session is employing volume normalization (that is, attempts to keep the 
+ sound level of each track the same), otherwise `NO`.
+ 
+ @warning *Important:* This property currently has no effect on iOS platforms.
+ */
+@property (readwrite, getter=isUsingVolumeNormalization) BOOL usingVolumeNormalization;
 
 /** Returns `YES` if the session is currently playing a track, otherwise `NO`. */
 @property (readwrite, getter=isPlaying) BOOL playing;
