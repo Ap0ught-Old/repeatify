@@ -33,7 +33,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** Contains convenience methods for working with Spotify error codes (`sp_error`). */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 static NSString * const kCocoaLibSpotifyErrorDomain = @"com.spotify.CocoaLibSpotify.error";
 

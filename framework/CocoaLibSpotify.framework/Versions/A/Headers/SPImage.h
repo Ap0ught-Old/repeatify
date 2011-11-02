@@ -32,14 +32,16 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /** Represents an image from the Spotify service. */
 
-#import <Cocoa/Cocoa.h>
-#import <libspotify/api.h>
+#import <Foundation/Foundation.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPSession;
 
+static NSUInteger const SPImageIdLength = 20;
+
 @interface SPImage : NSObject {
     @private
-    NSImage *image;
+    SPPlatformNativeImage *image;
     sp_image *spImage;
     const byte *imageId;
     BOOL loaded;
@@ -60,7 +62,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  @param aSession The SPSession the image should exist in.
  @return Returns the created SPImage object. 
  */
-+(SPImage *)imageWithImageId:(const byte[])imageId inSession:(SPSession *)aSession;
++(SPImage *)imageWithImageId:(const byte *)imageId inSession:(SPSession *)aSession;
 
 /** Creates an SPImage from the given URL. 
  
@@ -83,7 +85,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  @param aSession The SPSession the image should exist in.
  @return Returns the created SPImage object. 
  */
--(id)initWithImageStruct:(sp_image *)anImage imageId:(const byte[20])anId inSession:(SPSession *)aSession;
+-(id)initWithImageStruct:(sp_image *)anImage imageId:(const byte *)anId inSession:(SPSession *)aSession;
 
 ///----------------------------
 /// @name Loading Images
@@ -98,8 +100,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /// @name Properties
 ///----------------------------
 
-/** Returns an NSImage representation of the image, or `nil` if the image has yet to be loaded. */
-@property (readonly, retain) NSImage *image;
+/** Returns an NSImage or UIImage representation of the image, or `nil` if the image has yet to be loaded. */
+@property (readonly, retain) SPPlatformNativeImage *image;
 
 /** Returns the ID of the image. */
 -(const byte *)imageId;

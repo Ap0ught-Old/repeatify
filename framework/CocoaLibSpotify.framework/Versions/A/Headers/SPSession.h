@@ -46,7 +46,7 @@ Playback
  */
 
 #import <Foundation/Foundation.h>
-#import <libspotify/api.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPPlaylist;
 @class SPPlaylistFolder;
@@ -75,8 +75,8 @@ Playback
     __weak id <SPSessionDelegate> delegate;
     __weak id <SPSessionPlaybackDelegate> playbackDelegate;
     SPUser *user;
-    NSArray *friends;
 	NSLocale *locale;
+	NSError *offlineSyncError;
 }
 
 /** Returns a shared SPSession object. 
@@ -87,37 +87,99 @@ Playback
  support using multiple sessions in the same process. While you can either create and 
  store your SPSession object using this convenience method or yourself using -[SPSession init],
  make sure you only have _one_ instance of SPSession active in your process at a time.
+ 
+ @warning *Important:* This will return `nil` until +[SPSession initializeSharedSessionWithApplicationKey:userAgent:error:] is
+ successfully called.
+
+ 
  */
 +(SPSession *)sharedSession;
+
+/** Initializes the shared SPSession object.
+ 
+ Your application key and user agent must be valid to create an SPSession object.
+ 
+ @warning *Important:* The C API that CocoaLibSpotify uses (LibSpotify) doesn't 
+ support using multiple sessions in the same process. While you can either create and 
+ store your SPSession object using this convenience method or yourself using -[SPSession initWithApplicationKey:userAgent:error:],
+ make sure you only have _one_ instance of SPSession active in your process at a time.
+ 
+ @param appKey Your application key as an NSData.
+ @param userAgent Your application's user agent (for example, com.yourcompany.MyGreatApp).
+ @param error An error pointer to be filled with an NSError should a login problem occur. 
+ */
++(void)initializeSharedSessionWithApplicationKey:(NSData *)appKey
+									   userAgent:(NSString *)userAgent
+										   error:(NSError **)error;
+
+/** The "debug" build ID of libspotify.
+ 
+ This could be useful to display somewhere deep down in the user interface in 
+ case you (or Spotify) would like to know the exact version running. 
+ 
+ @return Returns an NSString representing the build ID of the currently running version of libspotify.
+ */
++(NSString *)libSpotifyBuildId;
 
 ///----------------------------
 /// @name Logging In and Setup
 ///----------------------------
 
+/** Initialize a new SPSession object.
+ 
+ Your application key and user agent must be valid to create an SPSession object. This is SPSession's designated initializer.
+ 
+@param appKey Your application key as an NSData.
+@param userAgent Your application's user agent (for example, com.yourcompany.MyGreatApp).
+@param error An error pointer to be filled with an NSError should a login problem occur.
+@return Returns a newly initialised SPSession object.
+ */
+-(id)initWithApplicationKey:(NSData *)appKey
+				  userAgent:(NSString *)userAgent
+					  error:(NSError **)error;
+
 /** Attempt to login to the Spotify service.
  
- Should your application key be valid, login success or fail methods will be called on the session's delegate.
+ Login success or fail methods will be called on the session's delegate.
  
-@warning *Important:* You must have successfully logged in to the Spotify service using this method
- before using other API methods.
+@warning *Important:* You must have successfully logged in to the Spotify service before using 
+ most other API methods.
  
- @param appKey Your application key as an NSData.
- @param userAgent Your application's user agent (for example, com.yourcompany.MyGreatApp).
  @param userName The username of the user who wishes to log in.
  @param password The password for the user who wishes to log in.
- @param error An error pointer to be filled with an NSError should a login problem occur.
- @return Returns `YES` if the login attempt started correctly, `NO` if not.
+ @param rememberMe `YES` if the user's credentials should be saved in libspotify's encrypted store, otherwise `NO`.
  */
--(BOOL)attemptLoginWithApplicationKey:(NSData *)appKey 
-							userAgent:(NSString *)userAgent 
-							 userName:(NSString *)userName 
-							 password:(NSString *)password
-								error:(NSError **)error;
+-(void)attemptLoginWithUserName:(NSString *)userName 
+					   password:(NSString *)password
+			rememberCredentials:(BOOL)rememberMe;
+
+/** Attempt to login to the Spotify service using previously stored credentials.
+ 
+ Login success or fail methods will be called on the session's delegate. 
+ 
+ @param error An error pointer to be filled with an NSError should a login problem occur.
+ @return Returns `YES` if user credentials had been stored and the login attempt began successfully.
+ */
+-(BOOL)attemptLoginWithStoredCredentials:(NSError **)error;
+
+/** The username saved in the stored credentials.
+ 
+ @return Returns the username that will be logged in with -[SPSession attemptLoginWithStoredCredentials:], or 
+ `nil` if there are no stored credentials.
+ */
+-(NSString *)storedCredentialsUserName;
+
+/** Remove stored credentials from the encrypted store.
+ 
+ This method will cleanly log out from the Spotify service and clear any in-memory caches. 
+ Called automatically when the instance is deallocated. 
+ */
+-(void)forgetStoredCredentials;
 
 /** Log out from the Spotify service.
  
  This method will cleanly log out from the Spotify service and clear any in-memory caches. 
- Called automatically when the instance is deallocated. 
+ Called automatically when the instance is deallocated.
  */
 -(void)logout;
 
@@ -127,6 +189,9 @@ Playback
  
  SP_CONNECTION_STATE_LOGGED_OUT 	
  User not yet logged in.
+ 
+ SP_CONNECTION_STATE_OFFLINE
+ User is logged in but in offline mode.
  
  SP_CONNECTION_STATE_LOGGED_IN 	
  Logged in against a Spotify access point.
@@ -186,12 +251,15 @@ Playback
 /** Returns a dictionary containing information about any offline sync activity. See Contants for keys. */
 @property (readonly, copy) NSDictionary *offlineStatistics;
 
+/** Returns the time until the user needs to reconnect to Spotify to renew offline syncing keys. */
+@property (readonly) NSTimeInterval offlineKeyTimeRemaining;
+
+/** Returns the last error encountered during offline syncing, or `nil` if there is no problem. */
+@property (readonly, retain) NSError *offlineSyncError;
+
 ///----------------------------
 /// @name User Content
 ///----------------------------
-
-/** Returns the logged in user's friends, as an array of SPUser objects. */
-@property (readonly, retain) NSArray *friends;
 
 /** Returns the logged in user's inbox playlist.
  
@@ -341,6 +409,13 @@ Playback
 ///----------------------------
 /// @name Audio Playback
 ///----------------------------
+
+/** Returns `YES` if the session is employing volume normalization (that is, attempts to keep the 
+ sound level of each track the same), otherwise `NO`.
+ 
+ @warning *Important:* This property currently has no effect on iOS platforms.
+ */
+@property (readwrite, getter=isUsingVolumeNormalization) BOOL usingVolumeNormalization;
 
 /** Returns `YES` if the session is currently playing a track, otherwise `NO`. */
 @property (readwrite, getter=isPlaying) BOOL playing;

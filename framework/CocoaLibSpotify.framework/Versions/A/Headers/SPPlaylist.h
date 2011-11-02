@@ -30,17 +30,17 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/** This class represents a list of tracks, be it a user's starred list, inbox, or a traditional "playlist". */
+/** This class represents a list of items, be it a user's starred list, inbox, or a traditional "playlist". */
 
-#import <Cocoa/Cocoa.h>
-#import <libspotify/api.h>
+#import <Foundation/Foundation.h>
+#import "CocoaLibSpotifyPlatformImports.h"
 
 @class SPUser;
 @class SPImage;
 @class SPSession;
 @protocol SPPlaylistDelegate;
 
-@interface SPPlaylist : NSObject {
+@interface SPPlaylist : NSObject <SPPlaylistableItem> {
 @private 
     sp_playlist *playlist;
     BOOL updating;
@@ -55,7 +55,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     SPUser *owner;
 	NSURL *spotifyURL;
 	BOOL trackChangesAreFromLibSpotifyCallback;
-	NSMutableArray *trackWrapper;
+	NSMutableArray *itemWrapper;
 	NSArray *subscribers;
 }
 
@@ -161,9 +161,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** Returns the Spotify URI of the playlist profile, for example: `spotify:user:sarnesjo:playlist:3p2c7mmML3fIUh5fcZ8Hcq` */
 @property (readonly, copy) NSURL *spotifyURL;
 
-// Removed until subscribers aren't broken in libspotify.
-// /** Returns the subscribers to the playlist as an array of Spotify usernames. */
-// @property (readonly, retain) NSArray *subscribers;
+/** Returns the subscribers to the playlist as an array of Spotify usernames. */
+@property (readonly, retain) NSArray *subscribers;
 
 ///----------------------------
 /// @name Metadata
@@ -179,112 +178,115 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (readonly, copy) NSString *playlistDescription;
 
 ///----------------------------
-/// @name Working with Tracks
+/// @name Working with Items
 ///----------------------------
 
-/** Returns an array of SPTrack objects representing playlist's track order.
+/** Returns an array of SPPlaylistItem objects representing playlist's item order.
  
  This array is KVO compliant, and any changes made will be reflected in the user's account.
  
- @warning *Important:* If you need to move a track from one location in this list to another, please
- use `-moveTracksAtIndexes:toIndex:error:` for performance reasons.
+ @warning *Important:* You can add both `SPTrack` and `SPPlaylistItem` objects to this array.
+ `SPTrack` objects will automatically be wrapped inside an `SPPlaylistItem`.
  
- @see -moveTracksAtIndexes:toIndex:error:
+ @warning *Important:* If you need to move an item from one location in this list to another, please
+ use `-moveItemsAtIndexes:toIndex:error:` for performance reasons.
+ 
+ @see -moveItemsAtIndexes:toIndex:error:
  */
-@property (readonly) NSMutableArray *tracks;
+@property (readonly) NSMutableArray *items;
 
-/** Move track(s) to another location in the list. 
+/** Move item(s) to another location in the list. 
  
- All indexes are given relative to the state of the track order before the move is executed. Therefore, you
- *don't* need to adjust the destination index to take into account tracks that will be moved from above it.
+ All indexes are given relative to the state of the item order before the move is executed. Therefore, you
+ *don't* need to adjust the destination index to take into account items that will be moved from above it.
  
  @warning *Important:* This operation can fail, for example if you give invalid indexes. Please make sure 
  you check the result of this method.
  
- @param indexes The indexes of the tracks to move.
- @param newLocation The index the tracks should be moved to.
+ @param indexes The indexes of the items to move.
+ @param newLocation The index the items should be moved to.
  @param error An NSError pointer to be filled if the operation fails.
  @return Returns `YES` if the operation succeeded, otherwise `NO`. 
  */
--(BOOL)moveTracksAtIndexes:(NSIndexSet *)indexes toIndex:(NSUInteger)newLocation error:(NSError **)error;
+-(BOOL)moveItemsAtIndexes:(NSIndexSet *)indexes toIndex:(NSUInteger)newLocation error:(NSError **)error;
 
 @end
 
-/** Delegate callbacks from SPPlaylist to help with track reordering. */
+/** Delegate callbacks from SPPlaylist to help with item reordering. */
 
 @protocol SPPlaylistDelegate <NSObject>
 @optional
 
-/** Called when one or more tracks in the playlist updated their metadata. 
+/** Called when one or more items in the playlist updated their metadata. 
  
- @param aPlaylist The playlist in which tracks updated their metadata.
+ @param aPlaylist The playlist in which items updated their metadata.
  */
--(void)tracksInPlaylistDidUpdateMetadata:(SPPlaylist *)aPlaylist;
+-(void)itemsInPlaylistDidUpdateMetadata:(SPPlaylist *)aPlaylist;
 
 ///----------------------------
-/// @name Track Removal
+/// @name Item Removal
 ///----------------------------
 
-/** Called before one or more tracks in the playlist will be removed from the playlist. 
+/** Called before one or more items in the playlist will be removed from the playlist. 
  
- @param aPlaylist The playlist in which tracks will be removed.
- @param tracks The tracks that will be removed.
- @param outgoingIndexes The indexes of the tracks.
+ @param aPlaylist The playlist in which items will be removed.
+ @param items The items that will be removed.
+ @param outgoingIndexes The indexes of the itemss.
  */
--(void)playlist:(SPPlaylist *)aPlaylist willRemoveTracks:(NSArray *)tracks atIndexes:(NSIndexSet *)outgoingIndexes;
+-(void)playlist:(SPPlaylist *)aPlaylist willRemoveItems:(NSArray *)items atIndexes:(NSIndexSet *)outgoingIndexes;
 
-/** Called after one or more tracks in the playlist were removed from the playlist. 
+/** Called after one or more items in the playlist were removed from the playlist. 
  
- @warning *Important:* The index set passed to this method is not valid for the given tracks.
+ @warning *Important:* The index set passed to this method is not valid for the given items.
  
- @param aPlaylist The playlist in which tracks were removed.
- @param tracks The tracks that were be removed.
- @param theseIndexesArentValidAnymore The (now invalid) indexes of the tracks.
+ @param aPlaylist The playlist in which items were removed.
+ @param items The items that were be removed.
+ @param theseIndexesArentValidAnymore The (now invalid) indexes of the items.
  */
--(void)playlist:(SPPlaylist *)aPlaylist didRemoveTracks:(NSArray *)tracks atIndexes:(NSIndexSet *)theseIndexesArentValidAnymore;
+-(void)playlist:(SPPlaylist *)aPlaylist didRemoveItems:(NSArray *)items atIndexes:(NSIndexSet *)theseIndexesArentValidAnymore;
 
 ///----------------------------
-/// @name Track Addition
+/// @name Item Addition
 ///----------------------------
 
-/** Called before one or more tracks are added to the playlist. 
+/** Called before one or more items are added to the playlist. 
  
- @warning *Important:* The index set passed to this method is not valid for the given tracks.
+ @warning *Important:* The index set passed to this method is not valid for the given items.
  
- @param aPlaylist The playlist to which tracks will be added.
- @param tracks The tracks that will be added.
- @param theseIndexesArentYetValid The (invalid, for now) destination indexes of the tracks.
+ @param aPlaylist The playlist to which items will be added.
+ @param items The items that will be added.
+ @param theseIndexesArentYetValid The (invalid, for now) destination indexes of the items.
  */
--(void)playlist:(SPPlaylist *)aPlaylist willAddTracks:(NSArray *)tracks atIndexes:(NSIndexSet *)theseIndexesArentYetValid;
+-(void)playlist:(SPPlaylist *)aPlaylist willAddItems:(NSArray *)items atIndexes:(NSIndexSet *)theseIndexesArentYetValid;
 
-/** Called after one or more tracks are added to the playlist. 
+/** Called after one or more items are added to the playlist. 
  
- @param aPlaylist The playlist in which tracks were added.
- @param tracks The tracks that were added.
- @param newIndexes The destination indexes of the tracks.
+ @param aPlaylist The playlist in which items were added.
+ @param items The items that were added.
+ @param newIndexes The destination indexes of the items.
  */
--(void)playlist:(SPPlaylist *)aPlaylist didAddTracks:(NSArray *)tracks atIndexes:(NSIndexSet *)newIndexes;
+-(void)playlist:(SPPlaylist *)aPlaylist didAddItems:(NSArray *)items atIndexes:(NSIndexSet *)newIndexes;
 
 ///----------------------------
-/// @name Track Reordering
+/// @name Item Reordering
 ///----------------------------
 
-/** Called before one or more tracks are moved within the playlist. 
+/** Called before one or more items are moved within the playlist. 
  
- @param aPlaylist The playlist in which tracks will be moved.
- @param tracks The tracks that will be moved.
- @param oldIndexes The current indexes of the tracks.
- @param newIndexes The (invalid, for now) indexes that the tracks will end up at.
+ @param aPlaylist The playlist in which items will be moved.
+ @param items The items that will be moved.
+ @param oldIndexes The current indexes of the items.
+ @param newIndexes The (invalid, for now) indexes that the items will end up at.
  */
--(void)playlist:(SPPlaylist *)aPlaylist willMoveTracks:(NSArray *)tracks atIndexes:(NSIndexSet *)oldIndexes toIndexes:(NSIndexSet *)newIndexes;
+-(void)playlist:(SPPlaylist *)aPlaylist willMoveItems:(NSArray *)items atIndexes:(NSIndexSet *)oldIndexes toIndexes:(NSIndexSet *)newIndexes;
 
-/** Called after one or more tracks are moved within the playlist. 
+/** Called after one or more items are moved within the playlist. 
  
- @param aPlaylist The playlist in which tracks will be moved.
- @param tracks The tracks that will be moved.
- @param oldIndexes The (invalid) old indexes of the tracks.
- @param newIndexes The now current indexes of the tracks.
+ @param aPlaylist The playlist in which items will be moved.
+ @param items The items that will be moved.
+ @param oldIndexes The (invalid) old indexes of the items.
+ @param newIndexes The now current indexes of the items.
  */
--(void)playlist:(SPPlaylist *)aPlaylist didMoveTracks:(NSArray *)tracks atIndexes:(NSIndexSet *)oldIndexes toIndexes:(NSIndexSet *)newIndexes;
+-(void)playlist:(SPPlaylist *)aPlaylist didMoveItems:(NSArray *)items atIndexes:(NSIndexSet *)oldIndexes toIndexes:(NSIndexSet *)newIndexes;
 
 @end
