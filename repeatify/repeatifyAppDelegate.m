@@ -139,6 +139,15 @@
     [_statusItem setMenu:_statusMenu];
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    if ([SPSession sharedSession].connectionState == SP_CONNECTION_STATE_LOGGED_OUT ||
+        [SPSession sharedSession].connectionState == SP_CONNECTION_STATE_UNDEFINED) 
+        return NSTerminateNow;
+    
+    [[SPSession sharedSession] logout];
+    return NSTerminateLater;
+}
+
 - (void)dealloc {
     [_statusMenu release];
     [_statusItem release];
@@ -162,7 +171,7 @@
 
 
 - (void)quitRepeatify {
-    [[NSApplication sharedApplication] terminate:nil];
+    [NSApp terminate:self];
 }
 
 
@@ -584,8 +593,9 @@
     [self.loginProgressIndicator setHidden:YES];
 }
 
--(void)sessionDidLogOut:(SPSession *)aSession {
-    NSLog(@"did log out");
+-(void)sessionDidLogOut:(SPSession *)aSession; {
+    NSLog(@"did log out!!!");
+    [[NSApplication sharedApplication] replyToApplicationShouldTerminate:YES];
 }
 
 -(void)session:(SPSession *)aSession didEncounterNetworkError:(NSError *)error {
@@ -593,11 +603,11 @@
 }
 
 -(void)session:(SPSession *)aSession didLogMessage:(NSString *)aMessage {
-    NSLog(@"did log message: %@", aMessage);
+    // NSLog(@"did log message: %@", aMessage);
 }
 
 -(void)sessionDidChangeMetadata:(SPSession *)aSession {
-    NSLog(@"did change metadata");
+    // NSLog(@"did change metadata");
 }
 
 -(void)session:(SPSession *)aSession recievedMessageForUser:(NSString *)aMessage; {
@@ -608,35 +618,24 @@
 #pragma mark SPMediaKeyTap Methods
 -(void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event {
     NSAssert([event type] == NSSystemDefined && [event subtype] == SPSystemDefinedEventMediaKeys, @"Unexpected NSEvent in mediaKeyTap:receivedMediaKeyEvent:");
-    // here be dragons...
     int keyCode = (([event data1] & 0xFFFF0000) >> 16);
     int keyFlags = ([event data1] & 0x0000FFFF);
     BOOL keyIsPressed = (((keyFlags & 0xFF00) >> 8)) == 0xA;
-    // int keyRepeat = (keyFlags & 0x1);
     
     if (keyIsPressed) {
-        // NSString *debugString = [NSString stringWithFormat:@"%@", keyRepeat?@", repeated.":@"."];
         switch (keyCode) {
             case NX_KEYTYPE_PLAY:
-                // debugString = [@"Play/pause pressed" stringByAppendingString:debugString];
                 [self togglePlayController:self];
                 break;
-                
             case NX_KEYTYPE_FAST:
-                // debugString = [@"Ffwd pressed" stringByAppendingString:debugString];
                 [self togglePlayNext:self];
                 break;
-                
             case NX_KEYTYPE_REWIND:
-                // debugString = [@"Rewind pressed" stringByAppendingString:debugString];
                 [self togglePlayPrevious:self];
                 break;
             default:
-                // debugString = [NSString stringWithFormat:@"Key %d pressed%@", keyCode, debugString];
                 break;
-                // More cases defined in hidsystem/ev_keymap.h
         }
-        // NSLog(@"%@", debugString);
     }
 }
 
