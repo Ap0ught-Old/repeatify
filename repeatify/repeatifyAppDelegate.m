@@ -121,6 +121,16 @@
     
     [[SPSession sharedSession] setDelegate:self];
     
+    NSBundle *currentBundle = [NSBundle bundleForClass:[repeatifyAppDelegate class]];
+    NSString *growlPath = [[currentBundle privateFrameworksPath]
+                           stringByAppendingPathComponent:@"Growl.framework"];
+    NSBundle *growlBundle = [NSBundle bundleWithPath:growlPath];
+    if (growlBundle && [growlBundle load]) {
+	[GrowlApplicationBridge setGrowlDelegate:self];
+    } else {
+	NSLog(@"Could not load Growl.framework");
+    }
+
     _playbackManager = [[RPPlaybackManager alloc] initWithPlaybackSession:[SPSession sharedSession]];    
     _topList = nil;
     _mediaKeyTap = [[SPMediaKeyTap alloc] initWithDelegate:self];

@@ -47,7 +47,7 @@ typedef enum _RPLoginStatus {
 @interface RPApplication : NSApplication
 @end
 
-@interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate, NSMenuDelegate> {
+@interface repeatifyAppDelegate : NSObject <NSApplicationDelegate, SPSessionDelegate, NSMenuDelegate, GrowlApplicationBridgeDelegate> {
     NSStatusItem *_statusItem;
     NSMenu *_statusMenu;
     

@@ -98,6 +98,16 @@
             NSLog(@"error description %@", [error localizedDescription]);
         }
         
+        if ([self getCurrentRepeatMode] != RPRepeatOne) {
+            [GrowlApplicationBridge notifyWithTitle:((SPArtist *)[track.artists objectAtIndex:0]).name
+                                        description:track.name
+                                   notificationName:@"PlayTrack"
+                                           iconData:nil
+                                           priority:0
+                                           isSticky:NO
+                                       clickContext:[NSDate date]];
+        }
+        
         SPImage *cover = track.album.cover;
         if (!cover.isLoaded) {
             [cover beginLoading];
