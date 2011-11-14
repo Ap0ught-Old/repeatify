@@ -30,6 +30,9 @@
 		29E8C9B013DDDFDC00CAFBE6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9AE13DDDFDC00CAFBE6 /* MainMenu.xib */; };
 		29EC923513F0BC03009CE42C /* SPMediaKeyTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */; };
 		29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29EC924713F0BCF9009CE42C /* Carbon.framework */; };
+		29ED07011470DEBC00BD7530 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 29ED07001470DEBC00BD7530 /* Growl Registration Ticket.growlRegDict */; };
+		29ED07041470DF8200BD7530 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29ED07031470DF8200BD7530 /* Growl.framework */; };
+		29ED07051470DFF300BD7530 /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29ED07031470DF8200BD7530 /* Growl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +43,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				2965ACF11436F4B6007D3657 /* CocoaLibSpotify.framework in CopyFiles */,
+				29ED07051470DFF300BD7530 /* Growl.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +87,8 @@
 		29EC923313F0BC03009CE42C /* SPMediaKeyTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPMediaKeyTap.h; path = lib/spmediakeytap/SPMediaKeyTap.h; sourceTree = SOURCE_ROOT; };
 		29EC923413F0BC03009CE42C /* SPMediaKeyTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPMediaKeyTap.m; path = lib/spmediakeytap/SPMediaKeyTap.m; sourceTree = SOURCE_ROOT; };
 		29EC924713F0BCF9009CE42C /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		29ED07001470DEBC00BD7530 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		29ED07031470DF8200BD7530 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = framework/Growl.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29ED07041470DF8200BD7530 /* Growl.framework in Frameworks */,
 				29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */,
 				29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */,
 				2965ACF21436F4BC007D3657 /* CocoaLibSpotify.framework in Frameworks */,
@@ -128,6 +135,7 @@
 		29E8C98A13DDDFDC00CAFBE6 = {
 			isa = PBXGroup;
 			children = (
+				29ED07031470DF8200BD7530 /* Growl.framework */,
 				2965ACF01436F4B6007D3657 /* CocoaLibSpotify.framework */,
 				29E8C99F13DDDFDC00CAFBE6 /* repeatify */,
 				29E8C99813DDDFDC00CAFBE6 /* Frameworks */,
@@ -193,6 +201,7 @@
 				29E8C9A713DDDFDC00CAFBE6 /* repeatify-Prefix.pch */,
 				29E8C9A813DDDFDC00CAFBE6 /* Credits.rtf */,
 				29E8C9DC13DDE3BB00CAFBE6 /* appkey.h */,
+				29ED07001470DEBC00BD7530 /* Growl Registration Ticket.growlRegDict */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -277,6 +286,7 @@
 				294D84A013E8430200DE09A1 /* app.icns in Resources */,
 				29875827140DB37200387F9D /* volume-decrease.png in Resources */,
 				29875828140DB37200387F9D /* volume-increase.png in Resources */,
+				29ED07011470DEBC00BD7530 /* Growl Registration Ticket.growlRegDict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
