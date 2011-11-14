@@ -42,7 +42,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SPImage;
 @class SPArtist;
 
-@interface SPAlbum : NSObject {
+@interface SPAlbum : NSObject <SPPlaylistableItem> {
     @private
     sp_album *album;
 	SPSession *session;

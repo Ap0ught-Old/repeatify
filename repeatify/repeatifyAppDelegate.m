@@ -63,6 +63,7 @@
 - (void)handleNowPlayingView:(NSMenu *)menu;
 - (void)handlePlaybackMenuItem:(NSMenu *)menu;
 
+- (NSArray *)getTracksFromPlaylistItems:(NSArray *)playlistItems;
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem;
 
 - (void)togglePlayNext:(id)sender;
@@ -75,6 +76,7 @@
 - (void)updateIsPlayingStatus:(id)sender;
 
 - (void)showLoginDialog;
+- (void)afterLoggedIn;
 - (void)didLoggedIn;
 - (void)logoutUser;
 
@@ -86,7 +88,7 @@
 @implementation repeatifyAppDelegate
 
 @synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton, volumeControlView, volumeControlSlider;
-@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField;
+@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField, saveCredentialsButton;
 
 
 #pragma mark -
@@ -109,8 +111,13 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [self showLoginDialog];
-    _loginStatus = RPLoginStatusNoUser;
+    if ([[SPSession sharedSession] attemptLoginWithStoredCredentials:nil]) {
+        [self afterLoggedIn];
+    }
+    else {
+        [self showLoginDialog];
+        _loginStatus = RPLoginStatusNoUser;
+    }
     
     [[SPSession sharedSession] setDelegate:self];
     
@@ -138,6 +145,15 @@
     [_statusItem setMenu:_statusMenu];
 }
 
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    if ([SPSession sharedSession].connectionState == SP_CONNECTION_STATE_LOGGED_OUT ||
+        [SPSession sharedSession].connectionState == SP_CONNECTION_STATE_UNDEFINED) 
+        return NSTerminateNow;
+    
+    [[SPSession sharedSession] logout];
+    return NSTerminateLater;
+}
+
 - (void)dealloc {
     [_statusMenu release];
     [_statusItem release];
@@ -161,7 +177,7 @@
 
 
 - (void)quitRepeatify {
-    [[NSApplication sharedApplication] terminate:nil];
+    [NSApp terminate:self];
 }
 
 
@@ -253,7 +269,6 @@
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
     [menuItem setTitle:folder.name];
     NSMenu *innerMenu = [[NSMenu alloc] init];
-
     for (id playlist in folder.playlists) {
         NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
         
@@ -274,8 +289,27 @@
 
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem {
     [menuItem setTitle:list.name];
-    [self addTracks:list.tracks toMenuItem:menuItem];
-    
+    [self addTracks:[self getTracksFromPlaylistItems:list.items] toMenuItem:menuItem];
+}
+
+- (NSArray *)getTracksFromPlaylistItems:(NSArray *)playlistItems {
+    NSMutableArray *tracks = [[NSMutableArray alloc] init];
+    for (id item in playlistItems) {
+        SPTrack *track = nil;
+        if ([item isKindOfClass:[SPPlaylistItem class]]) {
+            SPPlaylistItem *playlistItem = (SPPlaylistItem *)item;
+            if ([playlistItem.item isKindOfClass:[SPTrack class]]) {
+                track = (SPTrack *)playlistItem.item;
+            }
+        }
+        if ([item isKindOfClass:[SPTrack class]]) {
+            track = (SPTrack *)item;
+        }
+        if (track != nil) {
+            [tracks addObject:track];
+        }
+    }
+    return [tracks autorelease];
 }
 
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem {
@@ -287,7 +321,7 @@
                 innerMenuItem = [[NSMenuItem alloc] initWithTitle:@"Loading Track..." action:nil keyEquivalent:@""];
             }
             else {
-                if (track.availableForPlayback) {
+                if (track.availability == SP_TRACK_AVAILABILITY_AVAILABLE) {
                     innerMenuItem = [[NSMenuItem alloc] initWithTitle:track.name action:@selector(clickTrackMenuItem:) keyEquivalent:@""];
                     
                     if ([track isEqualTo:_playbackManager.currentTrack]) {
@@ -319,7 +353,7 @@
     [_playbackManager play:[[clickedMenuItem representedObject] objectAtIndex:0]];
     NSMutableArray *filteredPlaylist = [[NSMutableArray alloc] init];
     for (SPTrack *track in [[clickedMenuItem representedObject] objectAtIndex:1]) {
-        if (track.availableForPlayback) {
+        if (track.availability == SP_TRACK_AVAILABILITY_AVAILABLE) {
             [filteredPlaylist addObject:track];
         }
     }
@@ -507,7 +541,7 @@
     if ([self.usernameField.stringValue length] > 0 && [self.passwordField.stringValue length] > 0) {
         [[SPSession sharedSession] attemptLoginWithUserName:self.usernameField.stringValue
                                                    password:self.passwordField.stringValue
-                                        rememberCredentials:NO];
+                                        rememberCredentials:self.saveCredentialsButton.state];
         [self.loginProgressIndicator setHidden:NO];
         [self.loginProgressIndicator startAnimation:self];
         _loginStatus = RPLoginStatusLogging;
@@ -529,15 +563,20 @@
     [self.loginStatusField setStringValue:@""];
 }
 
-- (void)didLoggedIn {
+- (void)afterLoggedIn {
     _topList = [[SPToplist alloc] initLocaleToplistWithLocale:nil inSession:[SPSession sharedSession]];
     _loginStatus = RPLoginStatusLoggedIn;
+}
+
+- (void)didLoggedIn {
+    [self afterLoggedIn];
     [self closeLoginDialog:nil];
 }
 
 - (void)logoutUser {
     _loginStatus = RPLoginStatusNoUser;
     [_playbackManager playTrack:nil error:nil];
+    [[SPSession sharedSession] forgetStoredCredentials];
     [[SPSession sharedSession] logout];
     [self showLoginDialog];
 }
@@ -565,8 +604,8 @@
     [self.loginProgressIndicator setHidden:YES];
 }
 
--(void)sessionDidLogOut:(SPSession *)aSession {
-    NSLog(@"did log out");
+-(void)sessionDidLogOut:(SPSession *)aSession; {
+    [[NSApplication sharedApplication] replyToApplicationShouldTerminate:YES];
 }
 
 -(void)session:(SPSession *)aSession didEncounterNetworkError:(NSError *)error {
@@ -574,11 +613,11 @@
 }
 
 -(void)session:(SPSession *)aSession didLogMessage:(NSString *)aMessage {
-    NSLog(@"did log message: %@", aMessage);
+    // NSLog(@"did log message: %@", aMessage);
 }
 
 -(void)sessionDidChangeMetadata:(SPSession *)aSession {
-    NSLog(@"did change metadata");
+    // NSLog(@"did change metadata");
 }
 
 -(void)session:(SPSession *)aSession recievedMessageForUser:(NSString *)aMessage; {
@@ -589,35 +628,24 @@
 #pragma mark SPMediaKeyTap Methods
 -(void)mediaKeyTap:(SPMediaKeyTap*)keyTap receivedMediaKeyEvent:(NSEvent*)event {
     NSAssert([event type] == NSSystemDefined && [event subtype] == SPSystemDefinedEventMediaKeys, @"Unexpected NSEvent in mediaKeyTap:receivedMediaKeyEvent:");
-    // here be dragons...
     int keyCode = (([event data1] & 0xFFFF0000) >> 16);
     int keyFlags = ([event data1] & 0x0000FFFF);
     BOOL keyIsPressed = (((keyFlags & 0xFF00) >> 8)) == 0xA;
-    // int keyRepeat = (keyFlags & 0x1);
     
     if (keyIsPressed) {
-        // NSString *debugString = [NSString stringWithFormat:@"%@", keyRepeat?@", repeated.":@"."];
         switch (keyCode) {
             case NX_KEYTYPE_PLAY:
-                // debugString = [@"Play/pause pressed" stringByAppendingString:debugString];
                 [self togglePlayController:self];
                 break;
-                
             case NX_KEYTYPE_FAST:
-                // debugString = [@"Ffwd pressed" stringByAppendingString:debugString];
                 [self togglePlayNext:self];
                 break;
-                
             case NX_KEYTYPE_REWIND:
-                // debugString = [@"Rewind pressed" stringByAppendingString:debugString];
                 [self togglePlayPrevious:self];
                 break;
             default:
-                // debugString = [NSString stringWithFormat:@"Key %d pressed%@", keyCode, debugString];
                 break;
-                // More cases defined in hidsystem/ev_keymap.h
         }
-        // NSLog(@"%@", debugString);
     }
 }
 

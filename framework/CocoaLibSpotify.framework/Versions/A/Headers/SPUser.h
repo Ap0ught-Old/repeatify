@@ -104,9 +104,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /** Returns the user's display name. If this information isn't available yet, returns the same as canonicalName. */
 @property (readonly, copy) NSString *displayName;
 
-/** Returns the URL to the user's profile image, or `nil` if she doesn't have one. */
-@property (readonly, copy) NSURL *imageURL;
-
 /** Returns `YES` if the user has finished loading and all data is available. */ 
 @property (readonly, getter=isLoaded) BOOL loaded;
 
@@ -120,32 +117,5 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  API directly on items that have CocoaLibSpotify objects associated with them. 
  */
 @property (readonly) sp_user *user;
-
-///----------------------------
-/// @name Social
-///----------------------------
-
-/** Returns the user's full name from social networks, or `nil` if it isn't known. */
-@property (readonly, copy) NSString *fullName;
-
-/** Returns the relationship of the user with another user. 
- 
- Possible values are:
- 
- SP_RELATION_TYPE_UNKNOWN 	
- Not yet known.
- 
- SP_RELATION_TYPE_NONE 	
- No relation.
- 
- SP_RELATION_TYPE_UNIDIRECTIONAL 	
- The currently logged in user is following this uer.
- 
- SP_RELATION_TYPE_BIDIRECTIONAL 	
- Bidirectional friendship established.
- 
- @param friendOrFoe The user to get the relationship status of.
- */
--(sp_relation_type)relationshipWithUser:(SPUser *)friendOrFoe;
 
 @end

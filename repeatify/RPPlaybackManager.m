@@ -36,6 +36,12 @@
 #import "RPPlaybackManager.h"
 #import "RPArrayUtil.h"
 
+@interface SPPlaybackManager()
+
+-(void)applyVolumeToAudioUnit:(double)vol;
+
+@end
+
 @interface RPPlaybackManager()
 
 @property (nonatomic, retain) NSArray *currentPlaylist;
@@ -161,6 +167,11 @@
     [mutablePlaylist insertObject:self.currentTrack atIndex:0];
     self.playQueue = mutablePlaylist;
     [mutablePlaylist release];
+}
+
+- (void)setVolume:(double)volume {
+    [super setVolume:volume];
+    [super applyVolumeToAudioUnit:volume];
 }
 
 @end

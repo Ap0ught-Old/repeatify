@@ -70,34 +70,61 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
  This convenience method is simply returns a new, autoreleased SPArtistBrowse
  object. No caching is performed.
+
+ @warning *Important:* It is strongly recommended that you don't use `SP_ARTISTBROWSE_FULL`
+ as the browse type, as this will download metadata for every single album and track from the given
+ artist, which is both a lengthy and memory-intensive operation. Please use 
+ `SP_ARTISTBROWSE_NO_TRACKS` (which only downloads artist information and their albums) or
+ `SP_ARTISTBROWSE_NO_ALBUMS` (which only downloads artist information) instead.
+ 
+ @warning *Important:* If you pass in an invalid artist URL (i.e., any URL not
+ starting `spotify:artist:`, this method will return `nil`.
  
  @param anArtist The SPArtist to make an SPArtistBrowse for.
  @param aSession The SPSession the browse should exist in.
+ @param browseMode The type of artist browse to perform.
  @return Returns the created SPArtistBrowse object. 
  */
-+(SPArtistBrowse *)browseArtist:(SPArtist *)anArtist inSession:(SPSession *)aSession;
++(SPArtistBrowse *)browseArtist:(SPArtist *)anArtist inSession:(SPSession *)aSession type:(sp_artistbrowse_type)browseMode;
 
 /** Creates an SPArtistBrowse from the given artist URL. 
  
  This convenience method is simply returns a new, autoreleased SPArtistBrowse
  object. No caching is performed.
  
+ @warning *Important:* It is strongly recommended that you don't use `SP_ARTISTBROWSE_FULL`
+ as the browse type, as this will download metadata for every single album and track from the given
+ artist, which is both a lengthy and memory-intensive operation. Please use 
+ `SP_ARTISTBROWSE_NO_TRACKS` (which only downloads artist information and their albums) or
+ `SP_ARTISTBROWSE_NO_ALBUMS` (which only downloads artist information) instead.
+ 
  @warning *Important:* If you pass in an invalid artist URL (i.e., any URL not
  starting `spotify:artist:`, this method will return `nil`.
  
  @param artistURL The artist URL to make an SPArtistBrowse for.
  @param aSession The SPSession the browse should exist in.
+ @param browseMode The type of artist browse to perform.
  @return Returns the created SPArtistBrowse object. 
  */
-+(SPArtistBrowse *)browseArtistAtURL:(NSURL *)artistURL inSession:(SPSession *)aSession;
++(SPArtistBrowse *)browseArtistAtURL:(NSURL *)artistURL inSession:(SPSession *)aSession type:(sp_artistbrowse_type)browseMode;
 
 /** Initializes a new SPArtistBrowse from the given SPArtist. 
  
+ @warning *Important:* It is strongly recommended that you don't use `SP_ARTISTBROWSE_FULL`
+ as the browse type, as this will download metadata for every single album and track from the given
+ artist, which is both a lengthy and memory-intensive operation. Please use 
+ `SP_ARTISTBROWSE_NO_TRACKS` (which only downloads artist information and their albums) or
+ `SP_ARTISTBROWSE_NO_ALBUMS` (which only downloads artist information) instead.
+ 
+ @warning *Important:* If you pass in an invalid artist URL (i.e., any URL not
+ starting `spotify:artist:`, this method will return `nil`.
+ 
  @param anArtist The SPArtist to make an SPArtistBrowse for.
  @param aSession The SPSession the browse should exist in.
+ @param browseMode The type of artist browse to perform.
  @return Returns the created SPArtistBrowse object. 
  */
--(id)initWithArtist:(SPArtist *)anArtist inSession:(SPSession *)aSession;
+-(id)initWithArtist:(SPArtist *)anArtist inSession:(SPSession *)aSession type:(sp_artistbrowse_type)browseMode;
 
 ///----------------------------
 /// @name Properties
