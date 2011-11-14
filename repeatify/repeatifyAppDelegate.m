@@ -76,6 +76,7 @@
 - (void)updateIsPlayingStatus:(id)sender;
 
 - (void)showLoginDialog;
+- (void)afterLoggedIn;
 - (void)didLoggedIn;
 - (void)logoutUser;
 
@@ -87,7 +88,7 @@
 @implementation repeatifyAppDelegate
 
 @synthesize nowPlayingView, nowPlayingAlbumCoverImageView, nowPlayingTrackNameLabel, nowPlayingArtistNameLabel, nowPlayingControllerButton, volumeControlView, volumeControlSlider;
-@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField;
+@synthesize loginDialog, usernameField, passwordField, loginProgressIndicator, loginStatusField, saveCredentialsButton;
 
 
 #pragma mark -
@@ -110,8 +111,13 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    [self showLoginDialog];
-    _loginStatus = RPLoginStatusNoUser;
+    if ([[SPSession sharedSession] attemptLoginWithStoredCredentials:nil]) {
+        [self afterLoggedIn];
+    }
+    else {
+        [self showLoginDialog];
+        _loginStatus = RPLoginStatusNoUser;
+    }
     
     [[SPSession sharedSession] setDelegate:self];
     
@@ -535,7 +541,7 @@
     if ([self.usernameField.stringValue length] > 0 && [self.passwordField.stringValue length] > 0) {
         [[SPSession sharedSession] attemptLoginWithUserName:self.usernameField.stringValue
                                                    password:self.passwordField.stringValue
-                                        rememberCredentials:NO];
+                                        rememberCredentials:self.saveCredentialsButton.state];
         [self.loginProgressIndicator setHidden:NO];
         [self.loginProgressIndicator startAnimation:self];
         _loginStatus = RPLoginStatusLogging;
@@ -557,15 +563,20 @@
     [self.loginStatusField setStringValue:@""];
 }
 
-- (void)didLoggedIn {
+- (void)afterLoggedIn {
     _topList = [[SPToplist alloc] initLocaleToplistWithLocale:nil inSession:[SPSession sharedSession]];
     _loginStatus = RPLoginStatusLoggedIn;
+}
+
+- (void)didLoggedIn {
+    [self afterLoggedIn];
     [self closeLoginDialog:nil];
 }
 
 - (void)logoutUser {
     _loginStatus = RPLoginStatusNoUser;
     [_playbackManager playTrack:nil error:nil];
+    [[SPSession sharedSession] forgetStoredCredentials];
     [[SPSession sharedSession] logout];
     [self showLoginDialog];
 }
@@ -594,7 +605,6 @@
 }
 
 -(void)sessionDidLogOut:(SPSession *)aSession; {
-    NSLog(@"did log out!!!");
     [[NSApplication sharedApplication] replyToApplicationShouldTerminate:YES];
 }
 

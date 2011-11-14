@@ -69,6 +69,7 @@ typedef enum _RPLoginStatus {
 @property (nonatomic, retain) IBOutlet NSWindow *loginDialog;
 @property (nonatomic, retain) IBOutlet NSTextField *usernameField;
 @property (nonatomic, retain) IBOutlet NSSecureTextField *passwordField;
+@property (nonatomic, retain) IBOutlet NSButton *saveCredentialsButton;
 @property (nonatomic, retain) IBOutlet NSProgressIndicator *loginProgressIndicator;
 @property (nonatomic, retain) IBOutlet NSTextField *loginStatusField;
 
