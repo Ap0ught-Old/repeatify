@@ -3,9 +3,23 @@ Updated Features
 
 Repeatify is simplest player to repeat Spotify music
 
+* Enhanced user experience, focus and enjoy music
 * Repeat your favorite Spotify tracks by one click
 * Sync your Spotify playlists, inbox and starred playlist
 * Control play, pause, rewind, and fast forward by media keys
+
+Repeatify v0.9.8 Release Notes
+==============================
+
+* Upgrade libspotify to version 10
+* Growl notification when play new track
+* Choose the save credentials
+* Fixed issue of in-app volume control
+
+Repeatify v0.9.6 Release Notes
+==============================
+
+* Upgrade libspotify to version 9
 
 Repeatify v0.9.4 Release Notes
 ==============================
