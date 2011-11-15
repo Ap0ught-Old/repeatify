@@ -96,9 +96,10 @@
         NSError *error = nil;
         if (![self playTrack:track error:&error]) {
             NSLog(@"error description %@", [error localizedDescription]);
+            return;
         }
         
-        if ([self getCurrentRepeatMode] != RPRepeatOne) {
+        if ([self getCurrentRepeatMode] != RPRepeatOne && [[NSUserDefaults standardUserDefaults] boolForKey:@"RPGrowlNotification"]) {
             [GrowlApplicationBridge notifyWithTitle:((SPArtist *)[track.artists objectAtIndex:0]).name
                                         description:track.name
                                    notificationName:@"PlayTrack"

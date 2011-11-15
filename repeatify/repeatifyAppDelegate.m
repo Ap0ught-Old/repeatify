@@ -54,6 +54,7 @@
 - (void)switchToRepeatOneMode;
 - (void)switchToRepeatAllMode;
 - (void)switchToRepeatShuffleMode;
+- (void)toggleShowGrowlNotification;
 
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem;
 - (void)handlePlaylist:(SPPlaylist *)list menuItem:(NSMenuItem *)menuItem;
@@ -100,6 +101,7 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
                                                              [SPMediaKeyTap defaultMediaKeyUserBundleIdentifiers], kMediaKeyUsingBundleIdentifiersDefaultsKey,
                                                              RPRepeatOne, "RPRepeatMode",
+                                                             [NSNumber numberWithBool:YES], "RPGrowlNotification",
                                                              nil]];
 }
 
@@ -480,6 +482,14 @@
         volumeControlMenuItem.view = self.volumeControlView;
         [playbackControlMenu addItem:volumeControlMenuItem];
         [volumeControlMenuItem release];
+        [playbackControlMenu addItem:[NSMenuItem separatorItem]];
+        
+        NSMenuItem *showGrowlNotificationMenuItem = [[NSMenuItem alloc] initWithTitle:@"Show Notification" action:@selector(toggleShowGrowlNotification) keyEquivalent:@""];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"RPGrowlNotification"]) {
+            [showGrowlNotificationMenuItem setState:NSOnState];
+        }
+        [playbackControlMenu addItem:showGrowlNotificationMenuItem];
+        [showGrowlNotificationMenuItem release];
         
         [playbackMenuItem setSubmenu:playbackControlMenu];
         [menu addItem:playbackMenuItem];
@@ -523,6 +533,13 @@
     [_playbackManager toggleRepeatShuffleMode];
 }
 
+#pragma mark -
+#pragma mark Growl Notification Configuration
+
+- (void)toggleShowGrowlNotification {
+    BOOL currentState = [[NSUserDefaults standardUserDefaults] boolForKey:@"RPGrowlNotification"];
+    [[NSUserDefaults standardUserDefaults] setBool:!currentState forKey:@"RPGrowlNotification"];
+}
 
 #pragma mark -
 #pragma mark Volume Change Methods
