@@ -367,7 +367,6 @@
         return track.availability == SP_TRACK_AVAILABILITY_AVAILABLE;
     }];
     [_playbackManager setPlaylist:filteredPlaylist];
-    [filteredPlaylist release];
 }
 
 - (void)updateAlbumCoverImage:(id)sender {
