@@ -216,7 +216,7 @@
         if ([playlists count] == 0) {
             [_statusMenu addItemWithTitle:@"No Playlist Found" action:nil keyEquivalent:@""];
         }
-        for (id playlist in playlists) {
+        [playlists each:^(id playlist) {
             NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
             
             if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
@@ -228,7 +228,7 @@
             
             [_statusMenu addItem:innerMenuItem];
             [innerMenuItem release];
-        }
+        }];
         
         [_statusMenu addItem:[NSMenuItem separatorItem]];
         [self handleStarredPlaylist:_statusMenu];
@@ -281,7 +281,7 @@
 - (void)handlePlaylistFolder:(SPPlaylistFolder *)folder menuItem:(NSMenuItem *)menuItem {
     [menuItem setTitle:folder.name];
     NSMenu *innerMenu = [[NSMenu alloc] init];
-    for (id playlist in folder.playlists) {
+    [folder.playlists each:^(id playlist) {
         NSMenuItem *innerMenuItem = [[NSMenuItem alloc] init];
         
         if ([playlist isKindOfClass:[SPPlaylistFolder class]]) {
@@ -293,7 +293,7 @@
         
         [innerMenu addItem:innerMenuItem];
         [innerMenuItem release];
-    }
+    }];
     
     [menuItem setSubmenu:innerMenu];
     [innerMenu release];
@@ -306,7 +306,7 @@
 
 - (NSArray *)getTracksFromPlaylistItems:(NSArray *)playlistItems {
     NSMutableArray *tracks = [[NSMutableArray alloc] init];
-    for (id item in playlistItems) {
+    [playlistItems each:^(id item) {
         SPTrack *track = nil;
         if ([item isKindOfClass:[SPPlaylistItem class]]) {
             SPPlaylistItem *playlistItem = (SPPlaylistItem *)item;
@@ -320,13 +320,13 @@
         if (track != nil) {
             [tracks addObject:track];
         }
-    }
+    }];
     return [tracks autorelease];
 }
 
 - (void)addTracks:(NSArray *)tracks toMenuItem:(NSMenuItem *)menuItem {
     NSMenu *innerMenu = [[NSMenu alloc] init];
-    for (SPTrack *track in tracks) {
+    [tracks each:^(SPTrack *track) {
         if (track != nil) {
             NSMenuItem *innerMenuItem;
             if (track.name == nil) {
@@ -351,7 +351,7 @@
             [innerMenu addItem:innerMenuItem];
             [innerMenuItem release];
         }
-    }
+    }];
     [menuItem setSubmenu:innerMenu];
     [innerMenu release];
 }
@@ -363,12 +363,9 @@
     NSMenuItem *clickedMenuItem = (NSMenuItem *)sender;
     
     [_playbackManager play:[[clickedMenuItem representedObject] objectAtIndex:0]];
-    NSMutableArray *filteredPlaylist = [[NSMutableArray alloc] init];
-    for (SPTrack *track in [[clickedMenuItem representedObject] objectAtIndex:1]) {
-        if (track.availability == SP_TRACK_AVAILABILITY_AVAILABLE) {
-            [filteredPlaylist addObject:track];
-        }
-    }
+    NSArray *filteredPlaylist = [[[clickedMenuItem representedObject] objectAtIndex:1] select:^BOOL(SPTrack *track) {
+        return track.availability == SP_TRACK_AVAILABILITY_AVAILABLE;
+    }];
     [_playbackManager setPlaylist:filteredPlaylist];
     [filteredPlaylist release];
 }

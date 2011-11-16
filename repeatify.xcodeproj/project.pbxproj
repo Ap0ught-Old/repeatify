@@ -22,6 +22,8 @@
 		29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893A4B13E4BC2900951AB6 /* AudioUnit.framework */; };
 		29893A4F13E4C27800951AB6 /* RPPlaybackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */; };
 		29893A5813E5A88900951AB6 /* album-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 29893A5713E5A88900951AB6 /* album-placeholder.png */; };
+		29E4696F147329FD009A46E2 /* JiangFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E4696E147329FD009A46E2 /* JiangFoundation.framework */; };
+		29E4697114732A0A009A46E2 /* JiangFoundation.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 29E4696E147329FD009A46E2 /* JiangFoundation.framework */; };
 		29E8C99A13DDDFDC00CAFBE6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */; };
 		29E8C9A413DDDFDC00CAFBE6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 29E8C9A213DDDFDC00CAFBE6 /* InfoPlist.strings */; };
 		29E8C9A613DDDFDC00CAFBE6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E8C9A513DDDFDC00CAFBE6 /* main.m */; };
@@ -44,6 +46,7 @@
 			files = (
 				2965ACF11436F4B6007D3657 /* CocoaLibSpotify.framework in CopyFiles */,
 				29ED07051470DFF300BD7530 /* Growl.framework in CopyFiles */,
+				29E4697114732A0A009A46E2 /* JiangFoundation.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +73,7 @@
 		29893A4D13E4C27800951AB6 /* RPPlaybackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPPlaybackManager.h; sourceTree = "<group>"; };
 		29893A4E13E4C27800951AB6 /* RPPlaybackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPPlaybackManager.m; sourceTree = "<group>"; };
 		29893A5713E5A88900951AB6 /* album-placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "album-placeholder.png"; path = "resources/album-placeholder.png"; sourceTree = "<group>"; };
+		29E4696E147329FD009A46E2 /* JiangFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JiangFoundation.framework; path = framework/JiangFoundation.framework; sourceTree = "<group>"; };
 		29E8C99513DDDFDC00CAFBE6 /* Repeatify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Repeatify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29E8C99913DDDFDC00CAFBE6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		29E8C99C13DDDFDC00CAFBE6 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -96,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29E4696F147329FD009A46E2 /* JiangFoundation.framework in Frameworks */,
 				29ED07041470DF8200BD7530 /* Growl.framework in Frameworks */,
 				29EC924813F0BCF9009CE42C /* Carbon.framework in Frameworks */,
 				29893A4C13E4BC2900951AB6 /* AudioUnit.framework in Frameworks */,
@@ -135,6 +140,7 @@
 		29E8C98A13DDDFDC00CAFBE6 = {
 			isa = PBXGroup;
 			children = (
+				29E4696E147329FD009A46E2 /* JiangFoundation.framework */,
 				29ED07031470DF8200BD7530 /* Growl.framework */,
 				2965ACF01436F4B6007D3657 /* CocoaLibSpotify.framework */,
 				29E8C99F13DDDFDC00CAFBE6 /* repeatify */,
